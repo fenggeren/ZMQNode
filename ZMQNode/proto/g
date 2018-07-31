@@ -1,0 +1,8 @@
+#!/bin/bash
+files=(server)
+for f in ${files[@]}
+do
+    echo "genereate  $f.proto -> ${f}.pb.{h,cc}"
+    protoc  --cpp_out=. $f.proto
+    # sed -i '21 c #include "ZJH_Protoc_Export.h"' $f.pb.h
+done

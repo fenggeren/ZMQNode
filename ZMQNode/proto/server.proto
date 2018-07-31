@@ -1,0 +1,23 @@
+syntax = "proto3";
+package CPG;
+
+message ServiceProfile
+{
+    // 服务类型
+    int32 serviceType = 1;
+    // 服务地址
+    string addr = 2;
+}
+
+// 所有服务向MASTER注册
+message ServiceRegisterRQ
+{
+    ServiceProfile service = 1;
+}
+message ServiceRegisterRS
+{
+    // 需要连接的服务
+    repeated ServiceProfile connectServices = 1;
+}
+
+
