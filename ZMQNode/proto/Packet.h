@@ -52,7 +52,7 @@ const static std::vector<std::string> LOGIN_SERVER =
     "tcp://127.0.0.1:5581",
 };
 const static std::string MASTER = "tcp://127.0.0.1:5688";
-
+const static int MASTERPORT = 5688;
 
 enum CPGServerType
 {
