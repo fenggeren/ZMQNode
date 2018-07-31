@@ -50,6 +50,8 @@
 		1FAEEEE521104B050099D3FF /* server.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = server.proto; sourceTree = "<group>"; };
 		1FAEEEE821104B210099D3FF /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotobuf.a; path = ../../../../../usr/local/lib/libprotobuf.a; sourceTree = "<group>"; };
 		1FAEEEEA21104C060099D3FF /* Defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Defines.h; sourceTree = "<group>"; };
+		1FAEEEEC2110622C0099D3FF /* 屏幕快照 2018-07-31 下午5.21.26.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "屏幕快照 2018-07-31 下午5.21.26.png"; sourceTree = "<group>"; };
+		1FAEEEED211062380099D3FF /* ZMQNode.pages */ = {isa = PBXFileReference; lastKnownFileType = file; path = ZMQNode.pages; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 		1FAEEEC62110403F0099D3FF /* ZMQNode */ = {
 			isa = PBXGroup;
 			children = (
+				1FAEEEEB211062230099D3FF /* Doc */,
 				1FAEEEDE21104B050099D3FF /* proto */,
 				1FAEEED9211041130099D3FF /* CPG */,
 				1FAEEEC72110403F0099D3FF /* main.cpp */,
@@ -129,6 +132,15 @@
 				1FAEEEE521104B050099D3FF /* server.proto */,
 			);
 			path = proto;
+			sourceTree = "<group>";
+		};
+		1FAEEEEB211062230099D3FF /* Doc */ = {
+			isa = PBXGroup;
+			children = (
+				1FAEEEED211062380099D3FF /* ZMQNode.pages */,
+				1FAEEEEC2110622C0099D3FF /* 屏幕快照 2018-07-31 下午5.21.26.png */,
+			);
+			path = Doc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
