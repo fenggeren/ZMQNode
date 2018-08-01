@@ -38,6 +38,11 @@ class ServiceRegisterRSDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<ServiceRegisterRS>
       _instance;
 } _ServiceRegisterRS_default_instance_;
+class ServicePublishNewServicesMsgDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<ServicePublishNewServicesMsg>
+      _instance;
+} _ServicePublishNewServicesMsg_default_instance_;
 class ServiceHeartbeatMsgDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<ServiceHeartbeatMsg>
@@ -89,6 +94,21 @@ static void InitDefaultsServiceRegisterRS() {
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsServiceRegisterRS}, {
       &protobuf_server_2eproto::scc_info_ServiceProfile.base,}};
 
+static void InitDefaultsServicePublishNewServicesMsg() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::CPG::_ServicePublishNewServicesMsg_default_instance_;
+    new (ptr) ::CPG::ServicePublishNewServicesMsg();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::CPG::ServicePublishNewServicesMsg::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<1> scc_info_ServicePublishNewServicesMsg =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsServicePublishNewServicesMsg}, {
+      &protobuf_server_2eproto::scc_info_ServiceProfile.base,}};
+
 static void InitDefaultsServiceHeartbeatMsg() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -107,10 +127,11 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_ServiceProfile.base);
   ::google::protobuf::internal::InitSCC(&scc_info_ServiceRegisterRQ.base);
   ::google::protobuf::internal::InitSCC(&scc_info_ServiceRegisterRS.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_ServicePublishNewServicesMsg.base);
   ::google::protobuf::internal::InitSCC(&scc_info_ServiceHeartbeatMsg.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[4];
+::google::protobuf::Metadata file_level_metadata[5];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -135,6 +156,12 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CPG::ServiceRegisterRS, connectservices_),
   ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CPG::ServicePublishNewServicesMsg, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CPG::ServicePublishNewServicesMsg, newservices_),
+  ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CPG::ServiceHeartbeatMsg, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -145,13 +172,15 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 0, -1, sizeof(::CPG::ServiceProfile)},
   { 8, -1, sizeof(::CPG::ServiceRegisterRQ)},
   { 15, -1, sizeof(::CPG::ServiceRegisterRS)},
-  { 21, -1, sizeof(::CPG::ServiceHeartbeatMsg)},
+  { 21, -1, sizeof(::CPG::ServicePublishNewServicesMsg)},
+  { 27, -1, sizeof(::CPG::ServiceHeartbeatMsg)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::CPG::_ServiceProfile_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::CPG::_ServiceRegisterRQ_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::CPG::_ServiceRegisterRS_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::CPG::_ServicePublishNewServicesMsg_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::CPG::_ServiceHeartbeatMsg_default_instance_),
 };
 
@@ -170,7 +199,7 @@ static void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 4);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 5);
 }
 
 static void AddDescriptorsImpl() {
@@ -182,11 +211,13 @@ static void AddDescriptorsImpl() {
       "viceType\030\001 \001(\005\022%\n\010services\030\002 \003(\0132\023.CPG.S"
       "erviceProfile\"A\n\021ServiceRegisterRS\022,\n\017co"
       "nnectServices\030\001 \003(\0132\023.CPG.ServiceProfile"
-      "\"*\n\023ServiceHeartbeatMsg\022\023\n\013serviceType\030\001"
-      " \001(\005b\006proto3"
+      "\"H\n\034ServicePublishNewServicesMsg\022(\n\013newS"
+      "ervices\030\001 \003(\0132\023.CPG.ServiceProfile\"*\n\023Se"
+      "rviceHeartbeatMsg\022\023\n\013serviceType\030\001 \001(\005b\006"
+      "proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 292);
+      descriptor, 366);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "server.proto", &protobuf_RegisterTypes);
 }
@@ -1026,6 +1057,235 @@ void ServiceRegisterRS::InternalSwap(ServiceRegisterRS* other) {
 
 // ===================================================================
 
+void ServicePublishNewServicesMsg::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int ServicePublishNewServicesMsg::kNewServicesFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+ServicePublishNewServicesMsg::ServicePublishNewServicesMsg()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_server_2eproto::scc_info_ServicePublishNewServicesMsg.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CPG.ServicePublishNewServicesMsg)
+}
+ServicePublishNewServicesMsg::ServicePublishNewServicesMsg(const ServicePublishNewServicesMsg& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      newservices_(from.newservices_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:CPG.ServicePublishNewServicesMsg)
+}
+
+void ServicePublishNewServicesMsg::SharedCtor() {
+}
+
+ServicePublishNewServicesMsg::~ServicePublishNewServicesMsg() {
+  // @@protoc_insertion_point(destructor:CPG.ServicePublishNewServicesMsg)
+  SharedDtor();
+}
+
+void ServicePublishNewServicesMsg::SharedDtor() {
+}
+
+void ServicePublishNewServicesMsg::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* ServicePublishNewServicesMsg::descriptor() {
+  ::protobuf_server_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_server_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const ServicePublishNewServicesMsg& ServicePublishNewServicesMsg::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_server_2eproto::scc_info_ServicePublishNewServicesMsg.base);
+  return *internal_default_instance();
+}
+
+
+void ServicePublishNewServicesMsg::Clear() {
+// @@protoc_insertion_point(message_clear_start:CPG.ServicePublishNewServicesMsg)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  newservices_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool ServicePublishNewServicesMsg::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CPG.ServicePublishNewServicesMsg)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .CPG.ServiceProfile newServices = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+                input, add_newservices()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CPG.ServicePublishNewServicesMsg)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CPG.ServicePublishNewServicesMsg)
+  return false;
+#undef DO_
+}
+
+void ServicePublishNewServicesMsg::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CPG.ServicePublishNewServicesMsg)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .CPG.ServiceProfile newServices = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->newservices_size()); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1,
+      this->newservices(static_cast<int>(i)),
+      output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:CPG.ServicePublishNewServicesMsg)
+}
+
+::google::protobuf::uint8* ServicePublishNewServicesMsg::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CPG.ServicePublishNewServicesMsg)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .CPG.ServiceProfile newServices = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->newservices_size()); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, this->newservices(static_cast<int>(i)), deterministic, target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:CPG.ServicePublishNewServicesMsg)
+  return target;
+}
+
+size_t ServicePublishNewServicesMsg::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CPG.ServicePublishNewServicesMsg)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // repeated .CPG.ServiceProfile newServices = 1;
+  {
+    unsigned int count = static_cast<unsigned int>(this->newservices_size());
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          this->newservices(static_cast<int>(i)));
+    }
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void ServicePublishNewServicesMsg::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CPG.ServicePublishNewServicesMsg)
+  GOOGLE_DCHECK_NE(&from, this);
+  const ServicePublishNewServicesMsg* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const ServicePublishNewServicesMsg>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CPG.ServicePublishNewServicesMsg)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CPG.ServicePublishNewServicesMsg)
+    MergeFrom(*source);
+  }
+}
+
+void ServicePublishNewServicesMsg::MergeFrom(const ServicePublishNewServicesMsg& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CPG.ServicePublishNewServicesMsg)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  newservices_.MergeFrom(from.newservices_);
+}
+
+void ServicePublishNewServicesMsg::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CPG.ServicePublishNewServicesMsg)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ServicePublishNewServicesMsg::CopyFrom(const ServicePublishNewServicesMsg& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CPG.ServicePublishNewServicesMsg)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ServicePublishNewServicesMsg::IsInitialized() const {
+  return true;
+}
+
+void ServicePublishNewServicesMsg::Swap(ServicePublishNewServicesMsg* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void ServicePublishNewServicesMsg::InternalSwap(ServicePublishNewServicesMsg* other) {
+  using std::swap;
+  CastToBase(&newservices_)->InternalSwap(CastToBase(&other->newservices_));
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata ServicePublishNewServicesMsg::GetMetadata() const {
+  protobuf_server_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_server_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
 void ServiceHeartbeatMsg::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -1259,6 +1519,9 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::CPG::ServiceRegisterRQ* Arena::C
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::CPG::ServiceRegisterRS* Arena::CreateMaybeMessage< ::CPG::ServiceRegisterRS >(Arena* arena) {
   return Arena::CreateInternal< ::CPG::ServiceRegisterRS >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::CPG::ServicePublishNewServicesMsg* Arena::CreateMaybeMessage< ::CPG::ServicePublishNewServicesMsg >(Arena* arena) {
+  return Arena::CreateInternal< ::CPG::ServicePublishNewServicesMsg >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::CPG::ServiceHeartbeatMsg* Arena::CreateMaybeMessage< ::CPG::ServiceHeartbeatMsg >(Arena* arena) {
   return Arena::CreateInternal< ::CPG::ServiceHeartbeatMsg >(arena);

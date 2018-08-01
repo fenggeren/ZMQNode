@@ -38,7 +38,7 @@ namespace protobuf_server_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[4];
+  static const ::google::protobuf::internal::ParseTable schema[5];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -52,6 +52,9 @@ extern ServiceHeartbeatMsgDefaultTypeInternal _ServiceHeartbeatMsg_default_insta
 class ServiceProfile;
 class ServiceProfileDefaultTypeInternal;
 extern ServiceProfileDefaultTypeInternal _ServiceProfile_default_instance_;
+class ServicePublishNewServicesMsg;
+class ServicePublishNewServicesMsgDefaultTypeInternal;
+extern ServicePublishNewServicesMsgDefaultTypeInternal _ServicePublishNewServicesMsg_default_instance_;
 class ServiceRegisterRQ;
 class ServiceRegisterRQDefaultTypeInternal;
 extern ServiceRegisterRQDefaultTypeInternal _ServiceRegisterRQ_default_instance_;
@@ -63,6 +66,7 @@ namespace google {
 namespace protobuf {
 template<> ::CPG::ServiceHeartbeatMsg* Arena::CreateMaybeMessage<::CPG::ServiceHeartbeatMsg>(Arena*);
 template<> ::CPG::ServiceProfile* Arena::CreateMaybeMessage<::CPG::ServiceProfile>(Arena*);
+template<> ::CPG::ServicePublishNewServicesMsg* Arena::CreateMaybeMessage<::CPG::ServicePublishNewServicesMsg>(Arena*);
 template<> ::CPG::ServiceRegisterRQ* Arena::CreateMaybeMessage<::CPG::ServiceRegisterRQ>(Arena*);
 template<> ::CPG::ServiceRegisterRS* Arena::CreateMaybeMessage<::CPG::ServiceRegisterRS>(Arena*);
 }  // namespace protobuf
@@ -421,6 +425,115 @@ class ServiceRegisterRS : public ::google::protobuf::Message /* @@protoc_inserti
 };
 // -------------------------------------------------------------------
 
+class ServicePublishNewServicesMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.ServicePublishNewServicesMsg) */ {
+ public:
+  ServicePublishNewServicesMsg();
+  virtual ~ServicePublishNewServicesMsg();
+
+  ServicePublishNewServicesMsg(const ServicePublishNewServicesMsg& from);
+
+  inline ServicePublishNewServicesMsg& operator=(const ServicePublishNewServicesMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  ServicePublishNewServicesMsg(ServicePublishNewServicesMsg&& from) noexcept
+    : ServicePublishNewServicesMsg() {
+    *this = ::std::move(from);
+  }
+
+  inline ServicePublishNewServicesMsg& operator=(ServicePublishNewServicesMsg&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ServicePublishNewServicesMsg& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ServicePublishNewServicesMsg* internal_default_instance() {
+    return reinterpret_cast<const ServicePublishNewServicesMsg*>(
+               &_ServicePublishNewServicesMsg_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  void Swap(ServicePublishNewServicesMsg* other);
+  friend void swap(ServicePublishNewServicesMsg& a, ServicePublishNewServicesMsg& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ServicePublishNewServicesMsg* New() const final {
+    return CreateMaybeMessage<ServicePublishNewServicesMsg>(NULL);
+  }
+
+  ServicePublishNewServicesMsg* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<ServicePublishNewServicesMsg>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const ServicePublishNewServicesMsg& from);
+  void MergeFrom(const ServicePublishNewServicesMsg& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ServicePublishNewServicesMsg* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .CPG.ServiceProfile newServices = 1;
+  int newservices_size() const;
+  void clear_newservices();
+  static const int kNewServicesFieldNumber = 1;
+  ::CPG::ServiceProfile* mutable_newservices(int index);
+  ::google::protobuf::RepeatedPtrField< ::CPG::ServiceProfile >*
+      mutable_newservices();
+  const ::CPG::ServiceProfile& newservices(int index) const;
+  ::CPG::ServiceProfile* add_newservices();
+  const ::google::protobuf::RepeatedPtrField< ::CPG::ServiceProfile >&
+      newservices() const;
+
+  // @@protoc_insertion_point(class_scope:CPG.ServicePublishNewServicesMsg)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::CPG::ServiceProfile > newservices_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
 class ServiceHeartbeatMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.ServiceHeartbeatMsg) */ {
  public:
   ServiceHeartbeatMsg();
@@ -456,7 +569,7 @@ class ServiceHeartbeatMsg : public ::google::protobuf::Message /* @@protoc_inser
                &_ServiceHeartbeatMsg_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   void Swap(ServiceHeartbeatMsg* other);
   friend void swap(ServiceHeartbeatMsg& a, ServiceHeartbeatMsg& b) {
@@ -698,6 +811,40 @@ ServiceRegisterRS::connectservices() const {
 
 // -------------------------------------------------------------------
 
+// ServicePublishNewServicesMsg
+
+// repeated .CPG.ServiceProfile newServices = 1;
+inline int ServicePublishNewServicesMsg::newservices_size() const {
+  return newservices_.size();
+}
+inline void ServicePublishNewServicesMsg::clear_newservices() {
+  newservices_.Clear();
+}
+inline ::CPG::ServiceProfile* ServicePublishNewServicesMsg::mutable_newservices(int index) {
+  // @@protoc_insertion_point(field_mutable:CPG.ServicePublishNewServicesMsg.newServices)
+  return newservices_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::CPG::ServiceProfile >*
+ServicePublishNewServicesMsg::mutable_newservices() {
+  // @@protoc_insertion_point(field_mutable_list:CPG.ServicePublishNewServicesMsg.newServices)
+  return &newservices_;
+}
+inline const ::CPG::ServiceProfile& ServicePublishNewServicesMsg::newservices(int index) const {
+  // @@protoc_insertion_point(field_get:CPG.ServicePublishNewServicesMsg.newServices)
+  return newservices_.Get(index);
+}
+inline ::CPG::ServiceProfile* ServicePublishNewServicesMsg::add_newservices() {
+  // @@protoc_insertion_point(field_add:CPG.ServicePublishNewServicesMsg.newServices)
+  return newservices_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::CPG::ServiceProfile >&
+ServicePublishNewServicesMsg::newservices() const {
+  // @@protoc_insertion_point(field_list:CPG.ServicePublishNewServicesMsg.newServices)
+  return newservices_;
+}
+
+// -------------------------------------------------------------------
+
 // ServiceHeartbeatMsg
 
 // int32 serviceType = 1;
@@ -717,6 +864,8 @@ inline void ServiceHeartbeatMsg::set_servicetype(::google::protobuf::int32 value
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

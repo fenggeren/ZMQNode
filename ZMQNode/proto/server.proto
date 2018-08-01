@@ -22,6 +22,12 @@ message ServiceRegisterRS
     repeated ServiceProfile connectServices = 1;
 }
 
+// 发布 新服务， 订阅的服务会接收到信息，并连接
+message ServicePublishNewServicesMsg
+{
+    repeated ServiceProfile newServices = 1;
+}
+
 message ServiceHeartbeatMsg
 {
     int32 serviceType = 1;

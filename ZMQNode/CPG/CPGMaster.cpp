@@ -137,6 +137,7 @@ void CPGMaster::serviceHeart(const std::string& uuid, const char* data, size_t l
             {
                 node.heartbeat = time(NULL);
                 handle = true;
+                break;
             }
         }
     }
@@ -166,9 +167,38 @@ CPGMaster::serviceProfiles(int serviceType, const std::string& uuid)
     return {};
 }
 // 有新服务注册， 发布新服务
-void CPGMaster::publishNewService(const std::vector<ServiceProfile>& profile)
+void CPGMaster::publishNewService(const std::vector<ServiceProfile>& services)
 {
+    CPG::ServicePublishNewServicesMsg publishMsg;
     
+    int subType = 0;
+    
+    for (auto& service : services)
+    {
+        auto profile = publishMsg.add_newservices();
+        profile->set_servicetype(service.serviceType);
+        profile->set_sockettype(service.socketType);
+        profile->set_addr(service.addr);
+        subType |= service.serviceType;
+    }
+    
+    PacketHead head;
+    head.info = {0, 0, static_cast<unsigned int>(publishMsg.ByteSize())};
+    head.command = {kMaster, kServicePublishNewServicesMsg};
+    
+    google::protobuf::uint8* szBuf = new google::protobuf::uint8[publishMsg.ByteSize()];
+    publishMsg.SerializeWithCachedSizesToArray(szBuf);
+    
+    std::string subTypeStr(std::to_string(subType));
+    zmsg_t* msg = zmsg_new();
+    zmsg_addmem(msg, subTypeStr.data(), subTypeStr.size());
+    zmsg_addmem(msg, &head, sizeof(head));
+    zmsg_addmem(msg, szBuf, head.info.packetSize);
+    // send
+    zmsg_send(&msg, pub_);
+    
+    // zmsg_destroy(&msg);
+    delete []szBuf;
 }
 
 std::list<ServiceProfile>
