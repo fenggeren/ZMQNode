@@ -99,6 +99,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CPG::ServiceProfile, servicetype_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CPG::ServiceProfile, sockettype_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CPG::ServiceProfile, addr_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::CPG::ServiceRegisterRQ, _internal_metadata_),
@@ -115,8 +116,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::CPG::ServiceProfile)},
-  { 7, -1, sizeof(::CPG::ServiceRegisterRQ)},
-  { 13, -1, sizeof(::CPG::ServiceRegisterRS)},
+  { 8, -1, sizeof(::CPG::ServiceRegisterRQ)},
+  { 14, -1, sizeof(::CPG::ServiceRegisterRS)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -146,15 +147,15 @@ void protobuf_RegisterTypes(const ::std::string&) {
 static void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\014server.proto\022\003CPG\"3\n\016ServiceProfile\022\023\n"
-      "\013serviceType\030\001 \001(\005\022\014\n\004addr\030\002 \001(\t\"9\n\021Serv"
-      "iceRegisterRQ\022$\n\007service\030\001 \001(\0132\023.CPG.Ser"
-      "viceProfile\"A\n\021ServiceRegisterRS\022,\n\017conn"
-      "ectServices\030\001 \003(\0132\023.CPG.ServiceProfileb\006"
-      "proto3"
+      "\n\014server.proto\022\003CPG\"G\n\016ServiceProfile\022\023\n"
+      "\013serviceType\030\001 \001(\005\022\022\n\nsocketType\030\002 \001(\005\022\014"
+      "\n\004addr\030\003 \001(\t\"9\n\021ServiceRegisterRQ\022$\n\007ser"
+      "vice\030\001 \001(\0132\023.CPG.ServiceProfile\"A\n\021Servi"
+      "ceRegisterRS\022,\n\017connectServices\030\001 \003(\0132\023."
+      "CPG.ServiceProfileb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 206);
+      descriptor, 226);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "server.proto", &protobuf_RegisterTypes);
 }
@@ -178,6 +179,7 @@ void ServiceProfile::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int ServiceProfile::kServiceTypeFieldNumber;
+const int ServiceProfile::kSocketTypeFieldNumber;
 const int ServiceProfile::kAddrFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -196,13 +198,17 @@ ServiceProfile::ServiceProfile(const ServiceProfile& from)
   if (from.addr().size() > 0) {
     addr_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.addr_);
   }
-  servicetype_ = from.servicetype_;
+  ::memcpy(&servicetype_, &from.servicetype_,
+    static_cast<size_t>(reinterpret_cast<char*>(&sockettype_) -
+    reinterpret_cast<char*>(&servicetype_)) + sizeof(sockettype_));
   // @@protoc_insertion_point(copy_constructor:CPG.ServiceProfile)
 }
 
 void ServiceProfile::SharedCtor() {
   addr_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  servicetype_ = 0;
+  ::memset(&servicetype_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&sockettype_) -
+      reinterpret_cast<char*>(&servicetype_)) + sizeof(sockettype_));
 }
 
 ServiceProfile::~ServiceProfile() {
@@ -235,7 +241,9 @@ void ServiceProfile::Clear() {
   (void) cached_has_bits;
 
   addr_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  servicetype_ = 0;
+  ::memset(&servicetype_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&sockettype_) -
+      reinterpret_cast<char*>(&servicetype_)) + sizeof(sockettype_));
   _internal_metadata_.Clear();
 }
 
@@ -263,10 +271,24 @@ bool ServiceProfile::MergePartialFromCodedStream(
         break;
       }
 
-      // string addr = 2;
+      // int32 socketType = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &sockettype_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string addr = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_addr()));
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -310,14 +332,19 @@ void ServiceProfile::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->servicetype(), output);
   }
 
-  // string addr = 2;
+  // int32 socketType = 2;
+  if (this->sockettype() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->sockettype(), output);
+  }
+
+  // string addr = 3;
   if (this->addr().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->addr().data(), static_cast<int>(this->addr().length()),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "CPG.ServiceProfile.addr");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->addr(), output);
+      3, this->addr(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -339,7 +366,12 @@ void ServiceProfile::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->servicetype(), target);
   }
 
-  // string addr = 2;
+  // int32 socketType = 2;
+  if (this->sockettype() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->sockettype(), target);
+  }
+
+  // string addr = 3;
   if (this->addr().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->addr().data(), static_cast<int>(this->addr().length()),
@@ -347,7 +379,7 @@ void ServiceProfile::SerializeWithCachedSizes(
       "CPG.ServiceProfile.addr");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->addr(), target);
+        3, this->addr(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -367,7 +399,7 @@ size_t ServiceProfile::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // string addr = 2;
+  // string addr = 3;
   if (this->addr().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -379,6 +411,13 @@ size_t ServiceProfile::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->servicetype());
+  }
+
+  // int32 socketType = 2;
+  if (this->sockettype() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->sockettype());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -415,6 +454,9 @@ void ServiceProfile::MergeFrom(const ServiceProfile& from) {
   if (from.servicetype() != 0) {
     set_servicetype(from.servicetype());
   }
+  if (from.sockettype() != 0) {
+    set_sockettype(from.sockettype());
+  }
 }
 
 void ServiceProfile::CopyFrom(const ::google::protobuf::Message& from) {
@@ -444,6 +486,7 @@ void ServiceProfile::InternalSwap(ServiceProfile* other) {
   addr_.Swap(&other->addr_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(servicetype_, other->servicetype_);
+  swap(sockettype_, other->sockettype_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

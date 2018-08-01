@@ -18,7 +18,7 @@
 #include <czmq.h>
 #include <thread>
 
-// unsafe threads
+
 class ZMQReactor
 {
     class WakeupPair

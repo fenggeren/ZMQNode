@@ -154,9 +154,9 @@ class ServiceProfile : public ::google::protobuf::Message /* @@protoc_insertion_
 
   // accessors -------------------------------------------------------
 
-  // string addr = 2;
+  // string addr = 3;
   void clear_addr();
-  static const int kAddrFieldNumber = 2;
+  static const int kAddrFieldNumber = 3;
   const ::std::string& addr() const;
   void set_addr(const ::std::string& value);
   #if LANG_CXX11
@@ -174,12 +174,19 @@ class ServiceProfile : public ::google::protobuf::Message /* @@protoc_insertion_
   ::google::protobuf::int32 servicetype() const;
   void set_servicetype(::google::protobuf::int32 value);
 
+  // int32 socketType = 2;
+  void clear_sockettype();
+  static const int kSocketTypeFieldNumber = 2;
+  ::google::protobuf::int32 sockettype() const;
+  void set_sockettype(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:CPG.ServiceProfile)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr addr_;
   ::google::protobuf::int32 servicetype_;
+  ::google::protobuf::int32 sockettype_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_server_2eproto::TableStruct;
 };
@@ -426,7 +433,21 @@ inline void ServiceProfile::set_servicetype(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:CPG.ServiceProfile.serviceType)
 }
 
-// string addr = 2;
+// int32 socketType = 2;
+inline void ServiceProfile::clear_sockettype() {
+  sockettype_ = 0;
+}
+inline ::google::protobuf::int32 ServiceProfile::sockettype() const {
+  // @@protoc_insertion_point(field_get:CPG.ServiceProfile.socketType)
+  return sockettype_;
+}
+inline void ServiceProfile::set_sockettype(::google::protobuf::int32 value) {
+  
+  sockettype_ = value;
+  // @@protoc_insertion_point(field_set:CPG.ServiceProfile.socketType)
+}
+
+// string addr = 3;
 inline void ServiceProfile::clear_addr() {
   addr_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }

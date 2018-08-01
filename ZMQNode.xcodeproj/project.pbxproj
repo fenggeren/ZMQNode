@@ -44,7 +44,6 @@
 		1FAEEEDB211049D10099D3FF /* CPGGateWay.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CPGGateWay.hpp; sourceTree = "<group>"; };
 		1FAEEEDF21104B050099D3FF /* server.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = server.pb.cc; sourceTree = "<group>"; };
 		1FAEEEE021104B050099D3FF /* CPGProtoCodec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPGProtoCodec.cpp; sourceTree = "<group>"; };
-		1FAEEEE121104B050099D3FF /* g */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = g; sourceTree = "<group>"; };
 		1FAEEEE221104B050099D3FF /* server.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = server.pb.h; sourceTree = "<group>"; };
 		1FAEEEE321104B050099D3FF /* CPGProtoCodec.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CPGProtoCodec.hpp; sourceTree = "<group>"; };
 		1FAEEEE421104B050099D3FF /* Packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Packet.h; sourceTree = "<group>"; };
@@ -125,12 +124,11 @@
 		1FAEEEDE21104B050099D3FF /* proto */ = {
 			isa = PBXGroup;
 			children = (
+				1FAEEEE421104B050099D3FF /* Packet.h */,
 				1FAEEEDF21104B050099D3FF /* server.pb.cc */,
 				1FAEEEE021104B050099D3FF /* CPGProtoCodec.cpp */,
-				1FAEEEE121104B050099D3FF /* g */,
 				1FAEEEE221104B050099D3FF /* server.pb.h */,
 				1FAEEEE321104B050099D3FF /* CPGProtoCodec.hpp */,
-				1FAEEEE421104B050099D3FF /* Packet.h */,
 				1FAEEEE521104B050099D3FF /* server.proto */,
 			);
 			path = proto;

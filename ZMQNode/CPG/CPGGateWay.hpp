@@ -20,7 +20,6 @@ public:
     CPGGateWay()
     : reactor_()
     {
-        
     }
     
     void registerMaster()

@@ -52,15 +52,16 @@ const static std::vector<std::string> LOGIN_SERVER =
     "tcp://127.0.0.1:5581",
 };
 const static std::string MASTER = "tcp://127.0.0.1:5688";
-const static int MASTERPORT = 5688;
+const static int MASTER_ROUTER_PORT = 5688;
+const static int MASTER_PUB_PORT = 5680;
 
 enum CPGServerType
 {
-    kGateWay = 1,
-    kMatchServer = 2,
-    kMatchManager = 3,
-    kLoginServer = 4,
-    kMaster = 5,
+    kGateWay = 1 << 0,
+    kMatchServer = 1 << 1,
+    kMatchManager = 1 << 2,
+    kLoginServer = 1 << 3,
+    kMaster = 1 << 4,
 };
  
 struct ServiceProfile

@@ -5,8 +5,9 @@ message ServiceProfile
 {
     // 服务类型
     int32 serviceType = 1;
+int32 socketType = 2;
     // 服务地址
-    string addr = 2;
+    string addr = 3;
 }
 
 // 所有服务向MASTER注册
