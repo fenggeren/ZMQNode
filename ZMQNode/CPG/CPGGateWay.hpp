@@ -35,7 +35,7 @@ public:
     void sendRegisterService()
     {
         CPG::ServiceRegisterRQ rq;
-        auto service = rq.mutable_service();
+        auto service = rq.add_services();
         service->set_addr("127.0.0.1:2279");
         service->set_servicetype(kGateWay);
         

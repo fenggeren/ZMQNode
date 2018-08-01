@@ -87,6 +87,17 @@ public:
     
     ~ZMQReactor()
     {
+        for (auto& pair : messageCallbacks_)
+        {
+            zloop_reader_end(loop_, pair.first);
+        }
+        for (auto& pair : timerCallbacks_)
+        {
+            zloop_timer_end(loop_, pair.first);
+        }
+        messageCallbacks_.clear();
+        timerCallbacks_.clear();
+        
         if (thread_)
         {
             thread_->join();
@@ -102,6 +113,11 @@ public:
             wakup_.notify();
         }
     }
+    void removeSocket(zsock_t* sock)
+    {
+        zloop_reader_end(loop_, sock);
+        messageCallbacks_.erase(sock);
+    }
     
     int addTimer(size_t delay, size_t times, const ZTimerCallback& cb)
     {
@@ -113,12 +129,12 @@ public:
         }
         return timerID;
     }
-    
-    void removeSocket(zsock_t* sock)
+    void cancelTimer(int timerID)
     {
-        zloop_reader_end(loop_, sock);
-        messageCallbacks_.erase(sock);
+        zloop_timer_end(loop_, timerID);
+        timerCallbacks_.erase(timerID);
     }
+    
     
     int loop()
     {

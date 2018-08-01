@@ -7,9 +7,19 @@
 //
 
 #include <iostream>
+#include "ZMQReactor.hpp"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    
+    
+    ZMQReactor rector;
+    
+    rector.addTimer(1000, 0, []{
+        printf("========\n");
+    });
+    
+    rector.loop();
+    
+    
     return 0;
 }

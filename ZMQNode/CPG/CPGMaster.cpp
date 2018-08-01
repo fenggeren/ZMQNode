@@ -8,6 +8,7 @@
 
 #include "CPGMaster.hpp"
 
+#define SERVER_SESSION_ACTIVITY_TIMEOUT_SEC 60
 
 void CPGMaster::messageHandle(zsock_t* sock)
 {
@@ -52,20 +53,34 @@ void CPGMaster::parseData(const std::string& source,
     }
 }
 
+void CPGMaster::timerHeartbeatCheck()
+{
+    time_t now = time(NULL);
+    for (auto& pair : services_)
+    {
+        for (auto& node : pair.second)
+        {
+            if (node.heartbeat - now > SERVER_SESSION_ACTIVITY_TIMEOUT_SEC)
+            {
+                // 有服务超时响应， 处理之---
+            }
+        }
+    }
+}
+
 // gateWay需要连接的 services
-void CPGMaster::sendGateWayConnectors(const std::string& source)
+void CPGMaster::sendNewNodeConnectors(const ServiceNode& node)
 {
     CPG::ServiceRegisterRS rs;
     
-    auto services = requiredConnectService(kGateWay);
+    auto services = requiredConnectService(node.serviceType);
     for (auto& service : services)
     {
         auto profile = rs.add_connectservices();
         profile->set_servicetype(service.serviceType);
+        profile->set_sockettype(service.socketType);
         profile->set_addr(service.addr);
     }
-    
-    requiredConnectService(kGateWay);
     
     PacketHead head;
     head.info = {0, 0, static_cast<unsigned int>(rs.ByteSize())};
@@ -75,13 +90,13 @@ void CPGMaster::sendGateWayConnectors(const std::string& source)
     rs.SerializeWithCachedSizesToArray(szBuf);
     
     zmsg_t* msg = zmsg_new();
-    zmsg_addmem(msg, source.data(), source.size());
+    zmsg_addmem(msg, node.uuid.data(), node.uuid.size());
     zmsg_addmem(msg, &head, sizeof(head));
     zmsg_addmem(msg, szBuf, head.info.packetSize);
-    
     // send
+    zmsg_send(&msg, router_);
     
-    //        zmsg_destroy(&msg);
+    // zmsg_destroy(&msg);
     delete []szBuf;
 }
 
@@ -93,12 +108,18 @@ void CPGMaster::registerService(const std::string& source,
     
     rq.PrintDebugString();
     
-    auto& service = rq.service();
+    ServiceNode node;
+    node.heartbeat = time(NULL);
+    node.uuid = source;
+    node.serviceType = rq.servicetype();
+    for (auto& service : rq.services())
+    {
+        node.profiles.push_back({service.servicetype(), ZMQ_DEALER, service.addr()});
+    }
+    addServiceNode(node, rq.servicetype());
     
-    ServiceProfile profile{service.servicetype(), ZMQ_DEALER,service.addr()};
     // cal
-    
-    sendGateWayConnectors(source);
+    sendNewNodeConnectors(node);
 }
 
 void CPGMaster::serviceHeart(const std::string& uuid, const char* data, size_t len)
@@ -114,7 +135,7 @@ void CPGMaster::serviceHeart(const std::string& uuid, const char* data, size_t l
         {
             if (node.uuid == uuid)
             {
-                node.heart = time(NULL);
+                node.heartbeat = time(NULL);
                 handle = true;
             }
         }
@@ -181,6 +202,18 @@ CPGMaster::requiredConnectService(int serviceType)
     return requiredServices;
 }
 
+void CPGMaster::addServiceNode(const ServiceNode& node, int serviceType)
+{
+    auto nodes = services_[serviceType];
+    for(auto& on : nodes)
+    {
+        if (on.uuid == node.uuid)
+        {
+            // 已注册有该服务！
+        }
+    }
+    services_[serviceType].push_back(node);
+}
 
 
 

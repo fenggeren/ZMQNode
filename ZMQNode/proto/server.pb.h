@@ -38,7 +38,7 @@ namespace protobuf_server_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[3];
+  static const ::google::protobuf::internal::ParseTable schema[4];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -46,6 +46,9 @@ struct TableStruct {
 void AddDescriptors();
 }  // namespace protobuf_server_2eproto
 namespace CPG {
+class ServiceHeartbeatMsg;
+class ServiceHeartbeatMsgDefaultTypeInternal;
+extern ServiceHeartbeatMsgDefaultTypeInternal _ServiceHeartbeatMsg_default_instance_;
 class ServiceProfile;
 class ServiceProfileDefaultTypeInternal;
 extern ServiceProfileDefaultTypeInternal _ServiceProfile_default_instance_;
@@ -58,6 +61,7 @@ extern ServiceRegisterRSDefaultTypeInternal _ServiceRegisterRS_default_instance_
 }  // namespace CPG
 namespace google {
 namespace protobuf {
+template<> ::CPG::ServiceHeartbeatMsg* Arena::CreateMaybeMessage<::CPG::ServiceHeartbeatMsg>(Arena*);
 template<> ::CPG::ServiceProfile* Arena::CreateMaybeMessage<::CPG::ServiceProfile>(Arena*);
 template<> ::CPG::ServiceRegisterRQ* Arena::CreateMaybeMessage<::CPG::ServiceRegisterRQ>(Arena*);
 template<> ::CPG::ServiceRegisterRS* Arena::CreateMaybeMessage<::CPG::ServiceRegisterRS>(Arena*);
@@ -279,23 +283,30 @@ class ServiceRegisterRQ : public ::google::protobuf::Message /* @@protoc_inserti
 
   // accessors -------------------------------------------------------
 
-  // .CPG.ServiceProfile service = 1;
-  bool has_service() const;
-  void clear_service();
-  static const int kServiceFieldNumber = 1;
-  private:
-  const ::CPG::ServiceProfile& _internal_service() const;
-  public:
-  const ::CPG::ServiceProfile& service() const;
-  ::CPG::ServiceProfile* release_service();
-  ::CPG::ServiceProfile* mutable_service();
-  void set_allocated_service(::CPG::ServiceProfile* service);
+  // repeated .CPG.ServiceProfile services = 2;
+  int services_size() const;
+  void clear_services();
+  static const int kServicesFieldNumber = 2;
+  ::CPG::ServiceProfile* mutable_services(int index);
+  ::google::protobuf::RepeatedPtrField< ::CPG::ServiceProfile >*
+      mutable_services();
+  const ::CPG::ServiceProfile& services(int index) const;
+  ::CPG::ServiceProfile* add_services();
+  const ::google::protobuf::RepeatedPtrField< ::CPG::ServiceProfile >&
+      services() const;
+
+  // int32 serviceType = 1;
+  void clear_servicetype();
+  static const int kServiceTypeFieldNumber = 1;
+  ::google::protobuf::int32 servicetype() const;
+  void set_servicetype(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:CPG.ServiceRegisterRQ)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::CPG::ServiceProfile* service_;
+  ::google::protobuf::RepeatedPtrField< ::CPG::ServiceProfile > services_;
+  ::google::protobuf::int32 servicetype_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_server_2eproto::TableStruct;
 };
@@ -408,6 +419,109 @@ class ServiceRegisterRS : public ::google::protobuf::Message /* @@protoc_inserti
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_server_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class ServiceHeartbeatMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.ServiceHeartbeatMsg) */ {
+ public:
+  ServiceHeartbeatMsg();
+  virtual ~ServiceHeartbeatMsg();
+
+  ServiceHeartbeatMsg(const ServiceHeartbeatMsg& from);
+
+  inline ServiceHeartbeatMsg& operator=(const ServiceHeartbeatMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  ServiceHeartbeatMsg(ServiceHeartbeatMsg&& from) noexcept
+    : ServiceHeartbeatMsg() {
+    *this = ::std::move(from);
+  }
+
+  inline ServiceHeartbeatMsg& operator=(ServiceHeartbeatMsg&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ServiceHeartbeatMsg& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ServiceHeartbeatMsg* internal_default_instance() {
+    return reinterpret_cast<const ServiceHeartbeatMsg*>(
+               &_ServiceHeartbeatMsg_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  void Swap(ServiceHeartbeatMsg* other);
+  friend void swap(ServiceHeartbeatMsg& a, ServiceHeartbeatMsg& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ServiceHeartbeatMsg* New() const final {
+    return CreateMaybeMessage<ServiceHeartbeatMsg>(NULL);
+  }
+
+  ServiceHeartbeatMsg* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<ServiceHeartbeatMsg>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const ServiceHeartbeatMsg& from);
+  void MergeFrom(const ServiceHeartbeatMsg& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ServiceHeartbeatMsg* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 serviceType = 1;
+  void clear_servicetype();
+  static const int kServiceTypeFieldNumber = 1;
+  ::google::protobuf::int32 servicetype() const;
+  void set_servicetype(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:CPG.ServiceHeartbeatMsg)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::int32 servicetype_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -504,58 +618,48 @@ inline void ServiceProfile::set_allocated_addr(::std::string* addr) {
 
 // ServiceRegisterRQ
 
-// .CPG.ServiceProfile service = 1;
-inline bool ServiceRegisterRQ::has_service() const {
-  return this != internal_default_instance() && service_ != NULL;
+// int32 serviceType = 1;
+inline void ServiceRegisterRQ::clear_servicetype() {
+  servicetype_ = 0;
 }
-inline void ServiceRegisterRQ::clear_service() {
-  if (GetArenaNoVirtual() == NULL && service_ != NULL) {
-    delete service_;
-  }
-  service_ = NULL;
+inline ::google::protobuf::int32 ServiceRegisterRQ::servicetype() const {
+  // @@protoc_insertion_point(field_get:CPG.ServiceRegisterRQ.serviceType)
+  return servicetype_;
 }
-inline const ::CPG::ServiceProfile& ServiceRegisterRQ::_internal_service() const {
-  return *service_;
-}
-inline const ::CPG::ServiceProfile& ServiceRegisterRQ::service() const {
-  const ::CPG::ServiceProfile* p = service_;
-  // @@protoc_insertion_point(field_get:CPG.ServiceRegisterRQ.service)
-  return p != NULL ? *p : *reinterpret_cast<const ::CPG::ServiceProfile*>(
-      &::CPG::_ServiceProfile_default_instance_);
-}
-inline ::CPG::ServiceProfile* ServiceRegisterRQ::release_service() {
-  // @@protoc_insertion_point(field_release:CPG.ServiceRegisterRQ.service)
+inline void ServiceRegisterRQ::set_servicetype(::google::protobuf::int32 value) {
   
-  ::CPG::ServiceProfile* temp = service_;
-  service_ = NULL;
-  return temp;
+  servicetype_ = value;
+  // @@protoc_insertion_point(field_set:CPG.ServiceRegisterRQ.serviceType)
 }
-inline ::CPG::ServiceProfile* ServiceRegisterRQ::mutable_service() {
-  
-  if (service_ == NULL) {
-    auto* p = CreateMaybeMessage<::CPG::ServiceProfile>(GetArenaNoVirtual());
-    service_ = p;
-  }
-  // @@protoc_insertion_point(field_mutable:CPG.ServiceRegisterRQ.service)
-  return service_;
+
+// repeated .CPG.ServiceProfile services = 2;
+inline int ServiceRegisterRQ::services_size() const {
+  return services_.size();
 }
-inline void ServiceRegisterRQ::set_allocated_service(::CPG::ServiceProfile* service) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete service_;
-  }
-  if (service) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      service = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, service, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  service_ = service;
-  // @@protoc_insertion_point(field_set_allocated:CPG.ServiceRegisterRQ.service)
+inline void ServiceRegisterRQ::clear_services() {
+  services_.Clear();
+}
+inline ::CPG::ServiceProfile* ServiceRegisterRQ::mutable_services(int index) {
+  // @@protoc_insertion_point(field_mutable:CPG.ServiceRegisterRQ.services)
+  return services_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::CPG::ServiceProfile >*
+ServiceRegisterRQ::mutable_services() {
+  // @@protoc_insertion_point(field_mutable_list:CPG.ServiceRegisterRQ.services)
+  return &services_;
+}
+inline const ::CPG::ServiceProfile& ServiceRegisterRQ::services(int index) const {
+  // @@protoc_insertion_point(field_get:CPG.ServiceRegisterRQ.services)
+  return services_.Get(index);
+}
+inline ::CPG::ServiceProfile* ServiceRegisterRQ::add_services() {
+  // @@protoc_insertion_point(field_add:CPG.ServiceRegisterRQ.services)
+  return services_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::CPG::ServiceProfile >&
+ServiceRegisterRQ::services() const {
+  // @@protoc_insertion_point(field_list:CPG.ServiceRegisterRQ.services)
+  return services_;
 }
 
 // -------------------------------------------------------------------
@@ -592,9 +696,29 @@ ServiceRegisterRS::connectservices() const {
   return connectservices_;
 }
 
+// -------------------------------------------------------------------
+
+// ServiceHeartbeatMsg
+
+// int32 serviceType = 1;
+inline void ServiceHeartbeatMsg::clear_servicetype() {
+  servicetype_ = 0;
+}
+inline ::google::protobuf::int32 ServiceHeartbeatMsg::servicetype() const {
+  // @@protoc_insertion_point(field_get:CPG.ServiceHeartbeatMsg.serviceType)
+  return servicetype_;
+}
+inline void ServiceHeartbeatMsg::set_servicetype(::google::protobuf::int32 value) {
+  
+  servicetype_ = value;
+  // @@protoc_insertion_point(field_set:CPG.ServiceHeartbeatMsg.serviceType)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
