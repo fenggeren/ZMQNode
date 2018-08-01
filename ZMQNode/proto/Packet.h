@@ -11,7 +11,7 @@
 #include <stddef.h>
 #include <vector>
 #include <string>
-
+#include <unordered_map>
 
 
 struct PacketCommand
@@ -67,11 +67,32 @@ enum CPGServerType
 struct ServiceProfile
 {
     // 服务类型
-    int serviceType;
+    int serviceType{0};
     // zmq socket 类型
-    int socketType;
+    int socketType{0};
     // 服务地址
     std::string addr;
+};
+
+struct ServiceConnectInfo
+{
+    int serviceType{0};
+    int socketType{0};
+};
+
+// 服务节点 需要连接的其他服务
+static const std::unordered_map<int, std::vector<ServiceConnectInfo>>
+serviceConnectMap =
+{
+    {kGateWay, {
+        {kLoginServer, ZMQ_ROUTER},
+        {kMatchServer, ZMQ_PUSH},
+        {kMatchServer, ZMQ_ROUTER},
+        {kMatchManager, ZMQ_PUSH}
+    }},
+    {kMatchServer, {
+        {kMatchServer, ZMQ_ROUTER}
+    }}
 };
 
 ///////// main command ///////////

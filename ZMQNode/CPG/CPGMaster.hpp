@@ -30,6 +30,8 @@ public:
     {
         zsock_bind(router_, "tcp://*:%d", MASTER_ROUTER_PORT);
         zsock_bind(pub_, "tcp://*:%d", MASTER_PUB_PORT);
+        
+        
     }
     
     ~CPGMaster()
@@ -53,16 +55,33 @@ private:
     
     // gateWay需要连接的 services
     void sendGateWayConnectors(const std::string& source);
- 
+    
+    // 服务注册，  需要将服务节点的 服务sock信息发送过来，
+    // <ZMQ_ROUTER, ZMQ_PUSH, ZMQ_PUB> 三种
     void registerService(const std::string& source, const char* data, size_t len);
     
+    std::vector<ServiceProfile>
+        serviceProfiles(int serviceType, const std::string& uuid);
+    // 有新服务注册， 发布新服务
+    void publishNewService(const std::vector<ServiceProfile>& profile);
+    
+    // 有新服务注册， 获取新服务需要连接的其他服务节点。
     std::list<ServiceProfile> requiredConnectService(int serviceType);
     
 private:
     zsock_t* router_;
     zsock_t* pub_;
     ZMQReactor reactor_;
-    std::unordered_map<int, ServiceProfile> services_;
+    
+    // 每个服务节点， 可能有0/N个 数据服务。 <ZMQ_ROUTER, ZMQ_PUSH, ZMQ_PUB>
+    struct ServiceNode
+    {
+        std::string uuid;
+        std::vector<ServiceProfile> profiles;
+    };
+    // <serviceType, <服务节点uuid, 服务节点的服务vec>
+    std::unordered_map<int, std::list<ServiceNode>> services_;
+    
 };
 
 

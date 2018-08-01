@@ -100,26 +100,59 @@ void CPGMaster::registerService(const std::string& source,
     sendGateWayConnectors(source);
 }
 
+std::vector<ServiceProfile>
+CPGMaster::serviceProfiles(int serviceType, const std::string& uuid)
+{
+    auto nodeIters = services_.find(serviceType);
+    if (nodeIters != services_.end())
+    {
+        for (auto& node : nodeIters->second)
+        {
+            if (node.uuid == uuid) {
+                return node.profiles;
+            }
+        }
+    }
+    
+    return {};
+}
+// 有新服务注册， 发布新服务
+void CPGMaster::publishNewService(const std::vector<ServiceProfile>& profile)
+{
+    
+}
+
 std::list<ServiceProfile>
 CPGMaster::requiredConnectService(int serviceType)
 {
+    std::list<ServiceProfile> requiredServices;
+    auto iter = serviceConnectMap.find(serviceType);
+    if (iter == serviceConnectMap.end()) {
+        return requiredServices;
+    }
     
-    std::list<ServiceProfile> profiles;
-    
-    switch (serviceType) {
-        case kGateWay:
+    auto& connectTypes = iter->second;
+    for (auto& info : connectTypes)
+    {
+        // 所有服务节点
+        auto nodes = services_[info.serviceType];
+        for (auto& node : nodes)
         {
-            
+            // 相同服务类型的， 每个节点包含的数据服务sock
+            for (auto& profile : node.profiles)
+            {
+                // 是否是 给定类型所需 连接的服务sock
+                if (profile.socketType == info.socketType)
+                {
+                    requiredServices.push_back(profile);
+                }
+            }
         }
-            break;
-            
-        default:
-            break;
     }
     
-    return {
-        {kLoginServer, ZMQ_ROUTER,"172.0.0.1:5558"},
-        {kMatchServer, ZMQ_ROUTER, "172.0.0.1:5558"},
-        {kMatchManager, ZMQ_ROUTER,"172.0.0.1:5558"}
-    };
-    }
+    return requiredServices;
+}
+
+
+
+
