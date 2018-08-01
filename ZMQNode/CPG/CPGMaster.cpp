@@ -9,12 +9,13 @@
 #include "CPGMaster.hpp"
 
 
-void CPGMaster::messageIn(zsock_t* sock)
+void CPGMaster::messageHandle(zsock_t* sock)
 {
     zmsg_t* msg = zmsg_recv(sock);
+    zmsg_print(msg);
+    
     size_t count = zmsg_size(msg);
     zframe_t* source = zmsg_first(msg);
-    printf("server receive begin\n");
     
     const std::string sourceStr(reinterpret_cast<char*>(zframe_data(source)),
                                 zframe_size(source));
@@ -33,7 +34,6 @@ void CPGMaster::messageIn(zsock_t* sock)
         
         parseData(sourceStr, head, data, size);
     }
-    printf("\nreceive end\n");
 }
 
 void CPGMaster::parseData(const std::string& source,
@@ -45,6 +45,7 @@ void CPGMaster::parseData(const std::string& source,
         case kSeviceRegisterRQ:
             registerService(source, data, len);
             break;
+        case kServiceHeartMsg:
             
         default:
             break;
@@ -98,6 +99,33 @@ void CPGMaster::registerService(const std::string& source,
     // cal
     
     sendGateWayConnectors(source);
+}
+
+void CPGMaster::serviceHeart(const std::string& uuid, const char* data, size_t len)
+{
+    
+    int type = kGateWay;
+    bool handle = false;
+    
+    auto iter = services_.find(type);
+    if (iter != services_.end())
+    {
+        for (auto& node : iter->second)
+        {
+            if (node.uuid == uuid)
+            {
+                node.heart = time(NULL);
+                handle = true;
+            }
+        }
+    }
+    
+    
+    // TODO. 该服务还没有注册到MASTER   后续处理！
+    if (handle == false)
+    {
+        
+    }
 }
 
 std::vector<ServiceProfile>

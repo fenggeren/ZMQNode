@@ -101,6 +101,8 @@ serviceConnectMap =
 
 ///////// sub command ///////////
 
+#define kServiceHeartMsg 10000
+
 #define kSeviceRegisterRQ 10001
 #define kSeviceRegisterRS 10002
 

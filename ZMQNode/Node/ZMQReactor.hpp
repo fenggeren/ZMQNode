@@ -72,6 +72,7 @@ class ZMQReactor
     
 public:
     using ZMessageCallback = std::function<void(zsock_t*)>;
+    using ZTimerCallback = std::function<void()>;
     
     ZMQReactor(zloop_t* loop = NULL)
     :  wakup_()
@@ -94,12 +95,23 @@ public:
     
     void addSocket(zsock_t* sock, const ZMessageCallback& cb)
     {
-        zloop_reader(loop_, sock, &ZMQReactor::messageIn, this);
+        zloop_reader(loop_, sock, &ZMQReactor::messageHandle, this);
+        messageCallbacks_[sock] = cb;
         if (startedLoop_)
         {
             wakup_.notify();
         }
-        messageCallbacks_[sock] = cb;
+    }
+    
+    int addTimer(size_t delay, size_t times, const ZTimerCallback& cb)
+    {
+        int timerID = zloop_timer(loop_, delay, times, &ZMQReactor::timerHandle, this);
+        timerCallbacks_[timerID] = cb;
+        if (startedLoop_)
+        {
+            wakup_.notify();
+        }
+        return timerID;
     }
     
     void removeSocket(zsock_t* sock)
@@ -129,7 +141,7 @@ public:
     
 private:
     
-    static int messageIn(zloop_t *loop, zsock_t *reader, void *arg)
+    static int messageHandle(zloop_t *loop, zsock_t *reader, void *arg)
     {
         ZMQReactor* reactor = static_cast<ZMQReactor*>(arg);
         auto iter = reactor->messageCallbacks_.find(reader);
@@ -137,7 +149,18 @@ private:
         {
             iter->second(reader);
         }
-        return 1;
+        return 0;
+    }
+    
+    static int timerHandle(zloop_t *loop, int timer_id, void *arg)
+    {
+        ZMQReactor* reactor = static_cast<ZMQReactor*>(arg);
+        auto iter = reactor->timerCallbacks_.find(timer_id);
+        if (iter != reactor->timerCallbacks_.end())
+        {
+            iter->second();
+        }
+        return 0;
     }
     
     
@@ -146,6 +169,7 @@ private:
     zloop_t* loop_;
     WakeupPair wakup_;
     std::unordered_map<zsock_t*, ZMessageCallback> messageCallbacks_;
+    std::unordered_map<int, ZTimerCallback> timerCallbacks_;
     std::vector<zmq_pollitem_t> items_;
     std::list<zsock_t*> willRemovedSocks_;
     ZMessageCallback messageCallback_;
