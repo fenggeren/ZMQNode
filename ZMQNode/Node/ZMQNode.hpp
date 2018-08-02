@@ -10,62 +10,59 @@
 
 #include <czmq.h>
 #include <string>
+#include <set>
 #include "Defines.h"
 #include "Packet.h"
 #include "server.pb.h"
 #include "CPGFuncHelper.hpp"
+#include "ZMQReactor.hpp"
 
 class CPGZMQMasterClient
 {
 public:
+    using NewServiceProfileCallback =
+    std::function<void(const std::list<ServiceProfile>&)>;
     
-    CPGZMQMasterClient()
-    : dealer_(zsock_new(ZMQ_DEALER))
-    , sub_(zsock_new(ZMQ_SUB))
-    {
-
-    }
+    CPGZMQMasterClient(std::shared_ptr<ZMQReactor> reactor ,CPGServerType type);
+     
+    int connect(const std::set<std::string>& subids, const std::string& uuid);
     
-    int connect(int subServiceValue, const std::string& uuid)
-    {
-        zsock_set_identity(dealer_, uuid.data());
-        return connects(MASTER_ROUTER_ENDPOINT, MASTER_PUB_ENDPOINT, subServiceValue);
-    }
-    
-    int connects(const std::string& masterRouterEndpoint,
-                  const std::string& masterPubEndpoint,
-                  int subValue)
-    {
-        int rc = zsock_connect(dealer_, "%s", masterRouterEndpoint.data());
-        assert(!rc);
-        rc = zsock_connect(sub_, "%s", masterPubEndpoint.data());
-        assert(!rc);
-        std::string subValueStr(std::to_string(subValue));
-        zsock_set_subscribe(sub_, subValueStr.data());
-        return rc;
-    }
-    
-    void sendHeartbeat(int serviceType)
-    {
-        CPG::ServiceHeartbeatMsg hbMsg;
-        hbMsg.set_servicetype(serviceType);
-        zmsg_t* msg = zmsg_new();
-        CPGFuncHelper::appendZMsg(msg, serviceType, kServiceHeartMsg, hbMsg);
-        zmsg_send(&msg, dealer_);
-    }
-    
+    void sendHeartbeat(int serviceType);
     zsock_t* dealer() { return dealer_; };
     zsock_t* sub() {return sub_;}
     
     void setHeartbeatTimerID(int timerID) { heartbeatTimerID_ = timerID; }
     int heartbeatTimerID() const { return heartbeatTimerID_; }
+    
+    void setNewServiceProfile(const NewServiceProfileCallback& cb)
+    {
+        newServicesCallback_ = cb;
+    }
+    
+    void registerMaster(std::list<ServiceProfile>&& profiles);
+    
+private:
+
+    void masterMessageRead(zsock_t* sock);
+    
+    void handleNewServices(const PacketHead& head ,
+                           const char* data, int len);
 private:
     // 用于注册dealer，和发送心跳包
     zsock_t* dealer_;
     // 订阅master， 用于系统加入其他新服务，服务节点订阅关心的需要连接的其他服务节点
     zsock_t* sub_;
     
-    int heartbeatTimerID_;
+    CPGServerType serviceType_;
+    
+    int heartbeatTimerID_{0};
+    
+    std::shared_ptr<ZMQReactor> reactor_;
+    
+    NewServiceProfileCallback newServicesCallback_;
+    
+    // 存储当前节点 所有的服务
+    std::list<ServiceProfile> serverProfiles_;
 };
 
 

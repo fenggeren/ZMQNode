@@ -78,6 +78,8 @@ public:
     :  wakup_()
     , startedLoop_(false)
     , loop_(loop ?: zloop_new())
+    , messageCallbacks_()
+    , timerCallbacks_()
     {
         addSocket(wakup_.receiver(), [&](zsock_t* sock)
         {
@@ -186,9 +188,6 @@ private:
     WakeupPair wakup_;
     std::unordered_map<zsock_t*, ZMessageCallback> messageCallbacks_;
     std::unordered_map<int, ZTimerCallback> timerCallbacks_;
-    std::vector<zmq_pollitem_t> items_;
-    std::list<zsock_t*> willRemovedSocks_;
-    ZMessageCallback messageCallback_;
     std::shared_ptr<std::thread> thread_;
 };
 

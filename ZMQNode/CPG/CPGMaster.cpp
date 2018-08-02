@@ -68,7 +68,7 @@ void CPGMaster::timerHeartbeatCheck()
     }
 }
 
-// gateWay需要连接的 services
+// 需要连接的 services
 void CPGMaster::sendNewNodeConnectors(const ServiceNode& node)
 {
     CPG::ServiceRegisterRS rs;
@@ -106,6 +106,7 @@ void CPGMaster::registerService(const std::string& source,
     
     // cal
     sendNewNodeConnectors(node);
+    publishNewService(node.profiles);
 }
 
 void CPGMaster::serviceHeart(const std::string& uuid, const char* data, size_t len)

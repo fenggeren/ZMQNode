@@ -1,81 +1,62 @@
 //
-//  CPGGateWay.hpp
+//  CPGLoginServer.hpp
 //  ZMQNode
 //
-//  Created by huanao on 2018/7/31.
+//  Created by huanao on 2018/8/2.
 //  Copyright © 2018年 huanao. All rights reserved.
 //
-#pragma once
 
-#include <unordered_map>
+#pragma once
+#include "ZMQNode.hpp" 
 #include <czmq.h>
 #include "Packet.h"
 #include "ZMQReactor.hpp"
 #include "server.pb.h"
-#include "ZMQNode.hpp"
 #include "CPGFuncHelper.hpp"
 
-class CPGGateWay
+struct ServerProfile
+{
+    int serviceType{0};
+    zsock_t* service_;
+    std::string addr;
+};
+
+class CPGLoginServer
 {
 public:
     
-    CPGGateWay()
-    : serviceType_(kGateWay)
+    CPGLoginServer()
+    : serviceType_(kLoginServer)
     {
         count++;
-        uuid = std::string("GS-") + CPGFuncHelper::localIP() + "-" + std::to_string(count);
+        uuid = std::string("LS-") + CPGFuncHelper::localIP() + "-" + std::to_string(count);
+        server_.service_ = zsock_new(ZMQ_ROUTER);
+        server_.serviceType = serviceType_;
+        
         reactor_ = std::make_shared<ZMQReactor>();
         masterClient_ = std::make_shared<CPGZMQMasterClient>(reactor_, serviceType_);
     }
      
     
     void start();
-     
+    
     void parseClientData(const PacketHead& head,
                          char* data, size_t len);
     
     void registerServiceCallback(const PacketHead& head,
                                  char* data, size_t len);
-    
-    
-private: 
+private:
     
     void messageRead(zsock_t* sock);
     
-    void newServiceProfile(const std::list<ServiceProfile>& services);
 private:
-    zsock_t* loginDealer_;
-    zsock_t* matchPull_;
     
-    CPGServerType serviceType_;
-    std::shared_ptr<ZMQReactor> reactor_;
     std::shared_ptr<CPGZMQMasterClient> masterClient_;
- 
-    std::unordered_multimap<int, zsock_t*> matchDealers_;
-    
-    
+    std::shared_ptr<ZMQReactor> reactor_;
+    ServerProfile server_;
+    CPGServerType serviceType_;
     std::string uuid;
-    
     static int count;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -10,17 +10,29 @@
 #include "ZMQReactor.hpp"
 #include "CPGGateWay.hpp"
 #include "CPGMaster.hpp"
+#include "CPGLoginServer.hpp"
 
 int main(int argc, const char * argv[]) {
     
     CPGMaster master;
     master.start();
     
-    CPGGateWay gateWay;
-    gateWay.start();
-    gateWay.registerMaster();
+    CPGLoginServer login;
+    login.start();
     
+    zclock_sleep(5);
     
+    std::vector<CPGGateWay> gateWays;
+    for (int i = 0; i < 1; i++) {
+        gateWays.push_back(CPGGateWay());
+    }
+    
+    for(auto& gw : gateWays)
+    {
+        gw.start();
+    }
+ 
+
     while (true)
     {
         zclock_sleep(1000);

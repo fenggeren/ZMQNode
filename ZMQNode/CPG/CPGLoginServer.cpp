@@ -1,17 +1,17 @@
 //
-//  CPGGateWay.cpp
+//  CPGLoginServer.cpp
 //  ZMQNode
 //
-//  Created by huanao on 2018/7/31.
+//  Created by huanao on 2018/8/2.
 //  Copyright © 2018年 huanao. All rights reserved.
 //
 
-#include "CPGGateWay.hpp"
+#include "CPGLoginServer.hpp"
 
-int CPGGateWay::count = 0;
+int CPGLoginServer::count = 0;
 
 
-void CPGGateWay::start()
+void CPGLoginServer::start()
 {
     std::set<std::string> subids;
     for (auto& service : serviceConnectMap[serviceType_])
@@ -20,18 +20,18 @@ void CPGGateWay::start()
     }
     masterClient_->connect(subids, uuid);
     
-    masterClient_->setNewServiceProfile(std::bind(&CPGGateWay::newServiceProfile, this, std::placeholders::_1));
+    int port = zsock_bind(server_.service_, "tcp://*:*");
+    std::string routerId = uuid + ":" + std::to_string(port);
+    zsock_set_identity(server_.service_, routerId.data());
+    reactor_->addSocket(server_.service_, std::bind(&CPGLoginServer::messageRead, this, std::placeholders::_1));
+    server_.addr = "tcp://" + CPGFuncHelper::localIP() + ":" + std::to_string(port);
+    
     reactor_->asyncLoop();
     
-    masterClient_->registerMaster({});
+    masterClient_->registerMaster({{serviceType_, ZMQ_ROUTER, server_.addr}});
 }
 
-void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
-{
-    
-}
-
-void CPGGateWay::messageRead(zsock_t* sock)
+void CPGLoginServer::messageRead(zsock_t* sock)
 {
     zmsg_t* msg = zmsg_recv(sock);
     
@@ -53,8 +53,8 @@ void CPGGateWay::messageRead(zsock_t* sock)
     zmsg_destroy(&msg);
 }
 
-void CPGGateWay::parseClientData(const PacketHead& head,
-                     char* data, size_t len)
+void CPGLoginServer::parseClientData(const PacketHead& head,
+                                 char* data, size_t len)
 {
     auto& command = head;
     switch (command.mainCmdID) {
@@ -76,20 +76,10 @@ void CPGGateWay::parseClientData(const PacketHead& head,
     }
 }
 
-void CPGGateWay::registerServiceCallback(const PacketHead& head, char* data, size_t len)
+void CPGLoginServer::registerServiceCallback(const PacketHead& head, char* data, size_t len)
 {
     CPG::ServiceRegisterRS rs;
     rs.ParseFromArray(data, (int)len);
     
     rs.PrintDebugString();
 }
-
-
-
-
-
-
-
-
- 
-
