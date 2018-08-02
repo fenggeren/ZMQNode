@@ -56,6 +56,7 @@ private:
     
     // 心跳包检测， 是否有服务无响应
     void timerHeartbeatCheck();
+    
 private: // 消息处理
     struct ServiceNode;
     // 服务注册，  需要将服务节点的 服务sock信息发送过来，

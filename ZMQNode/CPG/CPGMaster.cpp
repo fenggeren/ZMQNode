@@ -38,10 +38,9 @@ void CPGMaster::messageHandle(zsock_t* sock)
 }
 
 void CPGMaster::parseData(const std::string& source,
-               const PacketHead& head,
+               const PacketHead& command,
                char* data, size_t len)
 {
-    PacketCommand command = head.command;
     switch (command.subCmdID) {
         case kSeviceRegisterRQ:
             registerService(source, data, len);
@@ -82,9 +81,7 @@ void CPGMaster::sendNewNodeConnectors(const ServiceNode& node)
         profile->set_addr(service.addr);
     }
     
-    PacketHead head;
-    head.info = {0, 0, static_cast<unsigned int>(rs.ByteSize())};
-    head.command = {kMaster, kSeviceRegisterRS};
+    PacketHead head = {kMaster, kSeviceRegisterRS};
     
     google::protobuf::uint8* szBuf = new google::protobuf::uint8[rs.ByteSize()];
     rs.SerializeWithCachedSizesToArray(szBuf);
@@ -92,7 +89,7 @@ void CPGMaster::sendNewNodeConnectors(const ServiceNode& node)
     zmsg_t* msg = zmsg_new();
     zmsg_addmem(msg, node.uuid.data(), node.uuid.size());
     zmsg_addmem(msg, &head, sizeof(head));
-    zmsg_addmem(msg, szBuf, head.info.packetSize);
+    zmsg_addmem(msg, szBuf, rs.ByteSize());
     // send
     zmsg_send(&msg, router_);
     
@@ -182,9 +179,7 @@ void CPGMaster::publishNewService(const std::vector<ServiceProfile>& services)
         subType |= service.serviceType;
     }
     
-    PacketHead head;
-    head.info = {0, 0, static_cast<unsigned int>(publishMsg.ByteSize())};
-    head.command = {kMaster, kServicePublishNewServicesMsg};
+    PacketHead head  = {kMaster, kServicePublishNewServicesMsg};
     
     google::protobuf::uint8* szBuf = new google::protobuf::uint8[publishMsg.ByteSize()];
     publishMsg.SerializeWithCachedSizesToArray(szBuf);
@@ -193,7 +188,7 @@ void CPGMaster::publishNewService(const std::vector<ServiceProfile>& services)
     zmsg_t* msg = zmsg_new();
     zmsg_addmem(msg, subTypeStr.data(), subTypeStr.size());
     zmsg_addmem(msg, &head, sizeof(head));
-    zmsg_addmem(msg, szBuf, head.info.packetSize);
+    zmsg_addmem(msg, szBuf, publishMsg.ByteSize());
     // send
     zmsg_send(&msg, pub_);
     

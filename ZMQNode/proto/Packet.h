@@ -12,48 +12,27 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
-
+#include <zmq.h>
 
 struct PacketCommand
 {
     unsigned short mainCmdID;
     unsigned short subCmdID;
 };
-struct PacketInfo
-{
-    unsigned short dataKind;
-    unsigned short checkCode;
-    unsigned packetSize;
-};
+//struct PacketInfo
+//{
+//    unsigned short dataKind;
+//    unsigned short checkCode;
+//    unsigned packetSize;
+//};
+//
+//struct PacketHead
+//{
+//    PacketCommand command;
+//    PacketInfo info;
+//};
+using PacketHead = PacketCommand;
 
-struct PacketHead
-{
-    PacketCommand command;
-    PacketInfo info;
-};
-
-
-
-const static std::vector<std::string> MATCH_SERVER =
-{
-    "tcp://127.0.0.1:5560",
-    "tcp://127.0.0.1:5561",
-    "tcp://127.0.0.1:5562",
-    "tcp://127.0.0.1:5563",
-};
-const static std::vector<std::string> MATCH_MANAGER =
-{
-    "tcp://127.0.0.1:5570",
-    "tcp://127.0.0.1:5571",
-};
-const static std::vector<std::string> LOGIN_SERVER =
-{
-    "tcp://127.0.0.1:5580",
-    "tcp://127.0.0.1:5581",
-};
-const static std::string MASTER = "tcp://127.0.0.1:5688";
-const static int MASTER_ROUTER_PORT = 5688;
-const static int MASTER_PUB_PORT = 5680;
 
 enum CPGServerType
 {
@@ -81,7 +60,7 @@ struct ServiceConnectInfo
 };
 
 // 服务节点 需要连接的其他服务
-static const std::unordered_map<int, std::vector<ServiceConnectInfo>>
+static std::unordered_map<int, std::vector<ServiceConnectInfo>>
 serviceConnectMap =
 {
     {kGateWay, {

@@ -17,6 +17,7 @@
 		1FAEEEE721104B050099D3FF /* CPGProtoCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEEEE021104B050099D3FF /* CPGProtoCodec.cpp */; };
 		1FAEEEE921104B210099D3FF /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FAEEEE821104B210099D3FF /* libprotobuf.a */; };
 		1FAEEEF1211064D30099D3FF /* ZMQReactor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEEEEF211064D30099D3FF /* ZMQReactor.cpp */; };
+		1FAEEEF52112A7150099D3FF /* CPGFuncHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEEEF32112A7150099D3FF /* CPGFuncHelper.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -54,6 +55,8 @@
 		1FAEEEED211062380099D3FF /* ZMQNode.pages */ = {isa = PBXFileReference; lastKnownFileType = file; path = ZMQNode.pages; sourceTree = "<group>"; };
 		1FAEEEEF211064D30099D3FF /* ZMQReactor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZMQReactor.cpp; sourceTree = "<group>"; };
 		1FAEEEF0211064D30099D3FF /* ZMQReactor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ZMQReactor.hpp; sourceTree = "<group>"; };
+		1FAEEEF32112A7150099D3FF /* CPGFuncHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPGFuncHelper.cpp; sourceTree = "<group>"; };
+		1FAEEEF42112A7150099D3FF /* CPGFuncHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CPGFuncHelper.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,8 @@
 				1FAEEEDA211049D10099D3FF /* CPGGateWay.cpp */,
 				1FAEEEDB211049D10099D3FF /* CPGGateWay.hpp */,
 				1FAEEEEA21104C060099D3FF /* Defines.h */,
+				1FAEEEF32112A7150099D3FF /* CPGFuncHelper.cpp */,
+				1FAEEEF42112A7150099D3FF /* CPGFuncHelper.hpp */,
 			);
 			path = CPG;
 			sourceTree = "<group>";
@@ -210,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FAEEEF52112A7150099D3FF /* CPGFuncHelper.cpp in Sources */,
 				1FAEEEF1211064D30099D3FF /* ZMQReactor.cpp in Sources */,
 				1FAEEED5211040DB0099D3FF /* ZMQNode.cpp in Sources */,
 				1FAEEEC82110403F0099D3FF /* main.cpp in Sources */,

@@ -12,6 +12,8 @@
 #include "Packet.h"
 #include "ZMQReactor.hpp"
 #include "server.pb.h"
+#include "ZMQNode.hpp"
+#include "CPGFuncHelper.hpp"
 
 class CPGGateWay
 {
@@ -20,102 +22,40 @@ public:
     CPGGateWay()
     : reactor_()
     {
+        count++;
+        uuid = std::string("GS-") + CPGFuncHelper::localIP() + "-" + std::to_string(count);
     }
     
-    void registerMaster()
-    {
-        masterDealer_ = zsock_new(ZMQ_DEALER);
-        zsock_connect(masterDealer_, "%s", MASTER.data());
-        reactor_.addSocket(masterDealer_, [](zsock_t* sock){
-            
-        });
-        reactor_.asyncLoop();
-    }
+    // 向master注册服务
+    void registerMaster();
     
-    void sendRegisterService()
-    {
-        CPG::ServiceRegisterRQ rq;
-        auto service = rq.add_services();
-        service->set_addr("127.0.0.1:2279");
-        service->set_servicetype(kGateWay);
-        
-        PacketHead head;
-        head.info = {0, 0, static_cast<unsigned int>(rq.ByteSize())};
-        head.command = {kGateWay, kSeviceRegisterRQ};
-        
-        google::protobuf::uint8* szBuf =
-        new google::protobuf::uint8[rq.ByteSize()];
-        rq.SerializeWithCachedSizesToArray(szBuf);
-        
-        zmsg_t* msg = zmsg_new();
-        
-        zmsg_addmem(msg, &head, sizeof(head));
-        zmsg_addmem(msg, szBuf, head.info.packetSize);
-        //
-        
-        //        zmsg_destroy(&msg);
-        
-        delete []szBuf;
-    }
-    
-    void clientMessageRead(zsock_t* sock)
-    {
-        zmsg_t* msg = zmsg_recv(sock);
-        size_t count = zmsg_size(msg);
-        printf("client receive begin\n");
-        
-        for (int i = 0; i < count - 1; i+=2)
-        {
-            zframe_t* headFrame = zmsg_next(msg);
-            PacketHead head;
-            memcpy(&head, zframe_data(headFrame), zframe_size(headFrame));
-            
-            
-            zframe_t* dataFrame = zmsg_next(msg);
-            char* data = reinterpret_cast<char*>(zframe_data(dataFrame));
-            size_t size = zframe_size(dataFrame);
-            parseClientData(head, data, size);
-        }
-        printf("\nreceive end\n");
-    }
-    
+    void start();
+     
     void parseClientData(const PacketHead& head,
-                         char* data, size_t len)
-    {
-        auto& command = head.command;
-        switch (command.mainCmdID) {
-            case kMaster:
-            {
-                switch (command.subCmdID) {
-                    case kSeviceRegisterRS:
-                        registerServiceCallback(head, data, len);
-                        break;
-                        
-                    default:
-                        break;
-                }
-            }
-                break;
-                
-            default:
-                break;
-        }
-    }
+                         char* data, size_t len);
     
-    void registerServiceCallback(const PacketHead& head, char* data, size_t len)
-    {
-        CPG::ServiceRegisterRS rs;
-        rs.ParseFromArray(data, len);
-        
-        rs.PrintDebugString();
-    }
+    void registerServiceCallback(const PacketHead& head,
+                                 char* data, size_t len);
+    
     
 private:
-    zsock_t* masterDealer_;
+    // master 服务 消息处理
+    void masterServiceMessageCallback(zsock_t* sock);
+    
+    void clientMessageRead(zsock_t* sock);
+private:
+    CPGZMQMasterClient masterClient_;
+    
     zsock_t* loginDealer_;
     zsock_t* matchPull_;
     ZMQReactor reactor_;
     std::unordered_multimap<int, zsock_t*> matchDealers_;
+    
+    int serviceType_;
+    
+    std::string uuid;
+    
+    static int count;
 };
 
 
