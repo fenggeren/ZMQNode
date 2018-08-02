@@ -12,20 +12,12 @@ int CPGGateWay::count = 0;
 
 void CPGGateWay::registerMaster()
 {
-    PacketHead head = {static_cast<unsigned short>(serviceType_), kSeviceRegisterRQ};
-    
     CPG::ServiceRegisterRQ rq;
     rq.set_servicetype(serviceType_);
-    google::protobuf::uint8* szBuf =
-    new google::protobuf::uint8[rq.ByteSize()];
-    rq.SerializeWithCachedSizesToArray(szBuf);
-    
     zmsg_t* msg = zmsg_new();
-    
-    zmsg_addmem(msg, &head, sizeof(head));
-    zmsg_addmem(msg, szBuf, rq.ByteSize());
-    
-    delete []szBuf;
+    CPGFuncHelper::appendZMsg(msg, serviceType_, kSeviceRegisterRQ, rq);
+    zmsg_send(&msg, masterClient_.dealer());
+    zmsg_destroy(&msg);
 }
 
 void CPGGateWay::start()
@@ -35,10 +27,10 @@ void CPGGateWay::start()
     {
         connectService |= service.serviceType;
     }
-    masterClient_.connect(connectService);
+    masterClient_.connect(connectService, uuid);
     reactor_.addSocket(masterClient_.dealer(), std::bind(&CPGGateWay::clientMessageRead, this, std::placeholders::_1));
     reactor_.addSocket(masterClient_.sub(), std::bind(&CPGGateWay::clientMessageRead, this, std::placeholders::_1));
-    reactor_.addTimer(kHeartbeatDuration, 0, std::bind(&CPGZMQMasterClient::sendHeartbeat, masterClient_, serviceType_));
+    reactor_.addTimer(kHeartbeatDuration * kSecondPerMilli, 0, std::bind(&CPGZMQMasterClient::sendHeartbeat, masterClient_, serviceType_));
     
     reactor_.asyncLoop();
 }
@@ -46,9 +38,10 @@ void CPGGateWay::start()
 void CPGGateWay::clientMessageRead(zsock_t* sock)
 {
     zmsg_t* msg = zmsg_recv(sock);
-    size_t count = zmsg_size(msg);
-    printf("client receive begin\n");
     
+    zmsg_print(msg);
+    
+    size_t count = zmsg_size(msg);
     for (int i = 0; i < count - 1; i+=2)
     {
         zframe_t* headFrame = zmsg_next(msg);
@@ -61,7 +54,7 @@ void CPGGateWay::clientMessageRead(zsock_t* sock)
         size_t size = zframe_size(dataFrame);
         parseClientData(head, data, size);
     }
-    printf("\nreceive end\n");
+    zmsg_destroy(&msg);
 }
 
 void CPGGateWay::parseClientData(const PacketHead& head,
@@ -90,10 +83,17 @@ void CPGGateWay::parseClientData(const PacketHead& head,
 void CPGGateWay::registerServiceCallback(const PacketHead& head, char* data, size_t len)
 {
     CPG::ServiceRegisterRS rs;
-    rs.ParseFromArray(data, len);
+    rs.ParseFromArray(data, (int)len);
     
     rs.PrintDebugString();
 }
+
+
+
+
+
+
+
 
  
 

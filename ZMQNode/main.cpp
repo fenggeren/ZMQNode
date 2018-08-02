@@ -8,18 +8,29 @@
 
 #include <iostream>
 #include "ZMQReactor.hpp"
+#include "CPGGateWay.hpp"
+#include "CPGMaster.hpp"
 
 int main(int argc, const char * argv[]) {
     
+    CPGMaster master;
+    master.start();
     
-    ZMQReactor rector;
+    CPGGateWay gateWay;
+    gateWay.start();
+    gateWay.registerMaster();
     
-    rector.addTimer(1000, 0, []{
-        printf("========\n");
-    });
     
-    rector.loop();
-    
+    while (true)
+    {
+        zclock_sleep(1000);
+    }
     
     return 0;
 }
+
+
+
+
+
+

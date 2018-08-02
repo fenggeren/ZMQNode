@@ -29,8 +29,7 @@ public:
     , pub_(zsock_new(ZMQ_PUB))
     , reactor_()
     {
-        zsock_bind(router_, "tcp://*:%d", MASTER_ROUTER_PORT);
-        zsock_bind(pub_, "tcp://*:%d", MASTER_PUB_PORT);
+
     }
     
     ~CPGMaster()
@@ -40,6 +39,9 @@ public:
     
     void start()
     {
+        int rc = zsock_bind(router_, "tcp://*:%d", MASTER_ROUTER_PORT);
+        rc = zsock_bind(pub_, "tcp://*:%d", MASTER_PUB_PORT);
+
         reactor_.addSocket(router_, std::bind(&CPGMaster::messageHandle, this, std::placeholders::_1));
         reactor_.addTimer(kSERVER_SCAN_HEATBEATS * 1000, 0, std::bind(&CPGMaster::timerHeartbeatCheck, this));
         reactor_.asyncLoop();

@@ -23,11 +23,12 @@ public:
     : dealer_(zsock_new(ZMQ_DEALER))
     , sub_(zsock_new(ZMQ_SUB))
     {
-        
+
     }
     
-    int connect(int subServiceValue)
+    int connect(int subServiceValue, const std::string& uuid)
     {
+        zsock_set_identity(dealer_, uuid.data());
         return connects(MASTER_ROUTER_ENDPOINT, MASTER_PUB_ENDPOINT, subServiceValue);
     }
     

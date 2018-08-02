@@ -11,7 +11,7 @@
 
 // 心跳包时间   2s
 #define kHeartbeatDuration 5
-
+#define kSecondPerMilli 1000
  
 
 const static std::string MATCH_SERVER[] =

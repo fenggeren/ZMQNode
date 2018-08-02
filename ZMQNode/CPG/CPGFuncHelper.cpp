@@ -40,9 +40,7 @@ namespace CPGFuncHelper
         gethostname(hname, sizeof(hname));
         
         //hent = gethostent();
-        hent = gethostbyname(hname);
-        printf("hostname: %s/naddress list: \n", hent->h_name);
-        
+        hent = gethostbyname(hname); 
         
         std::string lip = "";
         if (hent->h_length > 0)

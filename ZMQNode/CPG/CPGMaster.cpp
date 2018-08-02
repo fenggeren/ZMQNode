@@ -7,6 +7,7 @@
 //
 
 #include "CPGMaster.hpp"
+#include "CPGFuncHelper.hpp"
 
 #define SERVER_SESSION_ACTIVITY_TIMEOUT_SEC 60
 
@@ -21,7 +22,6 @@ void CPGMaster::messageHandle(zsock_t* sock)
     const std::string sourceStr(reinterpret_cast<char*>(zframe_data(source)),
                                 zframe_size(source));
     
-    
     for (int i = 0; i < count - 1; i+=2)
     {
         zframe_t* headFrame = zmsg_next(msg);
@@ -35,6 +35,7 @@ void CPGMaster::messageHandle(zsock_t* sock)
         
         parseData(sourceStr, head, data, size);
     }
+    zmsg_destroy(&msg);
 }
 
 void CPGMaster::parseData(const std::string& source,
@@ -46,7 +47,7 @@ void CPGMaster::parseData(const std::string& source,
             registerService(source, data, len);
             break;
         case kServiceHeartMsg:
-            
+            serviceHeart(source, data, len);
         default:
             break;
     }
@@ -71,7 +72,6 @@ void CPGMaster::timerHeartbeatCheck()
 void CPGMaster::sendNewNodeConnectors(const ServiceNode& node)
 {
     CPG::ServiceRegisterRS rs;
-    
     auto services = requiredConnectService(node.serviceType);
     for (auto& service : services)
     {
@@ -80,21 +80,11 @@ void CPGMaster::sendNewNodeConnectors(const ServiceNode& node)
         profile->set_sockettype(service.socketType);
         profile->set_addr(service.addr);
     }
-    
-    PacketHead head = {kMaster, kSeviceRegisterRS};
-    
-    google::protobuf::uint8* szBuf = new google::protobuf::uint8[rs.ByteSize()];
-    rs.SerializeWithCachedSizesToArray(szBuf);
-    
     zmsg_t* msg = zmsg_new();
     zmsg_addmem(msg, node.uuid.data(), node.uuid.size());
-    zmsg_addmem(msg, &head, sizeof(head));
-    zmsg_addmem(msg, szBuf, rs.ByteSize());
-    // send
+    CPGFuncHelper::appendZMsg(msg, kMaster, kSeviceRegisterRS, rs);
     zmsg_send(&msg, router_);
-    
-    // zmsg_destroy(&msg);
-    delete []szBuf;
+    zmsg_destroy(&msg);
 }
 
 void CPGMaster::registerService(const std::string& source,
@@ -102,7 +92,6 @@ void CPGMaster::registerService(const std::string& source,
 {
     CPG::ServiceRegisterRQ rq;
     rq.ParseFromArray(data, (int)len);
-    
     rq.PrintDebugString();
     
     ServiceNode node;
@@ -121,8 +110,9 @@ void CPGMaster::registerService(const std::string& source,
 
 void CPGMaster::serviceHeart(const std::string& uuid, const char* data, size_t len)
 {
-    
-    int type = kGateWay;
+    CPG::ServiceHeartbeatMsg msg;
+    msg.ParseFromArray(data, len);
+    int type = msg.servicetype();
     bool handle = false;
     
     auto iter = services_.find(type);
@@ -169,7 +159,6 @@ void CPGMaster::publishNewService(const std::vector<ServiceProfile>& services)
     CPG::ServicePublishNewServicesMsg publishMsg;
     
     int subType = 0;
-    
     for (auto& service : services)
     {
         auto profile = publishMsg.add_newservices();
@@ -179,21 +168,12 @@ void CPGMaster::publishNewService(const std::vector<ServiceProfile>& services)
         subType |= service.serviceType;
     }
     
-    PacketHead head  = {kMaster, kServicePublishNewServicesMsg};
-    
-    google::protobuf::uint8* szBuf = new google::protobuf::uint8[publishMsg.ByteSize()];
-    publishMsg.SerializeWithCachedSizesToArray(szBuf);
-    
     std::string subTypeStr(std::to_string(subType));
     zmsg_t* msg = zmsg_new();
     zmsg_addmem(msg, subTypeStr.data(), subTypeStr.size());
-    zmsg_addmem(msg, &head, sizeof(head));
-    zmsg_addmem(msg, szBuf, publishMsg.ByteSize());
-    // send
+    CPGFuncHelper::appendZMsg(msg, kMaster, kServicePublishNewServicesMsg, publishMsg);
     zmsg_send(&msg, pub_);
-    
-    // zmsg_destroy(&msg);
-    delete []szBuf;
+    zmsg_destroy(&msg);
 }
 
 std::list<ServiceProfile>
@@ -230,14 +210,15 @@ CPGMaster::requiredConnectService(int serviceType)
 void CPGMaster::addServiceNode(const ServiceNode& node, int serviceType)
 {
     auto nodes = services_[serviceType];
-    for(auto& on : nodes)
+    auto iter = std::find_if(nodes.begin(), nodes.end(), [&](const ServiceNode& sn){
+        return sn.uuid == node.uuid;
+    });
+    
+    if (iter != nodes.end())
     {
-        if (on.uuid == node.uuid)
-        {
-            // 已注册有该服务！
-        }
+        nodes.erase(iter);
     }
-    services_[serviceType].push_back(node);
+    nodes.push_back(node);
 }
 
 
