@@ -129,6 +129,25 @@ private:
 };
 
 
+// 过滤器
+class ZMQMessageFilter
+{
+public:
+    
+    void operator()(zsock_t* sock)
+    {
+        int type = zsock_type(sock);
+        zmsg_t* msg = zmsg_recv(sock);
+        
+        if (type == ZMQ_SUB)
+        {
+            
+        }
+    }
+    
+private:
+    std::function<void()> callback_;
+};
 
 
 

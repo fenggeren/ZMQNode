@@ -72,7 +72,7 @@ void testPub()
 
 int main(int argc, const char * argv[]) {
     
-    testPub();
+    test();
 //    test();
     
     return 0;

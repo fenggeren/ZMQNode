@@ -92,7 +92,6 @@ void CPGMaster::registerService(const std::string& source,
 {
     CPG::ServiceRegisterRQ rq;
     rq.ParseFromArray(data, (int)len);
-//    rq.PrintDebugString();
     
     ServiceNode node;
     node.heartbeat = time(NULL);
@@ -110,7 +109,8 @@ void CPGMaster::registerService(const std::string& source,
     publishNewService(node.profiles);
 }
 
-void CPGMaster::serviceHeart(const std::string& uuid, const char* data, size_t len)
+void CPGMaster::serviceHeart(const std::string& uuid,
+                             const char* data, size_t len)
 {
     CPG::ServiceHeartbeatMsg msg;
     msg.ParseFromArray(data, len);
