@@ -14,7 +14,7 @@
 void CPGMaster::messageHandle(zsock_t* sock)
 {
     zmsg_t* msg = zmsg_recv(sock);
-    zmsg_print(msg);
+//    zmsg_print(msg);
     
     size_t count = zmsg_size(msg);
     zframe_t* source = zmsg_first(msg);
@@ -92,7 +92,7 @@ void CPGMaster::registerService(const std::string& source,
 {
     CPG::ServiceRegisterRQ rq;
     rq.ParseFromArray(data, (int)len);
-    rq.PrintDebugString();
+//    rq.PrintDebugString();
     
     ServiceNode node;
     node.heartbeat = time(NULL);
@@ -100,12 +100,13 @@ void CPGMaster::registerService(const std::string& source,
     node.serviceType = rq.servicetype();
     for (auto& service : rq.services())
     {
-        node.profiles.push_back({service.servicetype(), ZMQ_DEALER, service.addr()});
+        node.profiles.push_back({service.servicetype(), service.sockettype(), service.addr()});
     }
     addServiceNode(node, rq.servicetype());
     
     // cal
     sendNewNodeConnectors(node);
+    // 将新加入的节点包含的所有 服务sock， 发布出去
     publishNewService(node.profiles);
 }
 
@@ -157,22 +158,35 @@ CPGMaster::serviceProfiles(int serviceType, const std::string& uuid)
 // 有新服务注册， 发布新服务
 void CPGMaster::publishNewService(const std::vector<ServiceProfile>& services)
 {
+    std::map<int, std::vector<ServiceProfile>> profilesMap;
+    for(auto& service : services)
+    {
+        profilesMap[service.serviceType].push_back(service);
+    }
+    
+    for(auto& pair : profilesMap)
+    {
+        publishNewService(pair.first, pair.second);
+    }
+}
+
+void CPGMaster::publishNewService(int serviceType,
+                                  const std::vector<ServiceProfile>& services)
+{
     CPG::ServicePublishNewServicesMsg publishMsg;
     
-    int subType = 0;
     for (auto& service : services)
     {
         auto profile = publishMsg.add_newservices();
         profile->set_servicetype(service.serviceType);
         profile->set_sockettype(service.socketType);
         profile->set_addr(service.addr);
-        subType |= service.serviceType;
     }
     
-    std::string subTypeStr(std::to_string(subType));
+    std::string subTypeStr(std::to_string(serviceType));
     zmsg_t* msg = zmsg_new();
-    zmsg_addmem(msg, subTypeStr.data(), subTypeStr.size());
-    CPGFuncHelper::appendZMsg(msg, kMaster, kServicePublishNewServicesMsg, publishMsg);
+    zmsg_addstr(msg, subTypeStr.data());
+    CPGFuncHelper::appendZMsg(msg, kMaster, kServicePublishNewServicesMsg, publishMsg); 
     zmsg_send(&msg, pub_);
     zmsg_destroy(&msg);
 }

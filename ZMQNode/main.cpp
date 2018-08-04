@@ -12,13 +12,13 @@
 #include "CPGMaster.hpp"
 #include "CPGLoginServer.hpp"
 
-int main(int argc, const char * argv[]) {
-    
+void test()
+{
     CPGMaster master;
     master.start();
     
-    CPGLoginServer login;
-    login.start();
+    //    CPGLoginServer login;
+    //    login.start();
     
     zclock_sleep(5);
     
@@ -31,12 +31,49 @@ int main(int argc, const char * argv[]) {
     {
         gw.start();
     }
- 
-
+    
+    zclock_sleep(1000);
+    
+    CPGLoginServer login2;
+    login2.start();
+    
     while (true)
     {
         zclock_sleep(1000);
     }
+}
+
+void testPub()
+{
+    CPGMaster master;
+    master.start();
+    
+    zsock_t* sub = zsock_new(ZMQ_SUB);
+    zsock_connect(sub, "tcp://localhost:5680");
+    zsock_set_subscribe(sub, "");
+    
+    ZMQReactor reactor;
+    reactor.addSocket(sub, [](zsock_t* sock){
+        zmsg_t* msg = zmsg_recv(sock);
+        zmsg_print(msg);
+        zmsg_destroy(&msg);
+    });
+    
+    reactor.asyncLoop();
+    
+    while (true)
+    {
+        zsock_connect(sub, "tcp://localhost:5680");
+        master.testPub();
+        zmq_sleep(2);
+    }
+
+}
+
+int main(int argc, const char * argv[]) {
+    
+    testPub();
+//    test();
     
     return 0;
 }

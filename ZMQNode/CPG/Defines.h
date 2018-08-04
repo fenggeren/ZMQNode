@@ -31,8 +31,9 @@ const static std::string LOGIN_SERVER[] =
     "tcp://127.0.0.1:5580",
     "tcp://127.0.0.1:5581",
 };
-const static std::string MASTER_ROUTER_ENDPOINT = "tcp://127.0.0.1:5688";
-const static std::string MASTER_PUB_ENDPOINT = "tcp://127.0.0.1:5689";
 const static int MASTER_ROUTER_PORT = 5688;
 const static int MASTER_PUB_PORT = 5680;
+const static std::string MASTER_ROUTER_ENDPOINT = "tcp://127.0.0.1:5688";
+const static std::string MASTER_PUB_ENDPOINT = "tcp://127.0.0.1:5680";
+
 

@@ -17,13 +17,13 @@
 #include "CPGFuncHelper.hpp"
 #include "ZMQReactor.hpp"
 
-class CPGZMQMasterClient
+class ZMQMasterClient
 {
 public:
     using NewServiceProfileCallback =
     std::function<void(const std::list<ServiceProfile>&)>;
     
-    CPGZMQMasterClient(std::shared_ptr<ZMQReactor> reactor ,CPGServerType type);
+    ZMQMasterClient(std::shared_ptr<ZMQReactor> reactor ,CPGServerType type);
      
     int connect(const std::set<std::string>& subids, const std::string& uuid);
     
@@ -42,8 +42,10 @@ public:
     void registerMaster(std::list<ServiceProfile>&& profiles);
     
 private:
-
-    void masterMessageRead(zsock_t* sock);
+    
+    void messageRead(zsock_t* sock);
+    void pubMessageRead(zsock_t* sock);
+    void readHandleChunkData(zmsg_t* msg);
     
     void handleNewServices(const PacketHead& head ,
                            const char* data, int len);
@@ -65,6 +67,66 @@ private:
     std::list<ServiceProfile> serverProfiles_;
 };
 
+// 服务/  Router/PUSH/PUB等
+class ZMQService
+{
+public:
+    
+    ZMQService(int type)
+    :sockType_(type)
+    {
+        service_ = zsock_new(type);
+    }
+    
+    void bind(const std::string& uuid)
+    {
+        int port = zsock_bind(service_, "tcp://*:*");
+        std::string identity = uuid + ":" + std::to_string(port);
+        if (sockType_ == ZMQ_REQ ||
+            sockType_ == ZMQ_REP ||
+            sockType_ == ZMQ_DEALER ||
+            sockType_ == ZMQ_ROUTER)
+        {
+            zsock_set_identity(service_, identity.data());
+        }
+        addr_ = "tcp://" + CPGFuncHelper::localIP() + ":" + std::to_string(port);
+    }
+    
+    void sendMessage(const char* more,
+                    const char* data, size_t len)
+    {
+        assert(sockType_ == ZMQ_PUB);
+        
+        zmsg_t* msg = zmsg_new();
+        zmsg_addstr(msg, more);
+        zmsg_addmem(msg, data, len);
+        zmsg_send(&msg, service_);
+        zmsg_destroy(&msg);
+    }
+ 
+    int sockType() const { return sockType_; }
+    zsock_t* serviceSock() const { return service_; }
+    const std::string& addr() const { return addr_; }
+    
+private:
+    int sockType_;
+    zsock_t* service_;
+    std::string addr_;
+};
+
+class ZMQPubService : public ZMQService
+{
+public:
+    
+    void pubMessage(const std::string& channel,
+                    const char* data, size_t len)
+    {
+        
+    }
+    
+private:
+    
+};
 
 
 

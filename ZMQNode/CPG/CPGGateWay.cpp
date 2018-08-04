@@ -28,7 +28,21 @@ void CPGGateWay::start()
 
 void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
 {
-    
+    for(auto& profile : services)
+    {
+        if (profile.serviceType == kLoginServer)
+        {
+            
+        }
+        else if (profile.serviceType == kMatchServer)
+        {
+            
+        }
+        else if (profile.serviceType == kMatchManager)
+        {
+            
+        }
+    }
 }
 
 void CPGGateWay::messageRead(zsock_t* sock)

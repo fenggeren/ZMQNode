@@ -16,8 +16,8 @@
 
 struct PacketCommand
 {
-    unsigned short mainCmdID;
-    unsigned short subCmdID;
+    unsigned short mainCmdID{0};
+    unsigned short subCmdID{0};
 };
 //struct PacketInfo
 //{

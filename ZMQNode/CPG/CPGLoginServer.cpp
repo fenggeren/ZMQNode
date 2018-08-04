@@ -20,6 +20,8 @@ void CPGLoginServer::start()
     }
     masterClient_->connect(subids, uuid);
     
+    masterClient_->setNewServiceProfile(std::bind(&CPGLoginServer::newServiceProfile, this, std::placeholders::_1));
+    
     int port = zsock_bind(server_.service_, "tcp://*:*");
     std::string routerId = uuid + ":" + std::to_string(port);
     zsock_set_identity(server_.service_, routerId.data());
@@ -30,6 +32,12 @@ void CPGLoginServer::start()
     
     masterClient_->registerMaster({{serviceType_, ZMQ_ROUTER, server_.addr}});
 }
+
+void CPGLoginServer::newServiceProfile(const std::list<ServiceProfile>& services)
+{
+    
+}
+
 
 void CPGLoginServer::messageRead(zsock_t* sock)
 {

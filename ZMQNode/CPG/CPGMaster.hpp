@@ -29,22 +29,32 @@ public:
     , pub_(zsock_new(ZMQ_PUB))
     , reactor_()
     {
-
     }
     
     ~CPGMaster()
     {
-        
     }
     
     void start()
     {
+        zsock_set_identity(router_, "MASTER");
         int rc = zsock_bind(router_, "tcp://*:%d", MASTER_ROUTER_PORT);
+        assert(rc != -1);
         rc = zsock_bind(pub_, "tcp://*:%d", MASTER_PUB_PORT);
-
+        assert(rc != -1);
+        
         reactor_.addSocket(router_, std::bind(&CPGMaster::messageHandle, this, std::placeholders::_1));
         reactor_.addTimer(kSERVER_SCAN_HEATBEATS * 1000, 0, std::bind(&CPGMaster::timerHeartbeatCheck, this));
         reactor_.asyncLoop();
+    }
+    
+    void testPub()
+    {
+        zmsg_t* msg = zmsg_new();
+        zmsg_addstr(msg, "A");
+        zmsg_addstr(msg, "AAAAAAAA");
+        zmsg_send(&msg, pub_);
+        zmsg_destroy(&msg);
     }
     
 private:
@@ -74,12 +84,16 @@ private: // 消息处理
 
     std::vector<ServiceProfile>
         serviceProfiles(int serviceType, const std::string& uuid);
-    // 有新服务注册， 发布新服务
-    void publishNewService(const std::vector<ServiceProfile>& profile);
     // 有新服务注册， 获取新服务需要连接的其他服务节点。
     std::list<ServiceProfile> requiredConnectService(int serviceType);
     
     void addServiceNode(const ServiceNode& node, int serviceType);
+    
+    // 有新服务注册， 发布新服务
+    void publishNewService(const std::vector<ServiceProfile>& profile);
+    // 每种服务 单独发布
+    void publishNewService(int serviceType,
+                           const std::vector<ServiceProfile>& profile);
 private:
     zsock_t* router_;
     zsock_t* pub_;

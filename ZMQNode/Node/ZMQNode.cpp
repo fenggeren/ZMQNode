@@ -8,7 +8,7 @@
 
 #include "ZMQNode.hpp"
 
-CPGZMQMasterClient::CPGZMQMasterClient(std::shared_ptr<ZMQReactor> reactor
+ZMQMasterClient::ZMQMasterClient(std::shared_ptr<ZMQReactor> reactor
                                        ,CPGServerType type)
 : serviceType_(type)
 , reactor_(reactor)
@@ -18,7 +18,7 @@ CPGZMQMasterClient::CPGZMQMasterClient(std::shared_ptr<ZMQReactor> reactor
     
 }
 
-void CPGZMQMasterClient::registerMaster(std::list<ServiceProfile>&& profiles)
+void ZMQMasterClient::registerMaster(std::list<ServiceProfile>&& profiles)
 {
     CPG::ServiceRegisterRQ rq;
     rq.set_servicetype(serviceType_);
@@ -40,12 +40,13 @@ void CPGZMQMasterClient::registerMaster(std::list<ServiceProfile>&& profiles)
 }
 
  // TODO. 订阅， 这里订阅不了任何东西， 不能 |  ==>
-int CPGZMQMasterClient::connect(const std::set<std::string>& subids,
+int ZMQMasterClient::connect(const std::set<std::string>& subids,
                                 const std::string& uuid)
 {
     zsock_set_identity(dealer_, uuid.data());
     int rc = zsock_connect(dealer_, "%s", MASTER_ROUTER_ENDPOINT.data());
     assert(!rc);
+    
     rc = zsock_connect(sub_, "%s", MASTER_PUB_ENDPOINT.data());
     assert(!rc);
     for (auto& subid : subids)
@@ -53,15 +54,16 @@ int CPGZMQMasterClient::connect(const std::set<std::string>& subids,
         zsock_set_subscribe(sub_, subid.data());
     }
     
-    heartbeatTimerID_ = reactor_->addTimer(kHeartbeatDuration * kSecondPerMilli, 0, std::bind(&CPGZMQMasterClient::sendHeartbeat, this, serviceType_));
-    reactor_->addSocket(sub_, std::bind(&CPGZMQMasterClient::masterMessageRead, this, std::placeholders::_1));
-    reactor_->addSocket(dealer_, std::bind(&CPGZMQMasterClient::masterMessageRead, this, std::placeholders::_1));
+    heartbeatTimerID_ = reactor_->addTimer(kHeartbeatDuration * kSecondPerMilli, 0, std::bind(&ZMQMasterClient::sendHeartbeat, this, serviceType_));
+    
+    reactor_->addSocket(sub_, std::bind(&ZMQMasterClient::pubMessageRead, this, std::placeholders::_1));
+    reactor_->addSocket(dealer_, std::bind(&ZMQMasterClient::messageRead, this, std::placeholders::_1));
  
     
     return rc;
 }
  
-void CPGZMQMasterClient::sendHeartbeat(int serviceType)
+void ZMQMasterClient::sendHeartbeat(int serviceType)
 {
     CPG::ServiceHeartbeatMsg hbMsg;
     hbMsg.set_servicetype(serviceType);
@@ -70,30 +72,43 @@ void CPGZMQMasterClient::sendHeartbeat(int serviceType)
     zmsg_send(&msg, dealer_);
 }
 
-void CPGZMQMasterClient::masterMessageRead(zsock_t* sock)
+void ZMQMasterClient::messageRead(zsock_t* sock)
 {
     zmsg_t* msg = zmsg_recv(sock);
-    
-    zmsg_print(msg);
     
     size_t count = zmsg_size(msg);
     for (int i = 0; i < count - 1; i+=2)
     {
-        zframe_t* headFrame = zmsg_next(msg);
-        PacketHead head;
-        memcpy(&head, zframe_data(headFrame), zframe_size(headFrame));
-        
-        
-        zframe_t* dataFrame = zmsg_next(msg);
-        char* data = reinterpret_cast<char*>(zframe_data(dataFrame));
-        size_t size = zframe_size(dataFrame);
-        
-        handleNewServices(head, data, size);
+        readHandleChunkData(msg);
     }
     zmsg_destroy(&msg);
 }
 
-void CPGZMQMasterClient::handleNewServices(const PacketHead& head ,
+void ZMQMasterClient::pubMessageRead(zsock_t* sock)
+{
+    zmsg_t* msg = zmsg_recv(sock);
+    
+    zframe_t* channel = zmsg_first(msg);
+    zframe_print(channel, "SUB IDENTITY: ");
+    
+    readHandleChunkData(msg);
+    zmsg_destroy(&msg);
+}
+
+void ZMQMasterClient::readHandleChunkData(zmsg_t* msg)
+{
+    zframe_t* headFrame = zmsg_next(msg);
+    PacketHead head;
+    memcpy(&head, zframe_data(headFrame), zframe_size(headFrame));
+    
+    zframe_t* dataFrame = zmsg_next(msg);
+    char* data = reinterpret_cast<char*>(zframe_data(dataFrame));
+    size_t size = zframe_size(dataFrame);
+    
+    handleNewServices(head, data, (int)size);
+}
+
+void ZMQMasterClient::handleNewServices(const PacketHead& head ,
                                            const char* data, int len)
 {
     if (head.mainCmdID != kMaster)
@@ -101,7 +116,7 @@ void CPGZMQMasterClient::handleNewServices(const PacketHead& head ,
         // ERROR!
         // 接收到非master的消息
     }
-    
+    printf("mainID: %d, subID: %d\n", head.mainCmdID, head.subCmdID);
     std::list<ServiceProfile> services;
     
     if (head.subCmdID == kSeviceRegisterRS)

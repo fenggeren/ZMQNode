@@ -34,7 +34,7 @@ public:
         server_.serviceType = serviceType_;
         
         reactor_ = std::make_shared<ZMQReactor>();
-        masterClient_ = std::make_shared<CPGZMQMasterClient>(reactor_, serviceType_);
+        masterClient_ = std::make_shared<ZMQMasterClient>(reactor_, serviceType_);
     }
      
     
@@ -49,10 +49,12 @@ private:
     
     void messageRead(zsock_t* sock);
     
+    void newServiceProfile(const std::list<ServiceProfile>& services);
 private:
     
-    std::shared_ptr<CPGZMQMasterClient> masterClient_;
+    std::shared_ptr<ZMQMasterClient> masterClient_;
     std::shared_ptr<ZMQReactor> reactor_;
+    zsock_t* router_;
     ServerProfile server_;
     CPGServerType serviceType_;
     std::string uuid;

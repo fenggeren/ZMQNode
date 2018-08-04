@@ -25,7 +25,7 @@ public:
         count++;
         uuid = std::string("GS-") + CPGFuncHelper::localIP() + "-" + std::to_string(count);
         reactor_ = std::make_shared<ZMQReactor>();
-        masterClient_ = std::make_shared<CPGZMQMasterClient>(reactor_, serviceType_);
+        masterClient_ = std::make_shared<ZMQMasterClient>(reactor_, serviceType_);
     }
      
     
@@ -49,8 +49,7 @@ private:
     
     CPGServerType serviceType_;
     std::shared_ptr<ZMQReactor> reactor_;
-    std::shared_ptr<CPGZMQMasterClient> masterClient_;
- 
+    std::shared_ptr<ZMQMasterClient> masterClient_;
     std::unordered_multimap<int, zsock_t*> matchDealers_;
     
     
