@@ -26,6 +26,7 @@ void CPGGateWay::start()
     masterClient_->registerMaster({});
 }
 
+// 抽取出来单独的组件
 void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
 {
     for(auto& profile : services)
