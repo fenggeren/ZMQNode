@@ -40,6 +40,7 @@ void ZMQServerNodeBase::readData(const std::string& extra, zmsg_t* msg)
 void ZMQServerNodeBase::handleData(const PacketHead& head,
                 char* data, size_t len)
 {
+    
 }
 
 void ZMQServerNodeBase::newServiceProfile(const std::list<ServiceProfile>& services)
@@ -52,7 +53,13 @@ void ZMQServerNodeBase::registerServiceCallback(const PacketHead& head, char* da
     CPG::ServiceRegisterRS rs;
     rs.ParseFromArray(data, (int)len);
     
-    rs.PrintDebugString();
+    std::list<ServiceProfile> services;
+    for(auto& s : rs.connectservices())
+    {
+        services.push_back({s.servicetype(), s.sockettype(), s.addr()});
+    }
+    
+    newServiceProfile(services);
 }
 
 

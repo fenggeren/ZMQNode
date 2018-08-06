@@ -17,11 +17,7 @@ public:
     : ZMQServerNodeBase(kGateWay)
     {
         uuid = std::string("GS-") + CPGFuncHelper::localIP();
-        reactor_ = std::make_shared<ZMQReactor>();
-        masterClient_ = std::make_shared<ZMQMasterClient>(reactor_, serviceType_);
     }
-     
-
     
     
 private: 

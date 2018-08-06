@@ -7,12 +7,7 @@
 //
 
 #pragma once
-#include "ZMQNode.hpp" 
-#include <czmq.h>
-#include "Packet.h"
-#include "ZMQReactor.hpp"
-#include "server.pb.h"
-#include "CPGFuncHelper.hpp"
+#include "ZMQServerNodeBase.hpp"
 
 struct ServerProfile
 {
@@ -21,44 +16,30 @@ struct ServerProfile
     std::string addr;
 };
 
-class CPGLoginServer
+class CPGLoginServer : public ZMQServerNodeBase
 {
 public:
     
     CPGLoginServer()
-    : serviceType_(kLoginServer)
+    : ZMQServerNodeBase(kLoginServer)
     {
-        count++;
-        uuid = std::string("LS-") + CPGFuncHelper::localIP() + "-" + std::to_string(count);
+        uuid = std::string("LS-") + CPGFuncHelper::localIP();
         server_.service_ = zsock_new(ZMQ_ROUTER);
         server_.serviceType = serviceType_;
-        
-        reactor_ = std::make_shared<ZMQReactor>();
-        masterClient_ = std::make_shared<ZMQMasterClient>(reactor_, serviceType_);
     }
      
     
-    void start();
-    
-    void parseClientData(const PacketHead& head,
-                         char* data, size_t len);
-    
-    void registerServiceCallback(const PacketHead& head,
-                                 char* data, size_t len);
 private:
     
-    void messageRead(zsock_t* sock);
+    virtual void handleData(const PacketHead& head,
+                         char* data, size_t len) override;
     
-    void newServiceProfile(const std::list<ServiceProfile>& services);
+    virtual void newServiceProfile(const std::list<ServiceProfile>& services) override;
+    
+    virtual std::list<ServiceProfile> allServiceProfiles() override; 
 private:
-    
-    std::shared_ptr<ZMQMasterClient> masterClient_;
-    std::shared_ptr<ZMQReactor> reactor_;
     zsock_t* router_;
-    ServerProfile server_;
-    CPGServerType serviceType_;
-    std::string uuid;
-    static int count;
+    ServerProfile server_; 
 };
 
 
