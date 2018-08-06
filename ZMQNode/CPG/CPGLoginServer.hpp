@@ -9,12 +9,6 @@
 #pragma once
 #include "ZMQServerNodeBase.hpp"
 
-struct ServerProfile
-{
-    int serviceType{0};
-    zsock_t* service_;
-    std::string addr;
-};
 
 class CPGLoginServer : public ZMQServerNodeBase
 {
@@ -23,9 +17,7 @@ public:
     CPGLoginServer()
     : ZMQServerNodeBase(kLoginServer)
     {
-        uuid = std::string("LS-") + CPGFuncHelper::localIP();
-        server_.service_ = zsock_new(ZMQ_ROUTER);
-        server_.serviceType = serviceType_;
+        uuid = std::string("LS-") + CPGFuncHelper::localIP(); 
     }
      
     
@@ -38,8 +30,7 @@ private:
     
     virtual std::list<ServiceProfile> allServiceProfiles() override; 
 private:
-    zsock_t* router_;
-    ServerProfile server_; 
+    zsock_t* router_; 
 };
 
 

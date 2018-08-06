@@ -32,6 +32,19 @@ namespace CPGFuncHelper
         delete [] szBuf;
     }
     
+    std::string connectTCPAddress(unsigned short port)
+    {
+        return "tcp://" + CPGFuncHelper::localIP() + ":" + std::to_string(port);
+    }
+
+    unsigned short getPort(const std::string& bindAddr)
+    {
+        auto pos = bindAddr.find_last_of(":"); 
+        assert(pos < addr.size()-1);
+        auto port = addr.substr(pos+1, addr.size());
+        return std::atoi(port.data());
+    }
+
     std::string localIP()
     {
         char hname[128];

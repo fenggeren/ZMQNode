@@ -17,19 +17,9 @@ void CPGLoginServer::newServiceProfile(const std::list<ServiceProfile>& services
 void CPGLoginServer::handleData(const PacketHead& head,
                                  char* data, size_t len)
 {
-    auto& command = head;
-    switch (command.mainCmdID) {
-        case kMaster:
-        {
-            switch (command.subCmdID) {
-                case kSeviceRegisterRS:
-                    registerServiceCallback(head, data, len);
-                    break;
-                    
-                default:
-                    break;
-            }
-        }
+    switch (head.subCmdID) {
+        case kSeviceRegisterRS:
+            registerServiceCallback(data, len);
             break;
             
         default:
@@ -39,13 +29,9 @@ void CPGLoginServer::handleData(const PacketHead& head,
 
 std::list<ServiceProfile> CPGLoginServer::allServiceProfiles()
 {
-    int port = zsock_bind(server_.service_, "tcp://*:*");
-    std::string routerId = uuid + ":" + std::to_string(port);
-    zsock_set_identity(server_.service_, routerId.data());
-    reactor_->addSocket(server_.service_, std::bind(&CPGLoginServer::messageRead<ZMQ_ROUTER>, this, std::placeholders::_1));
-    server_.addr = "tcp://" + CPGFuncHelper::localIP() + ":" + std::to_string(port);
-    
-    return {{server_.serviceType, zsock_type(server_.service_), server_.addr}};
+    auto tuple = createServiceSocket<ZMQ_ROUTER>();
+    router_ = std::get<0>(tuple);    
+    return {{serviceType_, ZMQ_ROUTER, std::get<1>(tuple)}};
 }
 
 

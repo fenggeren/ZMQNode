@@ -12,6 +12,7 @@
 #include <czmq.h>
 #include <set>
 #include <map>
+#include <tuple>
 #include "Packet.h"
 #include "ZMQReactor.hpp"
 #include "server.pb.h"
@@ -31,6 +32,7 @@
  PAIR and PAIR
  */
 
+
 class ZMQServerNodeBase
 {
 public:
@@ -43,6 +45,8 @@ public:
     
     void start();
     
+    // PUB -> SUB |  ROUTER -> DEALER | REQ -> ROUTER 
+    // all has a extra first frame
     template<int TYPE>
     void messageRead(zsock_t* sock)
     {
@@ -50,7 +54,6 @@ public:
         zmsg_t* msg = zmsg_recv(sock);
         
         std::string extra;
-        // PUB -> SUB | DEALER -> ROUTER    all has a first id frame
         if (TYPE == ZMQ_SUB || TYPE == ZMQ_ROUTER ||
             (TYPE == ZMQ_REQ &&  sourceType != ZMQ_REP))
         {
@@ -62,13 +65,13 @@ public:
         readData(extra, msg);
         zmsg_destroy(&msg);
     }
-    
+
 protected:
     
-    void readData(const std::string& extra, zmsg_t* msg);
+    virtual void readData(const std::string& extra, zmsg_t* msg);
     
     virtual void handleData(const PacketHead& head,
-                    char* data, size_t len);
+                             char* data, size_t len);
     
     virtual void newServiceProfile(const std::list<ServiceProfile>& services);
 
@@ -76,9 +79,21 @@ protected:
     
 protected: // 统一回调命令处理
     
-    void registerServiceCallback(const PacketHead& head,
-                                 char* data, size_t len);
+    void registerServiceCallback(char* data, size_t len);
     
+    // 创建服务端 socket
+    template <int TYPE>
+    std::tuple<zsock_t*, std::string> 
+    createServiceSocket()
+    {
+        zsock_t* sock = zsock_new(TYPE);
+        int port = zsock_bind(sock, "tcp://*:*");
+        std::string identity = uuid + ":" + std::to_string(port);
+        zsock_set_identity(sock, identity.data());
+        reactor_->addSocket(sock, std::bind(&CPGLoginServer::messageRead<TYPE>, this, std::placeholders::_1));
+        std::string addr = CPGFuncHelper::connectTCPAddress(port);
+        return {sock, addr};
+    }
 protected:
     CPGServerType serviceType_;
     std::shared_ptr<ZMQReactor> reactor_;

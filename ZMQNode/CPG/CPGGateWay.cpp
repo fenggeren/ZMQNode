@@ -56,24 +56,13 @@ void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
 void CPGGateWay::handleData(const PacketHead& head,
                      char* data, size_t len)
 {
-    auto& command = head;
-    switch (command.mainCmdID) {
-        case kMaster:
-        {
-            switch (command.subCmdID) {
-                case kSeviceRegisterRS:
-                    registerServiceCallback(head, data, len);
-                    break;
-                    
-                default:
-                    break;
-            }
-        }
-            break;
-            
-        default:
-            break;
-    }
+    switch (head.subCmdID) {
+    case kSeviceRegisterRS:
+        registerServiceCallback(head, data, len);
+        break;
+        
+    default:
+        break;
 }
 
 

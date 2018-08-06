@@ -48,7 +48,7 @@ void ZMQServerNodeBase::newServiceProfile(const std::list<ServiceProfile>& servi
     
 }
 
-void ZMQServerNodeBase::registerServiceCallback(const PacketHead& head, char* data, size_t len)
+void ZMQServerNodeBase::registerServiceCallback(char* data, size_t len)
 {
     CPG::ServiceRegisterRS rs;
     rs.ParseFromArray(data, (int)len);

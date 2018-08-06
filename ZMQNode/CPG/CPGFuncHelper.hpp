@@ -18,6 +18,10 @@ namespace CPGFuncHelper
                     unsigned short subCmdID,
                     const google::protobuf::Message& pMsg);
     
+    // tcp://*:3212  从zmq绑定中 获取端口号
+    unsigned short getPort(const std::string& bindAddr);
+
+    std::string connectTCPAddress(unsigned short port);
     // 本机ip地址
     std::string localIP();
 }
