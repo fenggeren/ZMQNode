@@ -34,13 +34,27 @@ void ZMQServerNodeBase::readData(const std::string& extra, zmsg_t* msg)
     zframe_t* dataFrame = zmsg_next(msg);
     char* data = reinterpret_cast<char*>(zframe_data(dataFrame));
     size_t size = zframe_size(dataFrame);
-    handleData(head, data, size);
+    handleCommonData(head, data, size);
 }
 
+void handleCommonData(const PacketHead& head,
+                        char* data, size_t len)
+{
+    switch (head.subCmdID) 
+    {
+    case kSeviceRegisterRS:
+        registerServiceCallback(data, len);
+        break;
+    default:
+        handleData(head, data, len);
+    }
+}
+
+// 公共
 void ZMQServerNodeBase::handleData(const PacketHead& head,
                 char* data, size_t len)
 {
-    
+
 }
 
 void ZMQServerNodeBase::newServiceProfile(const std::list<ServiceProfile>& services)

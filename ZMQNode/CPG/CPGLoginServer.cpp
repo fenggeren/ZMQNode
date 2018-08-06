@@ -10,21 +10,14 @@
  
 void CPGLoginServer::newServiceProfile(const std::list<ServiceProfile>& services)
 {
-    
+    // no.
 }
 
  
 void CPGLoginServer::handleData(const PacketHead& head,
                                  char* data, size_t len)
 {
-    switch (head.subCmdID) {
-        case kSeviceRegisterRS:
-            registerServiceCallback(data, len);
-            break;
-            
-        default:
-            break;
-    }
+ 
 }
 
 std::list<ServiceProfile> CPGLoginServer::allServiceProfiles()

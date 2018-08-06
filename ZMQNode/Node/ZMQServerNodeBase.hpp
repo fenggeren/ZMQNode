@@ -73,10 +73,17 @@ protected:
     virtual void handleData(const PacketHead& head,
                              char* data, size_t len);
     
+
     virtual void newServiceProfile(const std::list<ServiceProfile>& services);
 
     virtual std::list<ServiceProfile> allServiceProfiles() { return {}; };
     
+private:
+
+    // 统一处理相同的 命令，其余转发
+    void handleCommonData(const PacketHead& head,
+                            char* data, size_t len);
+
 protected: // 统一回调命令处理
     
     void registerServiceCallback(char* data, size_t len);
