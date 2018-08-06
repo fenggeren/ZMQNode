@@ -19,6 +19,7 @@
 		1FAEEEF1211064D30099D3FF /* ZMQReactor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEEEEF211064D30099D3FF /* ZMQReactor.cpp */; };
 		1FAEEEF52112A7150099D3FF /* CPGFuncHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEEEF32112A7150099D3FF /* CPGFuncHelper.cpp */; };
 		1FAEEEF82112E7FB0099D3FF /* CPGLoginServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEEEF62112E7FB0099D3FF /* CPGLoginServer.cpp */; };
+		1FE86DE92115E6B000ACC0F6 /* ZMQServerNodeBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE86DE72115E6B000ACC0F6 /* ZMQServerNodeBase.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,6 +61,8 @@
 		1FAEEEF42112A7150099D3FF /* CPGFuncHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CPGFuncHelper.hpp; sourceTree = "<group>"; };
 		1FAEEEF62112E7FB0099D3FF /* CPGLoginServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPGLoginServer.cpp; sourceTree = "<group>"; };
 		1FAEEEF72112E7FB0099D3FF /* CPGLoginServer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CPGLoginServer.hpp; sourceTree = "<group>"; };
+		1FE86DE72115E6B000ACC0F6 /* ZMQServerNodeBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ZMQServerNodeBase.cpp; sourceTree = "<group>"; };
+		1FE86DE82115E6B000ACC0F6 /* ZMQServerNodeBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ZMQServerNodeBase.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +163,8 @@
 				1FAEEEF0211064D30099D3FF /* ZMQReactor.hpp */,
 				1FAEEED3211040DB0099D3FF /* ZMQNode.cpp */,
 				1FAEEED4211040DB0099D3FF /* ZMQNode.hpp */,
+				1FE86DE72115E6B000ACC0F6 /* ZMQServerNodeBase.cpp */,
+				1FE86DE82115E6B000ACC0F6 /* ZMQServerNodeBase.hpp */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -228,6 +233,7 @@
 				1FAEEEE621104B050099D3FF /* server.pb.cc in Sources */,
 				1FAEEED82110410F0099D3FF /* CPGMaster.cpp in Sources */,
 				1FAEEEE721104B050099D3FF /* CPGProtoCodec.cpp in Sources */,
+				1FE86DE92115E6B000ACC0F6 /* ZMQServerNodeBase.cpp in Sources */,
 				1FAEEEDC211049D10099D3FF /* CPGGateWay.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

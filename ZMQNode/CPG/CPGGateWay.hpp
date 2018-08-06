@@ -7,45 +7,29 @@
 //
 #pragma once
 
-#include <unordered_map>
-#include <czmq.h>
-#include <set>
-#include <map>
-#include "Packet.h"
-#include "ZMQReactor.hpp"
-#include "server.pb.h"
-#include "ZMQNode.hpp"
-#include "CPGFuncHelper.hpp"
+#include "ZMQServerNodeBase.hpp"
 
-class CPGGateWay
+class CPGGateWay : public ZMQServerNodeBase
 {
 public:
     
     CPGGateWay()
-    : serviceType_(kGateWay)
+    : ZMQServerNodeBase(kGateWay)
     {
-        count++;
-        uuid = std::string("GS-") + CPGFuncHelper::localIP() + "-" + std::to_string(count);
+        uuid = std::string("GS-") + CPGFuncHelper::localIP();
         reactor_ = std::make_shared<ZMQReactor>();
         masterClient_ = std::make_shared<ZMQMasterClient>(reactor_, serviceType_);
     }
      
-    
-    void start();
- 
     void registerServiceCallback(const PacketHead& head,
                                  char* data, size_t len);
     
     
 private: 
     
-    void messageRead(zsock_t* sock);
-    void messageSubRead(zsock_t* sock);
-    void readData(zmsg_t* msg);
-    
-    void handleData(const PacketHead& head,
-                         char* data, size_t len);
-    void newServiceProfile(const std::list<ServiceProfile>& services);
+    virtual void handleData(const PacketHead& head,
+                            char* data, size_t len) override;
+    virtual void newServiceProfile(const std::list<ServiceProfile>& services) override;
     
 private:
     
@@ -64,17 +48,11 @@ private:
     zsock_t* loginDealer_;
     zsock_t* matchSub_;
     
-    CPGServerType serviceType_;
-    std::shared_ptr<ZMQReactor> reactor_;
-    std::shared_ptr<ZMQMasterClient> masterClient_;
-    
     // <mid,dealer>
     std::map<int, zsock_t*> matchDealerMap_;
     // dealers
     std::list<zsock_t*> matchDealers_;
     std::set<ServiceProfile,CompServiceProfile> matchServices_;
-    std::string uuid;
-    static int count;
 };
 
 
