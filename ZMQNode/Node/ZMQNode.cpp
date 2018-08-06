@@ -39,7 +39,6 @@ void ZMQMasterClient::registerMaster(std::list<ServiceProfile>&& profiles)
     serverProfiles_.swap(profiles);
 }
 
- // TODO. 订阅， 这里订阅不了任何东西， 不能 |  ==>
 int ZMQMasterClient::connect(const std::set<std::string>& subids,
                                 const std::string& uuid)
 {

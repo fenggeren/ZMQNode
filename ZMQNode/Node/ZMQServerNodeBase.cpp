@@ -50,7 +50,7 @@ void handleCommonData(const PacketHead& head,
     }
 }
 
-// 公共
+// 子类调用
 void ZMQServerNodeBase::handleData(const PacketHead& head,
                 char* data, size_t len)
 {
