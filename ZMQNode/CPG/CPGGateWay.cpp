@@ -76,13 +76,6 @@ void CPGGateWay::handleData(const PacketHead& head,
     }
 }
 
-void CPGGateWay::registerServiceCallback(const PacketHead& head, char* data, size_t len)
-{
-    CPG::ServiceRegisterRS rs;
-    rs.ParseFromArray(data, (int)len);
-    
-    rs.PrintDebugString();
-}
 
 zsock_t* CPGGateWay::loginDealer()
 {

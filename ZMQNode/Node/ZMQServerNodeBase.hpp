@@ -73,6 +73,12 @@ protected:
     virtual void newServiceProfile(const std::list<ServiceProfile>& services);
 
     virtual std::list<ServiceProfile> allServiceProfiles() { return {}; };
+    
+protected: // 统一回调命令处理
+    
+    void registerServiceCallback(const PacketHead& head,
+                                 char* data, size_t len);
+    
 protected:
     CPGServerType serviceType_;
     std::shared_ptr<ZMQReactor> reactor_;

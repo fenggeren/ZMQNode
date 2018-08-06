@@ -21,8 +21,7 @@ public:
         masterClient_ = std::make_shared<ZMQMasterClient>(reactor_, serviceType_);
     }
      
-    void registerServiceCallback(const PacketHead& head,
-                                 char* data, size_t len);
+
     
     
 private: 
