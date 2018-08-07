@@ -40,8 +40,8 @@ namespace CPGFuncHelper
     unsigned short getPort(const std::string& bindAddr)
     {
         auto pos = bindAddr.find_last_of(":"); 
-        assert(pos < addr.size()-1);
-        auto port = addr.substr(pos+1, addr.size());
+        assert(pos < bindAddr.size()-1);
+        auto port = bindAddr.substr(pos+1, bindAddr.size());
         return std::atoi(port.data());
     }
 

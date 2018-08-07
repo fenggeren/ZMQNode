@@ -37,7 +37,7 @@ void ZMQServerNodeBase::readData(const std::string& extra, zmsg_t* msg)
     handleCommonData(head, data, size);
 }
 
-void handleCommonData(const PacketHead& head,
+void ZMQServerNodeBase::handleCommonData(const PacketHead& head,
                         char* data, size_t len)
 {
     switch (head.subCmdID) 

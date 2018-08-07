@@ -43,6 +43,8 @@ public:
         masterClient_ = std::make_shared<ZMQMasterClient>(reactor_, serviceType_);
     }
     
+    virtual ~ZMQServerNodeBase() {}
+    
     void start();
     
     // PUB -> SUB |  ROUTER -> DEALER | REQ -> ROUTER 
@@ -97,7 +99,7 @@ protected: // 统一回调命令处理
         int port = zsock_bind(sock, "tcp://*:*");
         std::string identity = uuid + ":" + std::to_string(port);
         zsock_set_identity(sock, identity.data());
-        reactor_->addSocket(sock, std::bind(&CPGLoginServer::messageRead<TYPE>, this, std::placeholders::_1));
+        reactor_->addSocket(sock, std::bind(&ZMQServerNodeBase::messageRead<TYPE>, this, std::placeholders::_1));
         std::string addr = CPGFuncHelper::connectTCPAddress(port);
         return {sock, addr};
     }
