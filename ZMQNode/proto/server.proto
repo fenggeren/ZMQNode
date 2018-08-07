@@ -1,5 +1,7 @@
 syntax = "proto3";
-package CPG;
+package CPGServer;
+
+// 可能根据服务，这么多借口，进行分开来写。  CPGGateWay? CPGLogin? CPGMatch? CPGManager? CPGCommon?
 
 message ServiceProfile
 {
@@ -33,6 +35,71 @@ message ServiceHeartbeatMsg
     int32 serviceType = 1;
 }
 
+message LoginRQ
+{
+    int32 userid = 1;
+    string token = 2;
+}
 
+message LoginRS 
+{
+    int32 userid = 1;
+    // 登陆状态， 0为成功， 其余为错误码
+    int32 status = 2;
+}
 
+// 单纯的比赛消息 通用型 抽取到另一个文件？
+message MatchInfoMessage
+{
+
+}
+
+// 请求比赛列表信息
+message MatchListInfoRQ
+{
+    int32 userid = 1;
+}
+message MatchListInfoRS
+{
+    int32 userid = 1;
+    int32 status = 2;
+    repeated MatchInfoMessage infos = 3;
+}
+
+// 参加比赛
+message JoinMatchRQ
+{
+    int32 userid = 1;
+    int32 matchid = 2;
+}
+message JoinMatchRS
+{
+    int32 userid = 1;
+    int32 matchid = 2;
+    int32 status = 3;
+}
+
+// 取消参赛
+message UnjoinMatchRQ
+{
+    int32 userid = 1;
+    int32 matchid = 2;
+}
+message UnjoinMatchRS
+{
+    int32 userid = 1;
+    int32 matchid = 2;
+    int32 status = 3;
+}
+
+// 创建新的比赛
+message CreateMatchRQ
+{
+    int32 ruleid = 1;
+}
+message CreateMatchRS 
+{
+    int32 matchid = 1;
+    int32 status = 2;
+}
 

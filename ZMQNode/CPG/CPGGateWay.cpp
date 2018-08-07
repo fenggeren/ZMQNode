@@ -7,9 +7,6 @@
 //
 
 #include "CPGGateWay.hpp"
- 
-
- 
 
 // 抽取出来单独的组件
 void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
@@ -36,7 +33,8 @@ void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
                 {
                     zsock_t* dealer = zsock_new(ZMQ_DEALER);
                     zsock_connect(dealer, "%s", profile.addr.data());
-                    reactor_->addSocket(loginDealer_, std::bind(&CPGGateWay::messageRead<ZMQ_DEALER>, this, std::placeholders::_1));
+                    reactor_->addSocket(loginDealer_, std::bind(&CPGGateWay::messageRead<ZMQ_DEALER>, 
+                                                                    this, std::placeholders::_1));
                     matchDealers_.push_back(dealer);
                 }
             }
@@ -56,7 +54,7 @@ void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
 void CPGGateWay::handleData(const PacketHead& head,
                      char* data, size_t len)
 {
-    
+
 }
 
 

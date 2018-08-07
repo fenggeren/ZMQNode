@@ -43,9 +43,10 @@ private:
     zsock_t* loginDealer_;
     zsock_t* matchSub_;
     
-    // <mid,dealer>
+    // <mid,dealer>  用于通过比赛id，传递消息给指定matchServer, 
+    // 应该由 matchManager负责分配matchServer运行的比赛.
     std::map<int, zsock_t*> matchDealerMap_;
-    // dealers
+    // dealers, 每个dealer连接一个matchServer
     std::list<zsock_t*> matchDealers_;
     std::set<ServiceProfile,CompServiceProfile> matchServices_;
 };

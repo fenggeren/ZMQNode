@@ -39,7 +39,8 @@ void ZMQServerNodeBase::readData(const std::string& extra, zmsg_t* msg)
 
 void ZMQServerNodeBase::handleCommonData(const PacketHead& head,
                         char* data, size_t len)
-{
+{   
+    // 根据head的命令分发处理, 反序列化data->protobuf结构
     switch (head.subCmdID) 
     {
     case kSeviceRegisterRS:

@@ -10,14 +10,14 @@
  
 void CPGLoginServer::newServiceProfile(const std::list<ServiceProfile>& services)
 {
-    // no.
+    // login 暂无 动态连接的服务
 }
 
  
 void CPGLoginServer::handleData(const PacketHead& head,
                                  char* data, size_t len)
 {
- 
+
 }
 
 std::list<ServiceProfile> CPGLoginServer::allServiceProfiles()
