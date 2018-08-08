@@ -7,7 +7,7 @@
 //
 
 #include "CPGMaster.hpp"
-#include "CPGFuncHelper.hpp"
+#include "ZMQServerNodeBase.hpp"
 
 #define SERVER_SESSION_ACTIVITY_TIMEOUT_SEC 60
 

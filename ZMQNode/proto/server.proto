@@ -1,5 +1,5 @@
 syntax = "proto3";
-package CPGServer;
+package CPG;
 
 // 可能根据服务，这么多借口，进行分开来写。  CPGGateWay? CPGLogin? CPGMatch? CPGManager? CPGCommon?
 
@@ -51,7 +51,9 @@ message LoginRS
 // 单纯的比赛消息 通用型 抽取到另一个文件？
 message MatchInfoMessage
 {
-
+    int32 matchid = 1;
+    int32 entryfee = 2;
+    string matchname = 3;
 }
 
 // 请求比赛列表信息

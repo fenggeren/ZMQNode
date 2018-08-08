@@ -38,7 +38,7 @@ namespace protobuf_server_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[5];
+  static const ::google::protobuf::internal::ParseTable schema[16];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -46,6 +46,33 @@ struct TableStruct {
 void AddDescriptors();
 }  // namespace protobuf_server_2eproto
 namespace CPG {
+class CreateMatchRQ;
+class CreateMatchRQDefaultTypeInternal;
+extern CreateMatchRQDefaultTypeInternal _CreateMatchRQ_default_instance_;
+class CreateMatchRS;
+class CreateMatchRSDefaultTypeInternal;
+extern CreateMatchRSDefaultTypeInternal _CreateMatchRS_default_instance_;
+class JoinMatchRQ;
+class JoinMatchRQDefaultTypeInternal;
+extern JoinMatchRQDefaultTypeInternal _JoinMatchRQ_default_instance_;
+class JoinMatchRS;
+class JoinMatchRSDefaultTypeInternal;
+extern JoinMatchRSDefaultTypeInternal _JoinMatchRS_default_instance_;
+class LoginRQ;
+class LoginRQDefaultTypeInternal;
+extern LoginRQDefaultTypeInternal _LoginRQ_default_instance_;
+class LoginRS;
+class LoginRSDefaultTypeInternal;
+extern LoginRSDefaultTypeInternal _LoginRS_default_instance_;
+class MatchInfoMessage;
+class MatchInfoMessageDefaultTypeInternal;
+extern MatchInfoMessageDefaultTypeInternal _MatchInfoMessage_default_instance_;
+class MatchListInfoRQ;
+class MatchListInfoRQDefaultTypeInternal;
+extern MatchListInfoRQDefaultTypeInternal _MatchListInfoRQ_default_instance_;
+class MatchListInfoRS;
+class MatchListInfoRSDefaultTypeInternal;
+extern MatchListInfoRSDefaultTypeInternal _MatchListInfoRS_default_instance_;
 class ServiceHeartbeatMsg;
 class ServiceHeartbeatMsgDefaultTypeInternal;
 extern ServiceHeartbeatMsgDefaultTypeInternal _ServiceHeartbeatMsg_default_instance_;
@@ -61,14 +88,31 @@ extern ServiceRegisterRQDefaultTypeInternal _ServiceRegisterRQ_default_instance_
 class ServiceRegisterRS;
 class ServiceRegisterRSDefaultTypeInternal;
 extern ServiceRegisterRSDefaultTypeInternal _ServiceRegisterRS_default_instance_;
+class UnjoinMatchRQ;
+class UnjoinMatchRQDefaultTypeInternal;
+extern UnjoinMatchRQDefaultTypeInternal _UnjoinMatchRQ_default_instance_;
+class UnjoinMatchRS;
+class UnjoinMatchRSDefaultTypeInternal;
+extern UnjoinMatchRSDefaultTypeInternal _UnjoinMatchRS_default_instance_;
 }  // namespace CPG
 namespace google {
 namespace protobuf {
+template<> ::CPG::CreateMatchRQ* Arena::CreateMaybeMessage<::CPG::CreateMatchRQ>(Arena*);
+template<> ::CPG::CreateMatchRS* Arena::CreateMaybeMessage<::CPG::CreateMatchRS>(Arena*);
+template<> ::CPG::JoinMatchRQ* Arena::CreateMaybeMessage<::CPG::JoinMatchRQ>(Arena*);
+template<> ::CPG::JoinMatchRS* Arena::CreateMaybeMessage<::CPG::JoinMatchRS>(Arena*);
+template<> ::CPG::LoginRQ* Arena::CreateMaybeMessage<::CPG::LoginRQ>(Arena*);
+template<> ::CPG::LoginRS* Arena::CreateMaybeMessage<::CPG::LoginRS>(Arena*);
+template<> ::CPG::MatchInfoMessage* Arena::CreateMaybeMessage<::CPG::MatchInfoMessage>(Arena*);
+template<> ::CPG::MatchListInfoRQ* Arena::CreateMaybeMessage<::CPG::MatchListInfoRQ>(Arena*);
+template<> ::CPG::MatchListInfoRS* Arena::CreateMaybeMessage<::CPG::MatchListInfoRS>(Arena*);
 template<> ::CPG::ServiceHeartbeatMsg* Arena::CreateMaybeMessage<::CPG::ServiceHeartbeatMsg>(Arena*);
 template<> ::CPG::ServiceProfile* Arena::CreateMaybeMessage<::CPG::ServiceProfile>(Arena*);
 template<> ::CPG::ServicePublishNewServicesMsg* Arena::CreateMaybeMessage<::CPG::ServicePublishNewServicesMsg>(Arena*);
 template<> ::CPG::ServiceRegisterRQ* Arena::CreateMaybeMessage<::CPG::ServiceRegisterRQ>(Arena*);
 template<> ::CPG::ServiceRegisterRS* Arena::CreateMaybeMessage<::CPG::ServiceRegisterRS>(Arena*);
+template<> ::CPG::UnjoinMatchRQ* Arena::CreateMaybeMessage<::CPG::UnjoinMatchRQ>(Arena*);
+template<> ::CPG::UnjoinMatchRS* Arena::CreateMaybeMessage<::CPG::UnjoinMatchRS>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace CPG {
@@ -635,6 +679,1252 @@ class ServiceHeartbeatMsg : public ::google::protobuf::Message /* @@protoc_inser
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_server_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class LoginRQ : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.LoginRQ) */ {
+ public:
+  LoginRQ();
+  virtual ~LoginRQ();
+
+  LoginRQ(const LoginRQ& from);
+
+  inline LoginRQ& operator=(const LoginRQ& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  LoginRQ(LoginRQ&& from) noexcept
+    : LoginRQ() {
+    *this = ::std::move(from);
+  }
+
+  inline LoginRQ& operator=(LoginRQ&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const LoginRQ& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const LoginRQ* internal_default_instance() {
+    return reinterpret_cast<const LoginRQ*>(
+               &_LoginRQ_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  void Swap(LoginRQ* other);
+  friend void swap(LoginRQ& a, LoginRQ& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline LoginRQ* New() const final {
+    return CreateMaybeMessage<LoginRQ>(NULL);
+  }
+
+  LoginRQ* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<LoginRQ>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const LoginRQ& from);
+  void MergeFrom(const LoginRQ& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(LoginRQ* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string token = 2;
+  void clear_token();
+  static const int kTokenFieldNumber = 2;
+  const ::std::string& token() const;
+  void set_token(const ::std::string& value);
+  #if LANG_CXX11
+  void set_token(::std::string&& value);
+  #endif
+  void set_token(const char* value);
+  void set_token(const char* value, size_t size);
+  ::std::string* mutable_token();
+  ::std::string* release_token();
+  void set_allocated_token(::std::string* token);
+
+  // int32 userid = 1;
+  void clear_userid();
+  static const int kUseridFieldNumber = 1;
+  ::google::protobuf::int32 userid() const;
+  void set_userid(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:CPG.LoginRQ)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr token_;
+  ::google::protobuf::int32 userid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class LoginRS : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.LoginRS) */ {
+ public:
+  LoginRS();
+  virtual ~LoginRS();
+
+  LoginRS(const LoginRS& from);
+
+  inline LoginRS& operator=(const LoginRS& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  LoginRS(LoginRS&& from) noexcept
+    : LoginRS() {
+    *this = ::std::move(from);
+  }
+
+  inline LoginRS& operator=(LoginRS&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const LoginRS& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const LoginRS* internal_default_instance() {
+    return reinterpret_cast<const LoginRS*>(
+               &_LoginRS_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  void Swap(LoginRS* other);
+  friend void swap(LoginRS& a, LoginRS& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline LoginRS* New() const final {
+    return CreateMaybeMessage<LoginRS>(NULL);
+  }
+
+  LoginRS* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<LoginRS>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const LoginRS& from);
+  void MergeFrom(const LoginRS& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(LoginRS* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 userid = 1;
+  void clear_userid();
+  static const int kUseridFieldNumber = 1;
+  ::google::protobuf::int32 userid() const;
+  void set_userid(::google::protobuf::int32 value);
+
+  // int32 status = 2;
+  void clear_status();
+  static const int kStatusFieldNumber = 2;
+  ::google::protobuf::int32 status() const;
+  void set_status(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:CPG.LoginRS)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::int32 userid_;
+  ::google::protobuf::int32 status_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class MatchInfoMessage : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.MatchInfoMessage) */ {
+ public:
+  MatchInfoMessage();
+  virtual ~MatchInfoMessage();
+
+  MatchInfoMessage(const MatchInfoMessage& from);
+
+  inline MatchInfoMessage& operator=(const MatchInfoMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MatchInfoMessage(MatchInfoMessage&& from) noexcept
+    : MatchInfoMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline MatchInfoMessage& operator=(MatchInfoMessage&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MatchInfoMessage& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MatchInfoMessage* internal_default_instance() {
+    return reinterpret_cast<const MatchInfoMessage*>(
+               &_MatchInfoMessage_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
+
+  void Swap(MatchInfoMessage* other);
+  friend void swap(MatchInfoMessage& a, MatchInfoMessage& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MatchInfoMessage* New() const final {
+    return CreateMaybeMessage<MatchInfoMessage>(NULL);
+  }
+
+  MatchInfoMessage* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MatchInfoMessage>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MatchInfoMessage& from);
+  void MergeFrom(const MatchInfoMessage& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MatchInfoMessage* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string matchname = 3;
+  void clear_matchname();
+  static const int kMatchnameFieldNumber = 3;
+  const ::std::string& matchname() const;
+  void set_matchname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_matchname(::std::string&& value);
+  #endif
+  void set_matchname(const char* value);
+  void set_matchname(const char* value, size_t size);
+  ::std::string* mutable_matchname();
+  ::std::string* release_matchname();
+  void set_allocated_matchname(::std::string* matchname);
+
+  // int32 matchid = 1;
+  void clear_matchid();
+  static const int kMatchidFieldNumber = 1;
+  ::google::protobuf::int32 matchid() const;
+  void set_matchid(::google::protobuf::int32 value);
+
+  // int32 entryfee = 2;
+  void clear_entryfee();
+  static const int kEntryfeeFieldNumber = 2;
+  ::google::protobuf::int32 entryfee() const;
+  void set_entryfee(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:CPG.MatchInfoMessage)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr matchname_;
+  ::google::protobuf::int32 matchid_;
+  ::google::protobuf::int32 entryfee_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class MatchListInfoRQ : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.MatchListInfoRQ) */ {
+ public:
+  MatchListInfoRQ();
+  virtual ~MatchListInfoRQ();
+
+  MatchListInfoRQ(const MatchListInfoRQ& from);
+
+  inline MatchListInfoRQ& operator=(const MatchListInfoRQ& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MatchListInfoRQ(MatchListInfoRQ&& from) noexcept
+    : MatchListInfoRQ() {
+    *this = ::std::move(from);
+  }
+
+  inline MatchListInfoRQ& operator=(MatchListInfoRQ&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MatchListInfoRQ& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MatchListInfoRQ* internal_default_instance() {
+    return reinterpret_cast<const MatchListInfoRQ*>(
+               &_MatchListInfoRQ_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  void Swap(MatchListInfoRQ* other);
+  friend void swap(MatchListInfoRQ& a, MatchListInfoRQ& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MatchListInfoRQ* New() const final {
+    return CreateMaybeMessage<MatchListInfoRQ>(NULL);
+  }
+
+  MatchListInfoRQ* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MatchListInfoRQ>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MatchListInfoRQ& from);
+  void MergeFrom(const MatchListInfoRQ& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MatchListInfoRQ* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 userid = 1;
+  void clear_userid();
+  static const int kUseridFieldNumber = 1;
+  ::google::protobuf::int32 userid() const;
+  void set_userid(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:CPG.MatchListInfoRQ)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::int32 userid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class MatchListInfoRS : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.MatchListInfoRS) */ {
+ public:
+  MatchListInfoRS();
+  virtual ~MatchListInfoRS();
+
+  MatchListInfoRS(const MatchListInfoRS& from);
+
+  inline MatchListInfoRS& operator=(const MatchListInfoRS& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MatchListInfoRS(MatchListInfoRS&& from) noexcept
+    : MatchListInfoRS() {
+    *this = ::std::move(from);
+  }
+
+  inline MatchListInfoRS& operator=(MatchListInfoRS&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MatchListInfoRS& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MatchListInfoRS* internal_default_instance() {
+    return reinterpret_cast<const MatchListInfoRS*>(
+               &_MatchListInfoRS_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  void Swap(MatchListInfoRS* other);
+  friend void swap(MatchListInfoRS& a, MatchListInfoRS& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MatchListInfoRS* New() const final {
+    return CreateMaybeMessage<MatchListInfoRS>(NULL);
+  }
+
+  MatchListInfoRS* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<MatchListInfoRS>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const MatchListInfoRS& from);
+  void MergeFrom(const MatchListInfoRS& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MatchListInfoRS* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .CPG.MatchInfoMessage infos = 3;
+  int infos_size() const;
+  void clear_infos();
+  static const int kInfosFieldNumber = 3;
+  ::CPG::MatchInfoMessage* mutable_infos(int index);
+  ::google::protobuf::RepeatedPtrField< ::CPG::MatchInfoMessage >*
+      mutable_infos();
+  const ::CPG::MatchInfoMessage& infos(int index) const;
+  ::CPG::MatchInfoMessage* add_infos();
+  const ::google::protobuf::RepeatedPtrField< ::CPG::MatchInfoMessage >&
+      infos() const;
+
+  // int32 userid = 1;
+  void clear_userid();
+  static const int kUseridFieldNumber = 1;
+  ::google::protobuf::int32 userid() const;
+  void set_userid(::google::protobuf::int32 value);
+
+  // int32 status = 2;
+  void clear_status();
+  static const int kStatusFieldNumber = 2;
+  ::google::protobuf::int32 status() const;
+  void set_status(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:CPG.MatchListInfoRS)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::CPG::MatchInfoMessage > infos_;
+  ::google::protobuf::int32 userid_;
+  ::google::protobuf::int32 status_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class JoinMatchRQ : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.JoinMatchRQ) */ {
+ public:
+  JoinMatchRQ();
+  virtual ~JoinMatchRQ();
+
+  JoinMatchRQ(const JoinMatchRQ& from);
+
+  inline JoinMatchRQ& operator=(const JoinMatchRQ& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  JoinMatchRQ(JoinMatchRQ&& from) noexcept
+    : JoinMatchRQ() {
+    *this = ::std::move(from);
+  }
+
+  inline JoinMatchRQ& operator=(JoinMatchRQ&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const JoinMatchRQ& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const JoinMatchRQ* internal_default_instance() {
+    return reinterpret_cast<const JoinMatchRQ*>(
+               &_JoinMatchRQ_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  void Swap(JoinMatchRQ* other);
+  friend void swap(JoinMatchRQ& a, JoinMatchRQ& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline JoinMatchRQ* New() const final {
+    return CreateMaybeMessage<JoinMatchRQ>(NULL);
+  }
+
+  JoinMatchRQ* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<JoinMatchRQ>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const JoinMatchRQ& from);
+  void MergeFrom(const JoinMatchRQ& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(JoinMatchRQ* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 userid = 1;
+  void clear_userid();
+  static const int kUseridFieldNumber = 1;
+  ::google::protobuf::int32 userid() const;
+  void set_userid(::google::protobuf::int32 value);
+
+  // int32 matchid = 2;
+  void clear_matchid();
+  static const int kMatchidFieldNumber = 2;
+  ::google::protobuf::int32 matchid() const;
+  void set_matchid(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:CPG.JoinMatchRQ)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::int32 userid_;
+  ::google::protobuf::int32 matchid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class JoinMatchRS : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.JoinMatchRS) */ {
+ public:
+  JoinMatchRS();
+  virtual ~JoinMatchRS();
+
+  JoinMatchRS(const JoinMatchRS& from);
+
+  inline JoinMatchRS& operator=(const JoinMatchRS& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  JoinMatchRS(JoinMatchRS&& from) noexcept
+    : JoinMatchRS() {
+    *this = ::std::move(from);
+  }
+
+  inline JoinMatchRS& operator=(JoinMatchRS&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const JoinMatchRS& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const JoinMatchRS* internal_default_instance() {
+    return reinterpret_cast<const JoinMatchRS*>(
+               &_JoinMatchRS_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  void Swap(JoinMatchRS* other);
+  friend void swap(JoinMatchRS& a, JoinMatchRS& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline JoinMatchRS* New() const final {
+    return CreateMaybeMessage<JoinMatchRS>(NULL);
+  }
+
+  JoinMatchRS* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<JoinMatchRS>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const JoinMatchRS& from);
+  void MergeFrom(const JoinMatchRS& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(JoinMatchRS* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 userid = 1;
+  void clear_userid();
+  static const int kUseridFieldNumber = 1;
+  ::google::protobuf::int32 userid() const;
+  void set_userid(::google::protobuf::int32 value);
+
+  // int32 matchid = 2;
+  void clear_matchid();
+  static const int kMatchidFieldNumber = 2;
+  ::google::protobuf::int32 matchid() const;
+  void set_matchid(::google::protobuf::int32 value);
+
+  // int32 status = 3;
+  void clear_status();
+  static const int kStatusFieldNumber = 3;
+  ::google::protobuf::int32 status() const;
+  void set_status(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:CPG.JoinMatchRS)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::int32 userid_;
+  ::google::protobuf::int32 matchid_;
+  ::google::protobuf::int32 status_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class UnjoinMatchRQ : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.UnjoinMatchRQ) */ {
+ public:
+  UnjoinMatchRQ();
+  virtual ~UnjoinMatchRQ();
+
+  UnjoinMatchRQ(const UnjoinMatchRQ& from);
+
+  inline UnjoinMatchRQ& operator=(const UnjoinMatchRQ& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  UnjoinMatchRQ(UnjoinMatchRQ&& from) noexcept
+    : UnjoinMatchRQ() {
+    *this = ::std::move(from);
+  }
+
+  inline UnjoinMatchRQ& operator=(UnjoinMatchRQ&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UnjoinMatchRQ& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const UnjoinMatchRQ* internal_default_instance() {
+    return reinterpret_cast<const UnjoinMatchRQ*>(
+               &_UnjoinMatchRQ_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    12;
+
+  void Swap(UnjoinMatchRQ* other);
+  friend void swap(UnjoinMatchRQ& a, UnjoinMatchRQ& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline UnjoinMatchRQ* New() const final {
+    return CreateMaybeMessage<UnjoinMatchRQ>(NULL);
+  }
+
+  UnjoinMatchRQ* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<UnjoinMatchRQ>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const UnjoinMatchRQ& from);
+  void MergeFrom(const UnjoinMatchRQ& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UnjoinMatchRQ* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 userid = 1;
+  void clear_userid();
+  static const int kUseridFieldNumber = 1;
+  ::google::protobuf::int32 userid() const;
+  void set_userid(::google::protobuf::int32 value);
+
+  // int32 matchid = 2;
+  void clear_matchid();
+  static const int kMatchidFieldNumber = 2;
+  ::google::protobuf::int32 matchid() const;
+  void set_matchid(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:CPG.UnjoinMatchRQ)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::int32 userid_;
+  ::google::protobuf::int32 matchid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class UnjoinMatchRS : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.UnjoinMatchRS) */ {
+ public:
+  UnjoinMatchRS();
+  virtual ~UnjoinMatchRS();
+
+  UnjoinMatchRS(const UnjoinMatchRS& from);
+
+  inline UnjoinMatchRS& operator=(const UnjoinMatchRS& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  UnjoinMatchRS(UnjoinMatchRS&& from) noexcept
+    : UnjoinMatchRS() {
+    *this = ::std::move(from);
+  }
+
+  inline UnjoinMatchRS& operator=(UnjoinMatchRS&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UnjoinMatchRS& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const UnjoinMatchRS* internal_default_instance() {
+    return reinterpret_cast<const UnjoinMatchRS*>(
+               &_UnjoinMatchRS_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    13;
+
+  void Swap(UnjoinMatchRS* other);
+  friend void swap(UnjoinMatchRS& a, UnjoinMatchRS& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline UnjoinMatchRS* New() const final {
+    return CreateMaybeMessage<UnjoinMatchRS>(NULL);
+  }
+
+  UnjoinMatchRS* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<UnjoinMatchRS>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const UnjoinMatchRS& from);
+  void MergeFrom(const UnjoinMatchRS& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UnjoinMatchRS* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 userid = 1;
+  void clear_userid();
+  static const int kUseridFieldNumber = 1;
+  ::google::protobuf::int32 userid() const;
+  void set_userid(::google::protobuf::int32 value);
+
+  // int32 matchid = 2;
+  void clear_matchid();
+  static const int kMatchidFieldNumber = 2;
+  ::google::protobuf::int32 matchid() const;
+  void set_matchid(::google::protobuf::int32 value);
+
+  // int32 status = 3;
+  void clear_status();
+  static const int kStatusFieldNumber = 3;
+  ::google::protobuf::int32 status() const;
+  void set_status(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:CPG.UnjoinMatchRS)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::int32 userid_;
+  ::google::protobuf::int32 matchid_;
+  ::google::protobuf::int32 status_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class CreateMatchRQ : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.CreateMatchRQ) */ {
+ public:
+  CreateMatchRQ();
+  virtual ~CreateMatchRQ();
+
+  CreateMatchRQ(const CreateMatchRQ& from);
+
+  inline CreateMatchRQ& operator=(const CreateMatchRQ& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  CreateMatchRQ(CreateMatchRQ&& from) noexcept
+    : CreateMatchRQ() {
+    *this = ::std::move(from);
+  }
+
+  inline CreateMatchRQ& operator=(CreateMatchRQ&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CreateMatchRQ& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CreateMatchRQ* internal_default_instance() {
+    return reinterpret_cast<const CreateMatchRQ*>(
+               &_CreateMatchRQ_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  void Swap(CreateMatchRQ* other);
+  friend void swap(CreateMatchRQ& a, CreateMatchRQ& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CreateMatchRQ* New() const final {
+    return CreateMaybeMessage<CreateMatchRQ>(NULL);
+  }
+
+  CreateMatchRQ* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<CreateMatchRQ>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const CreateMatchRQ& from);
+  void MergeFrom(const CreateMatchRQ& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CreateMatchRQ* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 ruleid = 1;
+  void clear_ruleid();
+  static const int kRuleidFieldNumber = 1;
+  ::google::protobuf::int32 ruleid() const;
+  void set_ruleid(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:CPG.CreateMatchRQ)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::int32 ruleid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class CreateMatchRS : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPG.CreateMatchRS) */ {
+ public:
+  CreateMatchRS();
+  virtual ~CreateMatchRS();
+
+  CreateMatchRS(const CreateMatchRS& from);
+
+  inline CreateMatchRS& operator=(const CreateMatchRS& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  CreateMatchRS(CreateMatchRS&& from) noexcept
+    : CreateMatchRS() {
+    *this = ::std::move(from);
+  }
+
+  inline CreateMatchRS& operator=(CreateMatchRS&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CreateMatchRS& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CreateMatchRS* internal_default_instance() {
+    return reinterpret_cast<const CreateMatchRS*>(
+               &_CreateMatchRS_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    15;
+
+  void Swap(CreateMatchRS* other);
+  friend void swap(CreateMatchRS& a, CreateMatchRS& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CreateMatchRS* New() const final {
+    return CreateMaybeMessage<CreateMatchRS>(NULL);
+  }
+
+  CreateMatchRS* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<CreateMatchRS>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const CreateMatchRS& from);
+  void MergeFrom(const CreateMatchRS& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CreateMatchRS* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 matchid = 1;
+  void clear_matchid();
+  static const int kMatchidFieldNumber = 1;
+  ::google::protobuf::int32 matchid() const;
+  void set_matchid(::google::protobuf::int32 value);
+
+  // int32 status = 2;
+  void clear_status();
+  static const int kStatusFieldNumber = 2;
+  ::google::protobuf::int32 status() const;
+  void set_status(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:CPG.CreateMatchRS)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::int32 matchid_;
+  ::google::protobuf::int32 status_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -861,9 +2151,505 @@ inline void ServiceHeartbeatMsg::set_servicetype(::google::protobuf::int32 value
   // @@protoc_insertion_point(field_set:CPG.ServiceHeartbeatMsg.serviceType)
 }
 
+// -------------------------------------------------------------------
+
+// LoginRQ
+
+// int32 userid = 1;
+inline void LoginRQ::clear_userid() {
+  userid_ = 0;
+}
+inline ::google::protobuf::int32 LoginRQ::userid() const {
+  // @@protoc_insertion_point(field_get:CPG.LoginRQ.userid)
+  return userid_;
+}
+inline void LoginRQ::set_userid(::google::protobuf::int32 value) {
+  
+  userid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.LoginRQ.userid)
+}
+
+// string token = 2;
+inline void LoginRQ::clear_token() {
+  token_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& LoginRQ::token() const {
+  // @@protoc_insertion_point(field_get:CPG.LoginRQ.token)
+  return token_.GetNoArena();
+}
+inline void LoginRQ::set_token(const ::std::string& value) {
+  
+  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CPG.LoginRQ.token)
+}
+#if LANG_CXX11
+inline void LoginRQ::set_token(::std::string&& value) {
+  
+  token_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CPG.LoginRQ.token)
+}
+#endif
+inline void LoginRQ::set_token(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CPG.LoginRQ.token)
+}
+inline void LoginRQ::set_token(const char* value, size_t size) {
+  
+  token_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CPG.LoginRQ.token)
+}
+inline ::std::string* LoginRQ::mutable_token() {
+  
+  // @@protoc_insertion_point(field_mutable:CPG.LoginRQ.token)
+  return token_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* LoginRQ::release_token() {
+  // @@protoc_insertion_point(field_release:CPG.LoginRQ.token)
+  
+  return token_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void LoginRQ::set_allocated_token(::std::string* token) {
+  if (token != NULL) {
+    
+  } else {
+    
+  }
+  token_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), token);
+  // @@protoc_insertion_point(field_set_allocated:CPG.LoginRQ.token)
+}
+
+// -------------------------------------------------------------------
+
+// LoginRS
+
+// int32 userid = 1;
+inline void LoginRS::clear_userid() {
+  userid_ = 0;
+}
+inline ::google::protobuf::int32 LoginRS::userid() const {
+  // @@protoc_insertion_point(field_get:CPG.LoginRS.userid)
+  return userid_;
+}
+inline void LoginRS::set_userid(::google::protobuf::int32 value) {
+  
+  userid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.LoginRS.userid)
+}
+
+// int32 status = 2;
+inline void LoginRS::clear_status() {
+  status_ = 0;
+}
+inline ::google::protobuf::int32 LoginRS::status() const {
+  // @@protoc_insertion_point(field_get:CPG.LoginRS.status)
+  return status_;
+}
+inline void LoginRS::set_status(::google::protobuf::int32 value) {
+  
+  status_ = value;
+  // @@protoc_insertion_point(field_set:CPG.LoginRS.status)
+}
+
+// -------------------------------------------------------------------
+
+// MatchInfoMessage
+
+// int32 matchid = 1;
+inline void MatchInfoMessage::clear_matchid() {
+  matchid_ = 0;
+}
+inline ::google::protobuf::int32 MatchInfoMessage::matchid() const {
+  // @@protoc_insertion_point(field_get:CPG.MatchInfoMessage.matchid)
+  return matchid_;
+}
+inline void MatchInfoMessage::set_matchid(::google::protobuf::int32 value) {
+  
+  matchid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.MatchInfoMessage.matchid)
+}
+
+// int32 entryfee = 2;
+inline void MatchInfoMessage::clear_entryfee() {
+  entryfee_ = 0;
+}
+inline ::google::protobuf::int32 MatchInfoMessage::entryfee() const {
+  // @@protoc_insertion_point(field_get:CPG.MatchInfoMessage.entryfee)
+  return entryfee_;
+}
+inline void MatchInfoMessage::set_entryfee(::google::protobuf::int32 value) {
+  
+  entryfee_ = value;
+  // @@protoc_insertion_point(field_set:CPG.MatchInfoMessage.entryfee)
+}
+
+// string matchname = 3;
+inline void MatchInfoMessage::clear_matchname() {
+  matchname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MatchInfoMessage::matchname() const {
+  // @@protoc_insertion_point(field_get:CPG.MatchInfoMessage.matchname)
+  return matchname_.GetNoArena();
+}
+inline void MatchInfoMessage::set_matchname(const ::std::string& value) {
+  
+  matchname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:CPG.MatchInfoMessage.matchname)
+}
+#if LANG_CXX11
+inline void MatchInfoMessage::set_matchname(::std::string&& value) {
+  
+  matchname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CPG.MatchInfoMessage.matchname)
+}
+#endif
+inline void MatchInfoMessage::set_matchname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  matchname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CPG.MatchInfoMessage.matchname)
+}
+inline void MatchInfoMessage::set_matchname(const char* value, size_t size) {
+  
+  matchname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CPG.MatchInfoMessage.matchname)
+}
+inline ::std::string* MatchInfoMessage::mutable_matchname() {
+  
+  // @@protoc_insertion_point(field_mutable:CPG.MatchInfoMessage.matchname)
+  return matchname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MatchInfoMessage::release_matchname() {
+  // @@protoc_insertion_point(field_release:CPG.MatchInfoMessage.matchname)
+  
+  return matchname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MatchInfoMessage::set_allocated_matchname(::std::string* matchname) {
+  if (matchname != NULL) {
+    
+  } else {
+    
+  }
+  matchname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), matchname);
+  // @@protoc_insertion_point(field_set_allocated:CPG.MatchInfoMessage.matchname)
+}
+
+// -------------------------------------------------------------------
+
+// MatchListInfoRQ
+
+// int32 userid = 1;
+inline void MatchListInfoRQ::clear_userid() {
+  userid_ = 0;
+}
+inline ::google::protobuf::int32 MatchListInfoRQ::userid() const {
+  // @@protoc_insertion_point(field_get:CPG.MatchListInfoRQ.userid)
+  return userid_;
+}
+inline void MatchListInfoRQ::set_userid(::google::protobuf::int32 value) {
+  
+  userid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.MatchListInfoRQ.userid)
+}
+
+// -------------------------------------------------------------------
+
+// MatchListInfoRS
+
+// int32 userid = 1;
+inline void MatchListInfoRS::clear_userid() {
+  userid_ = 0;
+}
+inline ::google::protobuf::int32 MatchListInfoRS::userid() const {
+  // @@protoc_insertion_point(field_get:CPG.MatchListInfoRS.userid)
+  return userid_;
+}
+inline void MatchListInfoRS::set_userid(::google::protobuf::int32 value) {
+  
+  userid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.MatchListInfoRS.userid)
+}
+
+// int32 status = 2;
+inline void MatchListInfoRS::clear_status() {
+  status_ = 0;
+}
+inline ::google::protobuf::int32 MatchListInfoRS::status() const {
+  // @@protoc_insertion_point(field_get:CPG.MatchListInfoRS.status)
+  return status_;
+}
+inline void MatchListInfoRS::set_status(::google::protobuf::int32 value) {
+  
+  status_ = value;
+  // @@protoc_insertion_point(field_set:CPG.MatchListInfoRS.status)
+}
+
+// repeated .CPG.MatchInfoMessage infos = 3;
+inline int MatchListInfoRS::infos_size() const {
+  return infos_.size();
+}
+inline void MatchListInfoRS::clear_infos() {
+  infos_.Clear();
+}
+inline ::CPG::MatchInfoMessage* MatchListInfoRS::mutable_infos(int index) {
+  // @@protoc_insertion_point(field_mutable:CPG.MatchListInfoRS.infos)
+  return infos_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::CPG::MatchInfoMessage >*
+MatchListInfoRS::mutable_infos() {
+  // @@protoc_insertion_point(field_mutable_list:CPG.MatchListInfoRS.infos)
+  return &infos_;
+}
+inline const ::CPG::MatchInfoMessage& MatchListInfoRS::infos(int index) const {
+  // @@protoc_insertion_point(field_get:CPG.MatchListInfoRS.infos)
+  return infos_.Get(index);
+}
+inline ::CPG::MatchInfoMessage* MatchListInfoRS::add_infos() {
+  // @@protoc_insertion_point(field_add:CPG.MatchListInfoRS.infos)
+  return infos_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::CPG::MatchInfoMessage >&
+MatchListInfoRS::infos() const {
+  // @@protoc_insertion_point(field_list:CPG.MatchListInfoRS.infos)
+  return infos_;
+}
+
+// -------------------------------------------------------------------
+
+// JoinMatchRQ
+
+// int32 userid = 1;
+inline void JoinMatchRQ::clear_userid() {
+  userid_ = 0;
+}
+inline ::google::protobuf::int32 JoinMatchRQ::userid() const {
+  // @@protoc_insertion_point(field_get:CPG.JoinMatchRQ.userid)
+  return userid_;
+}
+inline void JoinMatchRQ::set_userid(::google::protobuf::int32 value) {
+  
+  userid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.JoinMatchRQ.userid)
+}
+
+// int32 matchid = 2;
+inline void JoinMatchRQ::clear_matchid() {
+  matchid_ = 0;
+}
+inline ::google::protobuf::int32 JoinMatchRQ::matchid() const {
+  // @@protoc_insertion_point(field_get:CPG.JoinMatchRQ.matchid)
+  return matchid_;
+}
+inline void JoinMatchRQ::set_matchid(::google::protobuf::int32 value) {
+  
+  matchid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.JoinMatchRQ.matchid)
+}
+
+// -------------------------------------------------------------------
+
+// JoinMatchRS
+
+// int32 userid = 1;
+inline void JoinMatchRS::clear_userid() {
+  userid_ = 0;
+}
+inline ::google::protobuf::int32 JoinMatchRS::userid() const {
+  // @@protoc_insertion_point(field_get:CPG.JoinMatchRS.userid)
+  return userid_;
+}
+inline void JoinMatchRS::set_userid(::google::protobuf::int32 value) {
+  
+  userid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.JoinMatchRS.userid)
+}
+
+// int32 matchid = 2;
+inline void JoinMatchRS::clear_matchid() {
+  matchid_ = 0;
+}
+inline ::google::protobuf::int32 JoinMatchRS::matchid() const {
+  // @@protoc_insertion_point(field_get:CPG.JoinMatchRS.matchid)
+  return matchid_;
+}
+inline void JoinMatchRS::set_matchid(::google::protobuf::int32 value) {
+  
+  matchid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.JoinMatchRS.matchid)
+}
+
+// int32 status = 3;
+inline void JoinMatchRS::clear_status() {
+  status_ = 0;
+}
+inline ::google::protobuf::int32 JoinMatchRS::status() const {
+  // @@protoc_insertion_point(field_get:CPG.JoinMatchRS.status)
+  return status_;
+}
+inline void JoinMatchRS::set_status(::google::protobuf::int32 value) {
+  
+  status_ = value;
+  // @@protoc_insertion_point(field_set:CPG.JoinMatchRS.status)
+}
+
+// -------------------------------------------------------------------
+
+// UnjoinMatchRQ
+
+// int32 userid = 1;
+inline void UnjoinMatchRQ::clear_userid() {
+  userid_ = 0;
+}
+inline ::google::protobuf::int32 UnjoinMatchRQ::userid() const {
+  // @@protoc_insertion_point(field_get:CPG.UnjoinMatchRQ.userid)
+  return userid_;
+}
+inline void UnjoinMatchRQ::set_userid(::google::protobuf::int32 value) {
+  
+  userid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.UnjoinMatchRQ.userid)
+}
+
+// int32 matchid = 2;
+inline void UnjoinMatchRQ::clear_matchid() {
+  matchid_ = 0;
+}
+inline ::google::protobuf::int32 UnjoinMatchRQ::matchid() const {
+  // @@protoc_insertion_point(field_get:CPG.UnjoinMatchRQ.matchid)
+  return matchid_;
+}
+inline void UnjoinMatchRQ::set_matchid(::google::protobuf::int32 value) {
+  
+  matchid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.UnjoinMatchRQ.matchid)
+}
+
+// -------------------------------------------------------------------
+
+// UnjoinMatchRS
+
+// int32 userid = 1;
+inline void UnjoinMatchRS::clear_userid() {
+  userid_ = 0;
+}
+inline ::google::protobuf::int32 UnjoinMatchRS::userid() const {
+  // @@protoc_insertion_point(field_get:CPG.UnjoinMatchRS.userid)
+  return userid_;
+}
+inline void UnjoinMatchRS::set_userid(::google::protobuf::int32 value) {
+  
+  userid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.UnjoinMatchRS.userid)
+}
+
+// int32 matchid = 2;
+inline void UnjoinMatchRS::clear_matchid() {
+  matchid_ = 0;
+}
+inline ::google::protobuf::int32 UnjoinMatchRS::matchid() const {
+  // @@protoc_insertion_point(field_get:CPG.UnjoinMatchRS.matchid)
+  return matchid_;
+}
+inline void UnjoinMatchRS::set_matchid(::google::protobuf::int32 value) {
+  
+  matchid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.UnjoinMatchRS.matchid)
+}
+
+// int32 status = 3;
+inline void UnjoinMatchRS::clear_status() {
+  status_ = 0;
+}
+inline ::google::protobuf::int32 UnjoinMatchRS::status() const {
+  // @@protoc_insertion_point(field_get:CPG.UnjoinMatchRS.status)
+  return status_;
+}
+inline void UnjoinMatchRS::set_status(::google::protobuf::int32 value) {
+  
+  status_ = value;
+  // @@protoc_insertion_point(field_set:CPG.UnjoinMatchRS.status)
+}
+
+// -------------------------------------------------------------------
+
+// CreateMatchRQ
+
+// int32 ruleid = 1;
+inline void CreateMatchRQ::clear_ruleid() {
+  ruleid_ = 0;
+}
+inline ::google::protobuf::int32 CreateMatchRQ::ruleid() const {
+  // @@protoc_insertion_point(field_get:CPG.CreateMatchRQ.ruleid)
+  return ruleid_;
+}
+inline void CreateMatchRQ::set_ruleid(::google::protobuf::int32 value) {
+  
+  ruleid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.CreateMatchRQ.ruleid)
+}
+
+// -------------------------------------------------------------------
+
+// CreateMatchRS
+
+// int32 matchid = 1;
+inline void CreateMatchRS::clear_matchid() {
+  matchid_ = 0;
+}
+inline ::google::protobuf::int32 CreateMatchRS::matchid() const {
+  // @@protoc_insertion_point(field_get:CPG.CreateMatchRS.matchid)
+  return matchid_;
+}
+inline void CreateMatchRS::set_matchid(::google::protobuf::int32 value) {
+  
+  matchid_ = value;
+  // @@protoc_insertion_point(field_set:CPG.CreateMatchRS.matchid)
+}
+
+// int32 status = 2;
+inline void CreateMatchRS::clear_status() {
+  status_ = 0;
+}
+inline ::google::protobuf::int32 CreateMatchRS::status() const {
+  // @@protoc_insertion_point(field_get:CPG.CreateMatchRS.status)
+  return status_;
+}
+inline void CreateMatchRS::set_status(::google::protobuf::int32 value) {
+  
+  status_ = value;
+  // @@protoc_insertion_point(field_set:CPG.CreateMatchRS.status)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
