@@ -104,10 +104,14 @@ protected: // 统一回调命令处理
         return {sock, addr};
     }
 protected:
+    using MessageHandler = std::function<void(const char*, size_t)>;
+    
     CPGServerType serviceType_;
     std::shared_ptr<ZMQReactor> reactor_;
     std::shared_ptr<ZMQMasterClient> masterClient_;
     std::string uuid;
+    
+    std::unordered_map<int, MessageHandler> messageHandlers_;
 };
 
 

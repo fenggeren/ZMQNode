@@ -19,6 +19,11 @@ public:
         uuid = std::string("GS-") + CPGFuncHelper::localIP();
     }
     
+public:
+
+    void sendLoginRQ(int uid, const std::string& token);
+    
+    void sendMatchListRQ(int uid);
     
 private: 
     
@@ -39,8 +44,10 @@ private:
     
     zsock_t* loginDealer();
     zsock_t* matchSub();
+    zsock_t* matchManagerDealer();
 private:
     zsock_t* loginDealer_;
+    zsock_t* matchManagerDealer_;
     zsock_t* matchSub_;
     
     // <mid,dealer>  用于通过比赛id，传递消息给指定matchServer, 

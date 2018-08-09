@@ -20,7 +20,10 @@ void CPGMatchServer::newServiceProfile(const std::list<ServiceProfile>& services
         // 新的 matchManager注册到系统， matchServer需要连接到该服务
         if (profile.serviceType == kMatchManager)
         {
-
+            if (profile.socketType == ZMQ_ROUTER)
+            {
+                zsock_connect(matchManagerDealer(), "%s", profile.addr.data());
+            }
         }
     }
 }
@@ -33,7 +36,7 @@ void CPGMatchServer::handleData(const PacketHead& head,
 }
  
 
-std::list<ServiceProfile> CPGLoginServer::allServiceProfiles()
+std::list<ServiceProfile> CPGMatchServer::allServiceProfiles()
 {
     auto tuple = createServiceSocket<ZMQ_ROUTER>();
     router_ = std::get<0>(tuple);   
@@ -43,4 +46,14 @@ std::list<ServiceProfile> CPGLoginServer::allServiceProfiles()
 
     return {{serviceType_, ZMQ_ROUTER, std::get<1>(tuple)}
             {serviceType_, ZMQ_SUB, std::get<1>(tuple)}};
+}
+
+zsock_t* CPGMatchServer::matchManagerDealer()
+{
+    if (!matchManagerDealer_)
+    {
+        matchManagerDealer_ = zsock_new(ZMQ_DEALER);
+        reactor_->addSocket(matchManagerDealer_, std::bind(&CPGLoginServer::messageRead<ZMQ_DEALER>, this, std::placeholders::_1));
+    }
+    return matchManagerDealer_;
 }

@@ -45,7 +45,14 @@ void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
         }
         else if (profile.serviceType == kMatchManager)
         {
-            zsock_connect(matchSub(), "%s", profile.addr.data());
+            if (profile.socketType == ZMQ_PUB)
+            {
+                zsock_connect(matchSub(), "%s", profile.addr.data());
+            }
+            else if (profile.socketType == ZMQ_ROUTER)
+            {
+                zsock_connect(matchManagerDealer(), "%s", profile.addr.data());
+            }
         }
     }
 }
@@ -54,7 +61,7 @@ void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
 void CPGGateWay::handleData(const PacketHead& head,
                      char* data, size_t len)
 {
-
+    
 }
 
 
@@ -75,6 +82,41 @@ zsock_t* CPGGateWay::matchSub()
         reactor_->addSocket(matchSub_, std::bind(&CPGGateWay::messageRead<ZMQ_SUB>, this, std::placeholders::_1));
     }
     return matchSub_;
+}
+zsock_t* CPGGateWay::matchManagerDealer()
+{
+    if (!matchManagerDealer_)
+    {
+        matchManagerDealer_ = zsock_new(ZMQ_DEALER);
+        reactor_->addSocket(matchManagerDealer_, std::bind(&CPGGateWay::messageRead<ZMQ_DEALER>, this, std::placeholders::_1));
+    }
+    return matchManagerDealer_;
+}
+
+
+#pragma mark -
+
+void CPGGateWay::sendLoginRQ(int uid, const std::string& token)
+{
+    CPG::LoginRQ rq;
+    rq.set_userid(uid);
+    rq.set_token(token);
+
+    zmsg_t* msg = zmsg_new();
+    CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceLoginRQ, rq);
+    zmsg_send(&msg, loginDealer());
+    zmsg_destroy(&msg);
+}
+
+void CPGGateWay::sendMatchListRQ(int uid)
+{
+    CPG::MatchListInfoRQ rq;
+    rq.set_userid(uid);
+    
+    zmsg_t* msg = zmsg_new();
+    CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceMatchListRQ, rq);
+    zmsg_send(&msg, loginDealer());
+    zmsg_destroy(&msg);
 }
 
 

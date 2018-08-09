@@ -20,6 +20,8 @@
 		1FAEEEF82112E7FB0099D3FF /* CPGLoginServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEEEF62112E7FB0099D3FF /* CPGLoginServer.cpp */; };
 		1FE86DEE211ACB7300ACC0F6 /* ZMQServerNodeBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE86DED211ACB7300ACC0F6 /* ZMQServerNodeBase.cpp */; };
 		1FE86DF1211ACC2100ACC0F6 /* CPGFuncHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE86DF0211ACC2100ACC0F6 /* CPGFuncHelper.cpp */; };
+		28654B3D211C62E7009CF381 /* CPGMatchManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28654B39211C62E7009CF381 /* CPGMatchManager.cpp */; };
+		28654B3E211C62E7009CF381 /* CPGMatchServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28654B3B211C62E7009CF381 /* CPGMatchServer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,6 +65,10 @@
 		1FE86DED211ACB7300ACC0F6 /* ZMQServerNodeBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZMQServerNodeBase.cpp; sourceTree = "<group>"; };
 		1FE86DEF211ACC2100ACC0F6 /* CPGFuncHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CPGFuncHelper.hpp; sourceTree = "<group>"; };
 		1FE86DF0211ACC2100ACC0F6 /* CPGFuncHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPGFuncHelper.cpp; sourceTree = "<group>"; };
+		28654B39211C62E7009CF381 /* CPGMatchManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPGMatchManager.cpp; sourceTree = "<group>"; };
+		28654B3A211C62E7009CF381 /* CPGMatchManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CPGMatchManager.hpp; sourceTree = "<group>"; };
+		28654B3B211C62E7009CF381 /* CPGMatchServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPGMatchServer.cpp; sourceTree = "<group>"; };
+		28654B3C211C62E7009CF381 /* CPGMatchServer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CPGMatchServer.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +127,10 @@
 		1FAEEED9211041130099D3FF /* CPG */ = {
 			isa = PBXGroup;
 			children = (
+				28654B39211C62E7009CF381 /* CPGMatchManager.cpp */,
+				28654B3A211C62E7009CF381 /* CPGMatchManager.hpp */,
+				28654B3B211C62E7009CF381 /* CPGMatchServer.cpp */,
+				28654B3C211C62E7009CF381 /* CPGMatchServer.hpp */,
 				1FAEEEF62112E7FB0099D3FF /* CPGLoginServer.cpp */,
 				1FAEEEF72112E7FB0099D3FF /* CPGLoginServer.hpp */,
 				1FAEEEDA211049D10099D3FF /* CPGGateWay.cpp */,
@@ -230,11 +240,13 @@
 				1FAEEEF82112E7FB0099D3FF /* CPGLoginServer.cpp in Sources */,
 				1FAEEEC82110403F0099D3FF /* main.cpp in Sources */,
 				1FE86DF1211ACC2100ACC0F6 /* CPGFuncHelper.cpp in Sources */,
+				28654B3E211C62E7009CF381 /* CPGMatchServer.cpp in Sources */,
 				1FAEEEE621104B050099D3FF /* server.pb.cc in Sources */,
 				1FAEEED82110410F0099D3FF /* CPGMaster.cpp in Sources */,
 				1FAEEEE721104B050099D3FF /* CPGProtoCodec.cpp in Sources */,
 				1FAEEEDC211049D10099D3FF /* CPGGateWay.cpp in Sources */,
 				1FE86DEE211ACB7300ACC0F6 /* ZMQServerNodeBase.cpp in Sources */,
+				28654B3D211C62E7009CF381 /* CPGMatchManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -87,6 +87,15 @@ serviceConnectMap =
 #define kServicePublishNewServicesMsg           10003
 
 
+#define kServiceLoginRQ                         10004
+#define kServiceLoginRS                         10005
+#define kServiceMatchListRQ                     10006
+#define kServiceMatchListRS                     10007
+#define kServiceJoinRQ                          10008
+#define kServiceJoinRS                          10009
+#define kServiceUnjoinRQ                        10010
+#define kServiceUnjoinRS                        10011
+
 
 
 
