@@ -10,6 +10,10 @@
 
 void ZMQServerNodeBase::start()
 {
+    
+    messageHandlers_[kSeviceRegisterRS] = std::bind(&ZMQServerNodeBase::registerServiceCallback, this, std::placeholders::_1, std::placeholders::_2);
+    configMessageHandlers();
+    
     std::set<std::string> subids;
     for (auto& service : serviceConnectMap[serviceType_])
     {
@@ -41,12 +45,13 @@ void ZMQServerNodeBase::handleCommonData(const PacketHead& head,
                         char* data, size_t len)
 {   
     // 根据head的命令分发处理, 反序列化data->protobuf结构
-    switch (head.subCmdID) 
+    auto iter = messageHandlers_.find(head.subCmdID);
+    if (iter != messageHandlers_.end())
     {
-    case kSeviceRegisterRS:
-        registerServiceCallback(data, len);
-        break;
-    default:
+        iter->second(data, len);
+    }
+    else
+    {
         handleData(head, data, len);
     }
 }

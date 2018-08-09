@@ -22,8 +22,12 @@ public:
 public:
 
     void sendLoginRQ(int uid, const std::string& token);
-    
     void sendMatchListRQ(int uid);
+    
+    
+private:
+    void handlerLoginRS(const char* data, size_t len);
+    void handlerMatchListRS(const char* data, size_t len);
     
 private: 
     
@@ -31,6 +35,7 @@ private:
                             char* data, size_t len) override;
     virtual void newServiceProfile(const std::list<ServiceProfile>& services) override;
     
+    virtual void configMessageHandlers() override;
 private:
     
     struct CompServiceProfile

@@ -121,6 +121,22 @@ void CPGGateWay::sendMatchListRQ(int uid)
 
 
 
+#mark -
+
+void CPGGateWay::handlerLoginRS(const char* data, size_t len)
+{
+    
+}
+void CPGGateWay::handlerMatchListRS(const char* data, size_t len)
+{
+    
+}
+
+void CPGGateWay::configMessageHandlers()
+{
+    messageHandlers_[kServiceLoginRS] = std::bind(&ZMQServerNodeBase::handlerLoginRS, this, std::placeholders::_1, std::placeholders::_2);
+    messageHandlers_[kServiceMatchListRS] = std::bind(&ZMQServerNodeBase::handlerMatchListRS, this, std::placeholders::_1, std::placeholders::_2);
+}
 
 
 

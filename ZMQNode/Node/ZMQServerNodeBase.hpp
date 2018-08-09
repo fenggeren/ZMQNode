@@ -80,6 +80,7 @@ protected:
 
     virtual std::list<ServiceProfile> allServiceProfiles() { return {}; };
     
+    virtual void configMessageHandlers() {};
 private:
 
     // 统一处理相同的 命令，其余转发
