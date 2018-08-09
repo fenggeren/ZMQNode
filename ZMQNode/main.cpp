@@ -19,7 +19,7 @@ void test()
     
     //    CPGLoginServer login;
     //    login.start();
-    
+
     zclock_sleep(5);
     
     std::vector<CPGGateWay> gateWays;
