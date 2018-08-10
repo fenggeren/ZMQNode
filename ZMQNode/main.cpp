@@ -17,13 +17,13 @@ void test()
     CPGMaster master;
     master.start();
     
-    //    CPGLoginServer login;
-    //    login.start();
+    CPGLoginServer login;
+    login.start();
 
-    zclock_sleep(5);
+    zclock_sleep(1000);
     
     std::vector<CPGGateWay> gateWays;
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 5; i++) {
         gateWays.push_back(CPGGateWay());
     }
     
@@ -39,6 +39,9 @@ void test()
     
     while (true)
     {
+        int idx = rand() % gateWays.size();
+        gateWays[idx].sendLoginRQ(123, "123456");
+        gateWays[idx].sendMatchListRQ(123);
         zclock_sleep(1000);
     }
 }

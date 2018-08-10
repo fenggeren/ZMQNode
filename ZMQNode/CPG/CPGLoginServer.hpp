@@ -19,16 +19,20 @@ public:
     {
         uuid = std::string("LS-") + CPGFuncHelper::localIP(); 
     }
-     
+ 
+private:
+    void handlerLoginRQ(const char* data, size_t len, const std::string& extra); 
     
 private:
     
     virtual void handleData(const PacketHead& head,
-                         char* data, size_t len) override;
+                            const std::string& extra,
+                         const char* data, size_t len) override;
     
     virtual void newServiceProfile(const std::list<ServiceProfile>& services) override;
     
-    virtual std::list<ServiceProfile> allServiceProfiles() override; 
+    virtual std::list<ServiceProfile> allServiceProfiles() override;
+    virtual void configMessageHandlers() override;
 private:
     zsock_t* router_; 
 };

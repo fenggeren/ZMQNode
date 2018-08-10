@@ -32,7 +32,7 @@ void ZMQMasterClient::registerMaster(std::list<ServiceProfile>&& profiles)
     }
 
     zmsg_t* msg = zmsg_new();
-    CPGFuncHelper::appendZMsg(msg, serviceType_, kSeviceRegisterRQ, rq);
+    CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceRegisterRQ, rq);
     zmsg_send(&msg, dealer_);
     zmsg_destroy(&msg);
     
@@ -118,7 +118,7 @@ void ZMQMasterClient::handleNewServices(const PacketHead& head ,
     printf("mainID: %d, subID: %d\n", head.mainCmdID, head.subCmdID);
     std::list<ServiceProfile> services;
     
-    if (head.subCmdID == kSeviceRegisterRS)
+    if (head.subCmdID == kServiceRegisterRS)
     {
         CPG::ServiceRegisterRS rs;
         rs.ParseFromArray(data, len);

@@ -24,7 +24,8 @@ void CPGMatchManager::newServiceProfile(const std::list<ServiceProfile>& service
 
 
 void CPGMatchManager::handleData(const PacketHead& head,
-                     char* data, size_t len)
+                                 const std::string& extra,
+                                 const char* data, size_t len)
 {
     
 }
@@ -39,6 +40,65 @@ CPGMatchManager::allServiceProfiles()
     auto pub = createServiceSocket<ZMQ_PUB>();
     pub_ = std::get<0>(tuple);
 
-    return {{serviceType_, ZMQ_ROUTER, std::get<1>(tuple)}
-            {serviceType_, ZMQ_SUB, std::get<1>(tuple)}};
+    return {
+            {serviceType_, ZMQ_ROUTER, std::get<1>(tuple)},
+            {serviceType_, ZMQ_SUB, std::get<1>(tuple)}
+           };
 }
+
+void CPGMatchManager::configMessageHandlers()
+{
+    messageHandlers_[kServiceMatchListRQ] =
+    std::bind(&CPGMatchManager::handlerMatchListRS, this, _1, _2, _3);
+}
+
+void CPGMatchManager::handlerMatchListRS(const char* data, size_t len,
+                        const std::string& extra)
+{
+    CPG::MatchListInfoRQ rq;
+    rq.ParseFromArray(data, len);
+    rq.PrintDebugString();
+    
+    
+    CPG::MatchListInfoRS rs;
+    rs.set_status(200);
+    rs.set_userid(rq.userid());
+    for(int idx : {1,2,3,4,5})
+    {
+        auto info = rs.add_infos();
+        info->set_matchid(idx);
+        info->set_entryfee(40000);
+        info->set_matchname("测试资格赛");
+    }
+    zmsg_t* msg = zmsg_new();
+    zmsg_addstr(msg, extra.data());
+    CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceMatchListRS, rs);
+    zmsg_send(&msg, router_);
+    zmsg_destroy(&msg);
+}
+
+void CPGMatchManager::pubMatchList()
+{
+    CPG::MatchListInfoRS rs;
+    rs.set_status(200);
+    rs.set_userid(0);
+    for(int idx : {1,2,3,4,5})
+    {
+        auto info = rs.add_infos();
+        info->set_matchid(idx);
+        info->set_entryfee(40000);
+        info->set_matchname("测试资格赛");
+    }
+    zmsg_t* msg = zmsg_new();
+    zmsg_addstr(msg, "");
+    CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceMatchListRS, rs);
+    zmsg_send(&msg, pub_);
+    zmsg_destroy(&msg);
+}
+
+
+
+
+
+
+

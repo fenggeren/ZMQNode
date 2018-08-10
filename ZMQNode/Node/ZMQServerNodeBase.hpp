@@ -32,7 +32,7 @@
  PAIR and PAIR
  */
 
-
+using namespace std::placeholders;
 class ZMQServerNodeBase
 {
 public:
@@ -73,22 +73,26 @@ protected:
     virtual void readData(const std::string& extra, zmsg_t* msg);
     
     virtual void handleData(const PacketHead& head,
-                             char* data, size_t len);
+                            const std::string& extra,
+                             const char* data, size_t len);
     
 
     virtual void newServiceProfile(const std::list<ServiceProfile>& services);
 
     virtual std::list<ServiceProfile> allServiceProfiles() { return {}; };
     
+    virtual void configMessageHandlers() {};
 private:
 
     // 统一处理相同的 命令，其余转发
     void handleCommonData(const PacketHead& head,
-                            char* data, size_t len);
+                          const std::string& extra,
+                          const char* data, size_t len);
 
 protected: // 统一回调命令处理
     
-    void registerServiceCallback(char* data, size_t len);
+    void registerServiceCallback(const char* data, size_t len,
+                                 const std::string& extra);
     
     // 创建服务端 socket
     template <int TYPE>
@@ -104,10 +108,15 @@ protected: // 统一回调命令处理
         return {sock, addr};
     }
 protected:
+    using MessageHandler = std::function<void(const char*, size_t,
+                                              const std::string&)>;
+    
     CPGServerType serviceType_;
     std::shared_ptr<ZMQReactor> reactor_;
     std::shared_ptr<ZMQMasterClient> masterClient_;
     std::string uuid;
+    
+    std::unordered_map<int, MessageHandler> messageHandlers_;
 };
 
 

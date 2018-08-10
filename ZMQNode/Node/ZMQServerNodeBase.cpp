@@ -10,6 +10,11 @@
 
 void ZMQServerNodeBase::start()
 {
+    
+    messageHandlers_[kServiceRegisterRS] = std::bind(&ZMQServerNodeBase::registerServiceCallback,this, _1, _2, _3);
+ 
+    configMessageHandlers();
+    
     std::set<std::string> subids;
     for (auto& service : serviceConnectMap[serviceType_])
     {
@@ -34,26 +39,29 @@ void ZMQServerNodeBase::readData(const std::string& extra, zmsg_t* msg)
     zframe_t* dataFrame = zmsg_next(msg);
     char* data = reinterpret_cast<char*>(zframe_data(dataFrame));
     size_t size = zframe_size(dataFrame);
-    handleCommonData(head, data, size);
+    handleCommonData(head, extra, data, size);
 }
 
 void ZMQServerNodeBase::handleCommonData(const PacketHead& head,
-                        char* data, size_t len)
+                                         const std::string& extra,
+                                         const char* data, size_t len)
 {   
     // 根据head的命令分发处理, 反序列化data->protobuf结构
-    switch (head.subCmdID) 
+    auto iter = messageHandlers_.find(head.subCmdID);
+    if (iter != messageHandlers_.end())
     {
-    case kSeviceRegisterRS:
-        registerServiceCallback(data, len);
-        break;
-    default:
-        handleData(head, data, len);
+        iter->second(data, len, extra);
+    }
+    else
+    {
+        handleData(head, extra, data, len);
     }
 }
 
 // 子类调用
 void ZMQServerNodeBase::handleData(const PacketHead& head,
-                char* data, size_t len)
+                                   const std::string& extra,
+                                   const char* data, size_t len)
 {
 
 }
@@ -63,7 +71,8 @@ void ZMQServerNodeBase::newServiceProfile(const std::list<ServiceProfile>& servi
     
 }
 
-void ZMQServerNodeBase::registerServiceCallback(char* data, size_t len)
+void ZMQServerNodeBase::registerServiceCallback(const char* data, size_t len,
+                                                const std::string& extra)
 {
     CPG::ServiceRegisterRS rs;
     rs.ParseFromArray(data, (int)len);

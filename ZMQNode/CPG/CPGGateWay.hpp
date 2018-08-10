@@ -19,13 +19,31 @@ public:
         uuid = std::string("GS-") + CPGFuncHelper::localIP();
     }
     
+public:
+
+    void sendLoginRQ(int uid, const std::string& token);
+    void sendMatchListRQ(int uid);
+    void sendMatchJoinRQ(int uid, int mid);
+    void sendMatchUnjoinRQ(int uid, int mid);
     
+private:
+    void handlerLoginRS(const char* data, size_t len,
+                        const std::string& extra);
+    
+    void handlerMatchListRS(const char* data, size_t len,
+                            const std::string& extra);
+    void handlerMatchJoinRS(const char* data, size_t len,
+                         const std::string& extra);
+    void handlerMatchUnjoinRS(const char* data, size_t len,
+                           const std::string& extra);
 private: 
     
     virtual void handleData(const PacketHead& head,
-                            char* data, size_t len) override;
+                            const std::string& extra,
+                            const char* data, size_t len) override;
     virtual void newServiceProfile(const std::list<ServiceProfile>& services) override;
     
+    virtual void configMessageHandlers() override;
 private:
     
     struct CompServiceProfile
@@ -39,8 +57,10 @@ private:
     
     zsock_t* loginDealer();
     zsock_t* matchSub();
+    zsock_t* matchManagerDealer();
 private:
     zsock_t* loginDealer_;
+    zsock_t* matchManagerDealer_;
     zsock_t* matchSub_;
     
     // <mid,dealer>  用于通过比赛id，传递消息给指定matchServer, 

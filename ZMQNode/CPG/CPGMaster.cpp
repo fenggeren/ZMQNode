@@ -43,7 +43,7 @@ void CPGMaster::parseData(const std::string& source,
                char* data, size_t len)
 {
     switch (command.subCmdID) {
-        case kSeviceRegisterRQ:
+        case kServiceRegisterRQ:
             registerService(source, data, len);
             break;
         case kServiceHeartMsg:
@@ -82,7 +82,7 @@ void CPGMaster::sendNewNodeConnectors(const ServiceNode& node)
     }
     zmsg_t* msg = zmsg_new();
     zmsg_addmem(msg, node.uuid.data(), node.uuid.size());
-    CPGFuncHelper::appendZMsg(msg, kMaster, kSeviceRegisterRS, rs);
+    CPGFuncHelper::appendZMsg(msg, kMaster, kServiceRegisterRS, rs);
     zmsg_send(&msg, router_);
     zmsg_destroy(&msg);
 }
@@ -224,8 +224,11 @@ CPGMaster::requiredConnectService(int serviceType)
 
 void CPGMaster::addServiceNode(const ServiceNode& node, int serviceType)
 {
-    auto nodes = services_[serviceType];
-    auto iter = std::find_if(nodes.begin(), nodes.end(), [&](const ServiceNode& sn){
+    auto& nodes = services_[serviceType];
+    auto iter = std::find_if(nodes.begin(), nodes.end(),
+                             [&](const ServiceNode& sn)
+    {
+        std::cout << "uuid:  ==="  << sn.uuid << "   " << node.uuid << std::endl;
         return sn.uuid == node.uuid;
     });
     
@@ -234,6 +237,8 @@ void CPGMaster::addServiceNode(const ServiceNode& node, int serviceType)
         nodes.erase(iter);
     }
     nodes.push_back(node);
+    
+    std::cout << "size: " << services_[serviceType].size() << std::endl;
 }
 
 
