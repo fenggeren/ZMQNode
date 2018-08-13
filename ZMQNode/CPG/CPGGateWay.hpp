@@ -44,6 +44,8 @@ private:
     virtual void newServiceProfile(const std::list<ServiceProfile>& services) override;
     
     virtual void configMessageHandlers() override;
+    
+    virtual void startInit() override;
 private:
     
     struct CompServiceProfile

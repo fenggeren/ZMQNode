@@ -12,6 +12,11 @@
 #include "CPGMaster.hpp"
 #include "CPGLoginServer.hpp"
 
+/*
+ 处理接收到的数据，
+ 如果是需要创建新sock，需要在主线程处理！！！
+ 引入aiso?
+ */
 void test()
 {
     CPGMaster master;
@@ -23,7 +28,7 @@ void test()
     zclock_sleep(1000);
     
     std::vector<CPGGateWay> gateWays;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 1; i++) {
         gateWays.push_back(CPGGateWay());
     }
     
@@ -41,7 +46,7 @@ void test()
     {
         int idx = rand() % gateWays.size();
         gateWays[idx].sendLoginRQ(123, "123456");
-        gateWays[idx].sendMatchListRQ(123);
+//        gateWays[idx].sendMatchListRQ(123);
         zclock_sleep(1000);
     }
 }

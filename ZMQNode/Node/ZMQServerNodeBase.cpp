@@ -28,6 +28,8 @@ void ZMQServerNodeBase::start()
     reactor_->asyncLoop();
     
     masterClient_->registerMaster(allServiceProfiles());
+    
+    startInit();
 }
 
 void ZMQServerNodeBase::readData(const std::string& extra, zmsg_t* msg)

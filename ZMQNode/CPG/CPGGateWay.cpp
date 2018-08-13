@@ -8,6 +8,14 @@
 
 #include "CPGGateWay.hpp"
 
+
+void CPGGateWay::startInit()
+{
+    loginDealer();
+    matchSub();
+    matchManagerDealer();
+}
+
 // 抽取出来单独的组件
 void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
 {
@@ -17,36 +25,38 @@ void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
         {
             if (profile.socketType == ZMQ_ROUTER)
             {
-                int rc = zsock_connect(loginDealer(), "%s", profile.addr.data());
+                int rc = zsock_connect(loginDealer_, "%s", profile.addr.data());
+                assert(rc == 0);
             }
         }
         else if (profile.serviceType == kMatchServer)
         {
             if (profile.socketType == ZMQ_ROUTER)
             {
+                // TODO!  创建sock，需要在主线程创建!
                 if (matchServices_.insert(profile).second)
                 {
                     zsock_t* dealer = zsock_new(ZMQ_DEALER);
                     zsock_connect(dealer, "%s", profile.addr.data());
                     reactor_->addSocket(loginDealer_, std::bind(&CPGGateWay::messageRead<ZMQ_DEALER>, 
-                                                                    this, std::placeholders::_1));
+                                              this, std::placeholders::_1));
                     matchDealers_.push_back(dealer);
                 }
             }
             else if (profile.socketType == ZMQ_PUB)
             {
-                zsock_connect(matchSub(), "%s", profile.addr.data());
+                zsock_connect(matchSub_, "%s", profile.addr.data());
             }
         }
         else if (profile.serviceType == kMatchManager)
         {
             if (profile.socketType == ZMQ_PUB)
             {
-                zsock_connect(matchSub(), "%s", profile.addr.data());
+                zsock_connect(matchSub_, "%s", profile.addr.data());
             }
             else if (profile.socketType == ZMQ_ROUTER)
             {
-                zsock_connect(matchManagerDealer(), "%s", profile.addr.data());
+                zsock_connect(matchManagerDealer_, "%s", profile.addr.data());
             }
         }
     }
@@ -91,7 +101,7 @@ zsock_t* CPGGateWay::matchManagerDealer()
 
 
 #pragma mark -
-// loginDealer_自动为null？？？！！！
+// loginDealer_自动为null？？？！！！, sock创建不能再子线程？
 void CPGGateWay::sendLoginRQ(int uid, const std::string& token)
 {
     if (!loginDealer_) {
@@ -120,7 +130,7 @@ void CPGGateWay::sendMatchListRQ(int uid)
     
     zmsg_t* msg = zmsg_new();
     CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceMatchListRQ, rq);
-    zmsg_send(&msg, loginDealer_);
+    zmsg_send(&msg, *matchDealers_.begin());
     zmsg_destroy(&msg);
 }
 
