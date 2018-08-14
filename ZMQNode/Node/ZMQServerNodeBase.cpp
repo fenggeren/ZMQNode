@@ -9,6 +9,8 @@
 #include "ZMQServerNodeBase.hpp"
 #include "Queue.hpp"
 
+int ZMQServerNodeBase::clientCount = 0;
+
 void ZMQServerNodeBase::start()
 {
     

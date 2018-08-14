@@ -63,7 +63,6 @@ public:
             extra = std::string(reinterpret_cast<char*>(zframe_data(first)),
                                   zframe_size(first));
         }
-        
         readData(extra, msg);
         zmsg_destroy(&msg);
     }
@@ -113,6 +112,22 @@ protected: // 统一回调命令处理
         std::string addr = CPGFuncHelper::connectTCPAddress(port);
         return {sock, addr};
     }
+    
+    template <int TYPE>
+    zsock_t* createClientSocket()
+    {
+        clientCount++;
+        zsock_t* sock = zsock_new(TYPE);
+        std::string identity = uuid + ":" + std::to_string(clientCount);
+        if (TYPE == ZMQ_REQ || TYPE == ZMQ_REP ||
+            TYPE == ZMQ_DEALER || TYPE == ZMQ_ROUTER)
+        {
+            zsock_set_identity(sock, identity.data());
+        }
+        reactor_->addSocket(sock, std::bind(&ZMQServerNodeBase::messageRead<TYPE>, this, std::placeholders::_1));
+        return sock;
+    }
+    
 protected:
     using MessageHandler = std::function<void(const char*, size_t,
                                               const std::string&)>;
@@ -123,6 +138,8 @@ protected:
     std::string uuid;
     
     std::unordered_map<int, MessageHandler> messageHandlers_;
+    
+    static int clientCount;
 };
 
 

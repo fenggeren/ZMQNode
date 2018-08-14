@@ -75,8 +75,7 @@ zsock_t* CPGGateWay::loginDealer()
 {
     if (!loginDealer_)
     {
-        loginDealer_ = zsock_new(ZMQ_DEALER);
-        reactor_->addSocket(loginDealer_, std::bind(&CPGGateWay::messageRead<ZMQ_DEALER>, this, std::placeholders::_1));
+        loginDealer_ = createClientSocket<ZMQ_DEALER>();
     }
     return loginDealer_;
 }
@@ -84,8 +83,8 @@ zsock_t* CPGGateWay::matchSub()
 {
     if (!matchSub_)
     {
-        matchSub_ = zsock_new(ZMQ_SUB);
-        reactor_->addSocket(matchSub_, std::bind(&CPGGateWay::messageRead<ZMQ_SUB>, this, std::placeholders::_1));
+        matchSub_ = createClientSocket<ZMQ_SUB>();
+        zsock_set_subscribe(matchSub_, "");
     }
     return matchSub_;
 }
@@ -93,8 +92,7 @@ zsock_t* CPGGateWay::matchManagerDealer()
 {
     if (!matchManagerDealer_)
     {
-        matchManagerDealer_ = zsock_new(ZMQ_DEALER);
-        reactor_->addSocket(matchManagerDealer_, std::bind(&CPGGateWay::messageRead<ZMQ_DEALER>, this, std::placeholders::_1));
+        matchManagerDealer_ = createClientSocket<ZMQ_DEALER>();
     }
     return matchManagerDealer_;
 }
