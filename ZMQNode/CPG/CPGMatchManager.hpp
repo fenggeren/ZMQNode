@@ -13,7 +13,7 @@ class CPGMatchManager : public ZMQServerNodeBase
 {
 public:
     CPGMatchManager()
-    : ZMQServerNodeBase(kMatchServer)
+    : ZMQServerNodeBase(kMatchManager)
     {
         uuid = std::string("MM-") + CPGFuncHelper::localIP();
     }
@@ -23,7 +23,7 @@ public:
     
 private:
     
-    void handlerMatchListRS(const char* data, size_t len,
+    void handlerMatchListRQ(const char* data, size_t len,
                             const std::string& extra);
     
 private:

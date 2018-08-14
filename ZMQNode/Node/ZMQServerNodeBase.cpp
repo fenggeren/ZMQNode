@@ -7,6 +7,7 @@
 //
 
 #include "ZMQServerNodeBase.hpp"
+#include "Queue.hpp"
 
 void ZMQServerNodeBase::start()
 {
@@ -85,7 +86,9 @@ void ZMQServerNodeBase::registerServiceCallback(const char* data, size_t len,
         services.push_back({s.servicetype(), s.sockettype(), s.addr()});
     }
     
-    newServiceProfile(services);
+    gMainQueue.dispatch([&]{
+        newServiceProfile(services);
+    });
 }
 
 

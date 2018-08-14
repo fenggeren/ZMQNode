@@ -11,6 +11,8 @@
 #include "CPGGateWay.hpp"
 #include "CPGMaster.hpp"
 #include "CPGLoginServer.hpp"
+#include "CPGMatchManager.hpp"
+#include "dependences/Queue.hpp"
 
 /*
  处理接收到的数据，
@@ -19,6 +21,9 @@
  */
 void test()
 {
+    using namespace Queue;
+    Queue::MainQueue::MainQueueInit();
+
     CPGMaster master;
     master.start();
     
@@ -42,13 +47,25 @@ void test()
     CPGLoginServer login2;
     login2.start();
     
-    while (true)
-    {
-        int idx = rand() % gateWays.size();
-        gateWays[idx].sendLoginRQ(123, "123456");
-//        gateWays[idx].sendMatchListRQ(123);
-        zclock_sleep(1000);
-    }
+    
+    CPGMatchManager mm;
+    mm.start();
+    
+    zclock_sleep(2000);
+    
+    GlobalQueue::Instance().post([&]{
+        while (true)
+        {
+            int idx = rand() % gateWays.size();
+            gateWays[idx].sendLoginRQ(123, "123456");
+            gateWays[idx].sendMatchListRQ(123);
+//            gateWays[idx].sendMatchJoinRQ(123, 321);
+//            gateWays[idx].sendMatchUnjoinRQ(123, 321);
+            zclock_sleep(1000);
+        }
+    });
+    
+    Queue::MainQueue::Instance().runMainThread();
 }
 
 void testPub()

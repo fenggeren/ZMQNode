@@ -28,15 +28,6 @@ void CPGMatchServer::newServiceProfile(const std::list<ServiceProfile>& services
     }
 }
 
-
-void CPGMatchServer::handleData(const PacketHead& head,
-                                const std::string& extra,
-                                const char* data, size_t len)
-{
-
-}
- 
-
 std::list<ServiceProfile> CPGMatchServer::allServiceProfiles()
 {
     auto tuple = createServiceSocket<ZMQ_ROUTER>();
@@ -60,5 +51,54 @@ zsock_t* CPGMatchServer::matchManagerDealer()
 }
 
 void CPGMatchServer::configMessageHandlers()
-{ 
+{
+    messageHandlers_[kServiceJoinRQ] =
+    std::bind(&CPGMatchServer::handlerMatchJoinRQ, this, _1, _2, _3);
+    messageHandlers_[kServiceUnjoinRQ] =
+    std::bind(&CPGMatchServer::handlerMatchUnjoinRQ, this, _1, _2, _3);
+}
+
+
+/////
+
+void CPGMatchServer::handleData(const PacketHead& head,
+                                const std::string& extra,
+                                const char* data, size_t len)
+{
+    
+}
+
+void CPGMatchServer::handlerMatchJoinRQ(const char* data, size_t len,
+                        const std::string& extra)
+{
+    CPG::JoinMatchRQ rq;
+    rq.ParseFromArray(data, len);
+    rq.PrintDebugString();
+    
+    CPG::JoinMatchRS rs;
+    rs.set_status(200);
+    rs.set_userid(rq.userid());
+    rs.set_matchid(rq.matchid());
+    zmsg_t* msg = zmsg_new();
+    zmsg_addstr(msg, extra.data());
+    CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceJoinRS, rs);
+    zmsg_send(&msg, router_);
+    zmsg_destroy(&msg);
+}
+void CPGMatchServer::handlerMatchUnjoinRQ(const char* data, size_t len,
+                          const std::string& extra)
+{
+    CPG::UnjoinMatchRQ rq;
+    rq.ParseFromArray(data, len);
+    rq.PrintDebugString();
+    
+    CPG::UnjoinMatchRS rs;
+    rs.set_status(200);
+    rs.set_userid(rq.userid());
+    rs.set_matchid(rq.matchid());
+    zmsg_t* msg = zmsg_new();
+    zmsg_addstr(msg, extra.data());
+    CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceUnjoinRS, rs);
+    zmsg_send(&msg, router_);
+    zmsg_destroy(&msg);
 }

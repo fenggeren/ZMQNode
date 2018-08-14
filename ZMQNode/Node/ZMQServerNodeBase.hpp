@@ -104,7 +104,11 @@ protected: // 统一回调命令处理
         zsock_t* sock = zsock_new(TYPE);
         int port = zsock_bind(sock, "tcp://*:*");
         std::string identity = uuid + ":" + std::to_string(port);
-        zsock_set_identity(sock, identity.data());
+        if (TYPE == ZMQ_REQ || TYPE == ZMQ_REP ||
+            TYPE == ZMQ_DEALER || TYPE == ZMQ_ROUTER)
+        {
+            zsock_set_identity(sock, identity.data());
+        }
         reactor_->addSocket(sock, std::bind(&ZMQServerNodeBase::messageRead<TYPE>, this, std::placeholders::_1));
         std::string addr = CPGFuncHelper::connectTCPAddress(port);
         return {sock, addr};

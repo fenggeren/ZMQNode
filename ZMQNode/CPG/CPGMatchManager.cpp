@@ -42,17 +42,17 @@ CPGMatchManager::allServiceProfiles()
 
     return {
             {serviceType_, ZMQ_ROUTER, std::get<1>(tuple)},
-            {serviceType_, ZMQ_SUB, std::get<1>(tuple)}
+            {serviceType_, ZMQ_PUB, std::get<1>(tuple)}
            };
 }
 
 void CPGMatchManager::configMessageHandlers()
 {
     messageHandlers_[kServiceMatchListRQ] =
-    std::bind(&CPGMatchManager::handlerMatchListRS, this, _1, _2, _3);
+    std::bind(&CPGMatchManager::handlerMatchListRQ, this, _1, _2, _3);
 }
 
-void CPGMatchManager::handlerMatchListRS(const char* data, size_t len,
+void CPGMatchManager::handlerMatchListRQ(const char* data, size_t len,
                         const std::string& extra)
 {
     CPG::MatchListInfoRQ rq;

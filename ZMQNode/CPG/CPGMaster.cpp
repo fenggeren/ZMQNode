@@ -97,6 +97,7 @@ void CPGMaster::registerService(const std::string& source,
     node.heartbeat = time(NULL);
     node.uuid = source;
     node.serviceType = rq.servicetype();
+    printf("===========type: %s", source.data());
     for (auto& service : rq.services())
     {
         node.profiles.push_back({service.servicetype(), service.sockettype(), service.addr()});

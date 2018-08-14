@@ -15,6 +15,10 @@ public:
     
 private:
     
+    void handlerMatchJoinRQ(const char* data, size_t len,
+                            const std::string& extra);
+    void handlerMatchUnjoinRQ(const char* data, size_t len,
+                            const std::string& extra);
 
 private:
 

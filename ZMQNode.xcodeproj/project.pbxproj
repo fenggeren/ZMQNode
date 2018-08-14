@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FA29FD52122B37A00D382E2 /* Queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FA29FD32122B37900D382E2 /* Queue.cpp */; };
 		1FAEEEC82110403F0099D3FF /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEEEC72110403F0099D3FF /* main.cpp */; };
 		1FAEEED0211040B70099D3FF /* libzmq.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FAEEECF211040B70099D3FF /* libzmq.a */; };
 		1FAEEED2211040C30099D3FF /* libczmq.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FAEEED1211040C30099D3FF /* libczmq.a */; };
@@ -37,6 +38,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1FA29FD32122B37900D382E2 /* Queue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Queue.cpp; sourceTree = "<group>"; };
+		1FA29FD42122B37900D382E2 /* Queue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Queue.hpp; sourceTree = "<group>"; };
 		1FAEEEC42110403F0099D3FF /* ZMQNode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ZMQNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FAEEEC72110403F0099D3FF /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1FAEEECF211040B70099D3FF /* libzmq.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzmq.a; path = ../../../../../usr/local/lib/libzmq.a; sourceTree = "<group>"; };
@@ -85,6 +88,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1FA29FD22122B36D00D382E2 /* dependences */ = {
+			isa = PBXGroup;
+			children = (
+				1FA29FD32122B37900D382E2 /* Queue.cpp */,
+				1FA29FD42122B37900D382E2 /* Queue.hpp */,
+			);
+			path = dependences;
+			sourceTree = "<group>";
+		};
 		1FAEEEBB2110403F0099D3FF = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +117,7 @@
 		1FAEEEC62110403F0099D3FF /* ZMQNode */ = {
 			isa = PBXGroup;
 			children = (
+				1FA29FD22122B36D00D382E2 /* dependences */,
 				1FAEEEEE211064C70099D3FF /* Node */,
 				1FAEEEEB211062230099D3FF /* Doc */,
 				1FAEEEDE21104B050099D3FF /* proto */,
@@ -237,6 +250,7 @@
 			files = (
 				1FAEEEF1211064D30099D3FF /* ZMQReactor.cpp in Sources */,
 				1FAEEED5211040DB0099D3FF /* ZMQNode.cpp in Sources */,
+				1FA29FD52122B37A00D382E2 /* Queue.cpp in Sources */,
 				1FAEEEF82112E7FB0099D3FF /* CPGLoginServer.cpp in Sources */,
 				1FAEEEC82110403F0099D3FF /* main.cpp in Sources */,
 				1FE86DF1211ACC2100ACC0F6 /* CPGFuncHelper.cpp in Sources */,
@@ -368,6 +382,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-l",
+					boost_system,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -378,6 +396,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-l",
+					boost_system,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -11,9 +11,9 @@
 
 void CPGGateWay::startInit()
 {
-    loginDealer();
-    matchSub();
-    matchManagerDealer();
+//    loginDealer();
+//    matchSub();
+//    matchManagerDealer();
 }
 
 // 抽取出来单独的组件
@@ -25,7 +25,7 @@ void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
         {
             if (profile.socketType == ZMQ_ROUTER)
             {
-                int rc = zsock_connect(loginDealer_, "%s", profile.addr.data());
+                int rc = zsock_connect(loginDealer(), "%s", profile.addr.data());
                 assert(rc == 0);
             }
         }
@@ -45,18 +45,18 @@ void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
             }
             else if (profile.socketType == ZMQ_PUB)
             {
-                zsock_connect(matchSub_, "%s", profile.addr.data());
+                zsock_connect(matchSub(), "%s", profile.addr.data());
             }
         }
         else if (profile.serviceType == kMatchManager)
         {
             if (profile.socketType == ZMQ_PUB)
             {
-                zsock_connect(matchSub_, "%s", profile.addr.data());
+                zsock_connect(matchSub(), "%s", profile.addr.data());
             }
             else if (profile.socketType == ZMQ_ROUTER)
             {
-                zsock_connect(matchManagerDealer_, "%s", profile.addr.data());
+                zsock_connect(matchManagerDealer(), "%s", profile.addr.data());
             }
         }
     }
@@ -104,10 +104,7 @@ zsock_t* CPGGateWay::matchManagerDealer()
 // loginDealer_自动为null？？？！！！, sock创建不能再子线程？
 void CPGGateWay::sendLoginRQ(int uid, const std::string& token)
 {
-    if (!loginDealer_) {
-        std::cout << "sendLoginRQ: sendLoginRQ null" << std::endl;
-        return;
-    }
+    assert(loginDealer_);
     CPG::LoginRQ rq;
     rq.set_userid(uid);
     rq.set_token(token);
@@ -117,20 +114,15 @@ void CPGGateWay::sendLoginRQ(int uid, const std::string& token)
     zmsg_send(&msg, loginDealer_);
     zmsg_destroy(&msg);
 }
-
-// loginDealer_自动为null？？？！！！
+ 
 void CPGGateWay::sendMatchListRQ(int uid)
 {
-    if (!loginDealer_) {
-        std::cout << "sendLoginRQ: sendLoginRQ null" << std::endl;
-        return;
-    }
     CPG::MatchListInfoRQ rq;
     rq.set_userid(uid);
     
     zmsg_t* msg = zmsg_new();
     CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceMatchListRQ, rq);
-    zmsg_send(&msg, *matchDealers_.begin());
+    zmsg_send(&msg, matchManagerDealer_);
     zmsg_destroy(&msg);
 }
 
@@ -142,12 +134,19 @@ void CPGGateWay::sendMatchJoinRQ(int uid, int mid)
     
     zmsg_t* msg = zmsg_new();
     CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceJoinRQ, rq);
-//    zmsg_send(&msg, matchDealers_);
+    zmsg_send(&msg, *matchDealers_.begin());
     zmsg_destroy(&msg);
 }
 void CPGGateWay::sendMatchUnjoinRQ(int uid, int mid)
 {
+    CPG::UnjoinMatchRQ rq;
+    rq.set_userid(uid);
+    rq.set_matchid(mid);
     
+    zmsg_t* msg = zmsg_new();
+    CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceUnjoinRQ, rq);
+    zmsg_send(&msg, *matchDealers_.begin());
+    zmsg_destroy(&msg);
 }
 
 ////////////////
