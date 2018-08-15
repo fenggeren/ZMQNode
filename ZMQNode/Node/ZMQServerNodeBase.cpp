@@ -7,13 +7,12 @@
 //
 
 #include "ZMQServerNodeBase.hpp"
-#include "Queue.hpp"
 
 int ZMQServerNodeBase::clientCount = 0;
 
 void ZMQServerNodeBase::start()
 {
-    
+    uuid = uuidPrefix() + CPGFuncHelper::localIP() + "-" + std::to_string(validCount());
     messageHandlers_[kServiceRegisterRS] = std::bind(&ZMQServerNodeBase::registerServiceCallback,this, _1, _2, _3);
  
     configMessageHandlers();
@@ -87,10 +86,7 @@ void ZMQServerNodeBase::registerServiceCallback(const char* data, size_t len,
     {
         services.push_back({s.servicetype(), s.sockettype(), s.addr()});
     }
-    
-    gMainQueue.dispatch([&]{
-        newServiceProfile(services);
-    });
+    newServiceProfile(services); 
 }
 
 

@@ -12,6 +12,7 @@
 #include "CPGMaster.hpp"
 #include "CPGLoginServer.hpp"
 #include "CPGMatchManager.hpp"
+#include "CPGMatchServer.hpp"
 #include "dependences/Queue.hpp"
 
 /*
@@ -33,7 +34,7 @@ void test()
     zclock_sleep(1000);
     
     std::vector<CPGGateWay> gateWays;
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 5; i++) {
         gateWays.push_back(CPGGateWay());
     }
     
@@ -47,20 +48,21 @@ void test()
     CPGLoginServer login2;
     login2.start();
     
-    
     CPGMatchManager mm;
     mm.start();
     
-    zclock_sleep(2000);
-    
-    GlobalQueue::Instance().post([&]{
+    CPGMatchServer ms;
+    ms.start();
+ 
+    gGlobalQueue.dispatch([&]{
+        zclock_sleep(3000);
         while (true)
         {
             int idx = rand() % gateWays.size();
             gateWays[idx].sendLoginRQ(123, "123456");
             gateWays[idx].sendMatchListRQ(123);
-//            gateWays[idx].sendMatchJoinRQ(123, 321);
-//            gateWays[idx].sendMatchUnjoinRQ(123, 321);
+            gateWays[idx].sendMatchJoinRQ(123, 321);
+            gateWays[idx].sendMatchUnjoinRQ(123, 321);
             zclock_sleep(1000);
         }
     });

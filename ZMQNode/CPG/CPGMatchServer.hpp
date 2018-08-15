@@ -9,7 +9,6 @@ public:
     CPGMatchServer()
     : ZMQServerNodeBase(kMatchServer)
     {
-        uuid = std::string("MS-") + CPGFuncHelper::localIP();
     }
     
     
@@ -30,6 +29,11 @@ private:
     
     virtual std::list<ServiceProfile> allServiceProfiles() override; 
     virtual void configMessageHandlers() override;
+    
+    virtual std::string uuidPrefix() override
+    {
+        return "MS-";
+    }
     
 private:
     zsock_t* matchManagerDealer();

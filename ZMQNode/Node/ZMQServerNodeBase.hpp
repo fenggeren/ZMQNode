@@ -128,6 +128,15 @@ protected: // 统一回调命令处理
         return sock;
     }
     
+    virtual std::string uuidPrefix()
+    {
+        return "";
+    }
+    
+    static int validCount()
+    {
+        return clientCount++;
+    }
 protected:
     using MessageHandler = std::function<void(const char*, size_t,
                                               const std::string&)>;

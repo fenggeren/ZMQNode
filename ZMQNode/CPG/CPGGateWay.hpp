@@ -16,7 +16,6 @@ public:
     CPGGateWay()
     : ZMQServerNodeBase(kGateWay)
     {
-        uuid = std::string("GS-") + CPGFuncHelper::localIP();
     }
     
 public:
@@ -46,6 +45,10 @@ private:
     virtual void configMessageHandlers() override;
     
     virtual void startInit() override;
+    virtual std::string uuidPrefix() override
+    {
+        return "GW-";
+    }
 private:
     
     struct CompServiceProfile

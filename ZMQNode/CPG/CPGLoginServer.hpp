@@ -17,7 +17,6 @@ public:
     CPGLoginServer()
     : ZMQServerNodeBase(kLoginServer)
     {
-        uuid = std::string("LS-") + CPGFuncHelper::localIP(); 
     }
  
 private:
@@ -33,6 +32,10 @@ private:
     
     virtual std::list<ServiceProfile> allServiceProfiles() override;
     virtual void configMessageHandlers() override;
+    virtual std::string uuidPrefix() override
+    {
+        return "LS-";
+    }
 private:
     zsock_t* router_; 
 };

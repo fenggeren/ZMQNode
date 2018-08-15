@@ -15,7 +15,6 @@ public:
     CPGMatchManager()
     : ZMQServerNodeBase(kMatchManager)
     {
-        uuid = std::string("MM-") + CPGFuncHelper::localIP();
     }
 
     
@@ -38,6 +37,10 @@ private:
     
     virtual std::list<ServiceProfile> allServiceProfiles() override; 
 
+    virtual std::string uuidPrefix() override
+    {
+        return "MM-";
+    }
 private:
     zsock_t* pub_;
     zsock_t* router_;

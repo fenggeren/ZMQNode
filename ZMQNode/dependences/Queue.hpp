@@ -11,7 +11,7 @@
 #include <boost/asio.hpp>
 
 #define gMainQueue Queue::MainQueue::Instance()
-
+#define gGlobalQueue Queue::GlobalQueue::Instance()
 using namespace boost;
 namespace Queue
 {

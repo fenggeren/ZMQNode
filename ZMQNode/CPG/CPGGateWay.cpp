@@ -6,8 +6,7 @@
 //  Copyright © 2018年 huanao. All rights reserved.
 //
 
-#include "CPGGateWay.hpp"
-
+#include "CPGGateWay.hpp" 
 
 void CPGGateWay::startInit()
 {
@@ -19,6 +18,7 @@ void CPGGateWay::startInit()
 // 抽取出来单独的组件
 void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
 {
+    printf("newServiceProfile uuid: %s\n", uuid.data());
     for(auto& profile : services)
     {
         if (profile.serviceType == kLoginServer)
@@ -36,10 +36,8 @@ void CPGGateWay::newServiceProfile(const std::list<ServiceProfile>& services)
                 // TODO!  创建sock，需要在主线程创建!
                 if (matchServices_.insert(profile).second)
                 {
-                    zsock_t* dealer = zsock_new(ZMQ_DEALER);
+                    zsock_t* dealer = createClientSocket<ZMQ_DEALER>();
                     zsock_connect(dealer, "%s", profile.addr.data());
-                    reactor_->addSocket(loginDealer_, std::bind(&CPGGateWay::messageRead<ZMQ_DEALER>, 
-                                              this, std::placeholders::_1));
                     matchDealers_.push_back(dealer);
                 }
             }
@@ -98,8 +96,7 @@ zsock_t* CPGGateWay::matchManagerDealer()
 }
 
 
-#pragma mark -
-// loginDealer_自动为null？？？！！！, sock创建不能再子线程？
+#pragma mark - 
 void CPGGateWay::sendLoginRQ(int uid, const std::string& token)
 {
     assert(loginDealer_);

@@ -6,7 +6,8 @@
 //  Copyright © 2018年 huanao. All rights reserved.
 //
 
-#include "ZMQNode.hpp"
+#include "ZMQNode.hpp" 
+
 
 ZMQMasterClient::ZMQMasterClient(std::shared_ptr<ZMQReactor> reactor
                                        ,CPGServerType type)
@@ -42,10 +43,10 @@ void ZMQMasterClient::registerMaster(std::list<ServiceProfile>&& profiles)
 int ZMQMasterClient::connect(const std::set<std::string>& subids,
                                 const std::string& uuid)
 {
+    printf("connect master uuid: %s\n", uuid.data());
     zsock_set_identity(dealer_, uuid.data());
     int rc = zsock_connect(dealer_, "%s", MASTER_ROUTER_ENDPOINT.data());
     assert(!rc);
-    
     rc = zsock_connect(sub_, "%s", MASTER_PUB_ENDPOINT.data());
     assert(!rc);
     for (auto& subid : subids)
