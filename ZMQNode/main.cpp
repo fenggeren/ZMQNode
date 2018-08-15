@@ -16,12 +16,12 @@
 #include "dependences/Queue.hpp"
 
 /*
- 处理接收到的数据，
- 如果是需要创建新sock，需要在主线程处理！！！
- 引入aiso?
+ sock非线程安全，
+ 多线程共享sock，会造成死锁！！！
  */
 void test()
 {
+    Queue::MainQueue::MainQueueInit();
     CPGMaster master;
     master.start();
     
@@ -31,7 +31,7 @@ void test()
     zclock_sleep(1000);
     
     std::vector<CPGGateWay> gateWays;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 1; i++) {
         gateWays.push_back(CPGGateWay());
     }
     
@@ -50,16 +50,20 @@ void test()
     
     CPGMatchServer ms;
     ms.start();
+    
+    gMainQueue.dispatchAfter(3, [&]{
+        while (true)
+        {
+            int idx = rand() % gateWays.size();
+            gateWays[idx].sendLoginRQ(123, "123456");
+//            gateWays[idx].sendMatchListRQ(123);
+//            gateWays[idx].sendMatchJoinRQ(123, 321);
+//            gateWays[idx].sendMatchUnjoinRQ(123, 321);
+            zclock_sleep(1);
+        }
+    });
  
-    zclock_sleep(3000);
-    while (true)
-    {
-        int idx = rand() % gateWays.size();
-        gateWays[idx].sendLoginRQ(123, "123456");
-        gateWays[idx].sendMatchListRQ(123);
-        gateWays[idx].sendMatchJoinRQ(123, 321);
-        gateWays[idx].sendMatchUnjoinRQ(123, 321);
-    }
+    gMainQueue.runMainThread();
 }
 
 void testPub()
@@ -89,10 +93,29 @@ void testPub()
 
 }
 
+void testQueue()
+{
+    gMainQueue.MainQueueInit();
+    
+    gMainQueue.dispatchAfter(1, [&]{
+        int demo = 1;
+        while (true)
+        {
+            gMainQueue.dispatch([&]{
+                demo++;
+                printf("demo:     %d\n", demo);
+            });
+        }
+    });
+    
+    gMainQueue.runMainThread();
+}
+
 int main(int argc, const char * argv[]) {
     
-    test();
 //    test();
+    test();
+//    testQueue();
     
     return 0;
 }

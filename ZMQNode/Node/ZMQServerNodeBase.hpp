@@ -66,7 +66,10 @@ public:
         readData(extra, msg);
         zmsg_destroy(&msg);
     }
-
+    
+    
+    void send(zmsg_t* msg, zsock_t* sock);
+    
 protected:
     
     virtual void readData(const std::string& extra, zmsg_t* msg);

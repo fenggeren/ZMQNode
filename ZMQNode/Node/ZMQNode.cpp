@@ -6,7 +6,8 @@
 //  Copyright © 2018年 huanao. All rights reserved.
 //
 
-#include "ZMQNode.hpp" 
+#include "ZMQNode.hpp"
+#include "Queue.hpp"
 
 
 ZMQMasterClient::ZMQMasterClient(std::shared_ptr<ZMQReactor> reactor
@@ -139,7 +140,10 @@ void ZMQMasterClient::handleNewServices(const PacketHead& head ,
     }
     if (newServicesCallback_)
     {
-        newServicesCallback_(services);
+        gMainQueue.dispatch([&, services=std::move(services)]
+        {
+            newServicesCallback_(services);
+        });
     }
 }
 

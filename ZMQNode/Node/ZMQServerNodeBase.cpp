@@ -7,6 +7,7 @@
 //
 
 #include "ZMQServerNodeBase.hpp"
+#include "Queue.hpp"
 
 int ZMQServerNodeBase::clientCount = 0;
 
@@ -89,6 +90,13 @@ void ZMQServerNodeBase::registerServiceCallback(const char* data, size_t len,
     newServiceProfile(services); 
 }
 
+void ZMQServerNodeBase::send(zmsg_t* msg, zsock_t* sock)
+{
+    zmsg_send(&msg, sock);
+//    gMainQueue.dispatch([&]{
+////        zmsg_destroy(&msg);
+//    });
+}
 
 
 

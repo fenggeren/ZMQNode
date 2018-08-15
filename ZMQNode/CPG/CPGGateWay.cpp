@@ -106,8 +106,7 @@ void CPGGateWay::sendLoginRQ(int uid, const std::string& token)
 
     zmsg_t* msg = zmsg_new();
     CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceLoginRQ, rq);
-    zmsg_send(&msg, loginDealer_);
-    zmsg_destroy(&msg);
+    send(msg, loginDealer_);
 }
  
 void CPGGateWay::sendMatchListRQ(int uid)
@@ -117,8 +116,7 @@ void CPGGateWay::sendMatchListRQ(int uid)
     
     zmsg_t* msg = zmsg_new();
     CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceMatchListRQ, rq);
-    zmsg_send(&msg, matchManagerDealer_);
-    zmsg_destroy(&msg);
+    send(msg, matchManagerDealer_);
 }
 
 void CPGGateWay::sendMatchJoinRQ(int uid, int mid)
@@ -129,8 +127,7 @@ void CPGGateWay::sendMatchJoinRQ(int uid, int mid)
     
     zmsg_t* msg = zmsg_new();
     CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceJoinRQ, rq);
-    zmsg_send(&msg, *matchDealers_.begin());
-    zmsg_destroy(&msg);
+    send(msg, *matchDealers_.begin());
 }
 void CPGGateWay::sendMatchUnjoinRQ(int uid, int mid)
 {
@@ -140,8 +137,7 @@ void CPGGateWay::sendMatchUnjoinRQ(int uid, int mid)
     
     zmsg_t* msg = zmsg_new();
     CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceUnjoinRQ, rq);
-    zmsg_send(&msg, *matchDealers_.begin());
-    zmsg_destroy(&msg);
+    send(msg, *matchDealers_.begin()); 
 }
 
 ////////////////

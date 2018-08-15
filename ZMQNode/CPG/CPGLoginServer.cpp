@@ -7,6 +7,7 @@
 //
 
 #include "CPGLoginServer.hpp"
+#include "Queue.hpp"
  
 void CPGLoginServer::newServiceProfile(const std::list<ServiceProfile>& services)
 {
@@ -39,12 +40,17 @@ void CPGLoginServer::handlerLoginRQ(const char* data, size_t len,
     CPG::LoginRS rs;
     rs.set_userid(rq.userid());
     rs.set_status(200);
-    
     zmsg_t* msg = zmsg_new();
     zmsg_addstr(msg, extra.data());
     CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceLoginRS, rs);
     zmsg_send(&msg, router_);
     zmsg_destroy(&msg);
+    
+//    gMainQueue.dispatch([&]{
+//
+//    });
+
+//    send(msg, router_);
 }
 
 void CPGLoginServer::configMessageHandlers()

@@ -82,8 +82,7 @@ void CPGMatchServer::handlerMatchJoinRQ(const char* data, size_t len,
     zmsg_t* msg = zmsg_new();
     zmsg_addstr(msg, extra.data());
     CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceJoinRS, rs);
-    zmsg_send(&msg, router_);
-    zmsg_destroy(&msg);
+    send(msg, router_);
 }
 void CPGMatchServer::handlerMatchUnjoinRQ(const char* data, size_t len,
                           const std::string& extra)
@@ -99,6 +98,5 @@ void CPGMatchServer::handlerMatchUnjoinRQ(const char* data, size_t len,
     zmsg_t* msg = zmsg_new();
     zmsg_addstr(msg, extra.data());
     CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceUnjoinRS, rs);
-    zmsg_send(&msg, router_);
-    zmsg_destroy(&msg);
+    send(msg, router_); 
 }
