@@ -22,9 +22,6 @@
  */
 void test()
 {
-    using namespace Queue;
-    Queue::MainQueue::MainQueueInit();
-
     CPGMaster master;
     master.start();
     
@@ -54,20 +51,15 @@ void test()
     CPGMatchServer ms;
     ms.start();
  
-    gGlobalQueue.dispatch([&]{
-        zclock_sleep(3000);
-        while (true)
-        {
-            int idx = rand() % gateWays.size();
-            gateWays[idx].sendLoginRQ(123, "123456");
-            gateWays[idx].sendMatchListRQ(123);
-            gateWays[idx].sendMatchJoinRQ(123, 321);
-            gateWays[idx].sendMatchUnjoinRQ(123, 321);
-            zclock_sleep(1000);
-        }
-    });
-    
-    Queue::MainQueue::Instance().runMainThread();
+    zclock_sleep(3000);
+    while (true)
+    {
+        int idx = rand() % gateWays.size();
+        gateWays[idx].sendLoginRQ(123, "123456");
+        gateWays[idx].sendMatchListRQ(123);
+        gateWays[idx].sendMatchJoinRQ(123, 321);
+        gateWays[idx].sendMatchUnjoinRQ(123, 321);
+    }
 }
 
 void testPub()
