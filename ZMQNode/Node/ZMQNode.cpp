@@ -140,10 +140,11 @@ void ZMQMasterClient::handleNewServices(const PacketHead& head ,
     }
     if (newServicesCallback_)
     {
-        gMainQueue.dispatch([&, services=std::move(services)]
-        {
-            newServicesCallback_(services);
-        });
+        newServicesCallback_(services);
+//        gMainQueue.dispatch([&, services=std::move(services)]
+//        {
+//            newServicesCallback_(services);
+//        });
     }
 }
 

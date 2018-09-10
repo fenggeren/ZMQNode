@@ -68,7 +68,7 @@ public:
     }
     
     
-    void send(zmsg_t* msg, zsock_t* sock);
+    void send(zmsg_t** msg, zsock_t* sock);
     
 protected:
     

@@ -73,7 +73,7 @@ void CPGMatchManager::handlerMatchListRQ(const char* data, size_t len,
     zmsg_t* msg = zmsg_new();
     zmsg_addstr(msg, extra.data());
     CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceMatchListRS, rs);
-    send(msg, router_);
+    send(&msg, router_);
 }
 
 void CPGMatchManager::pubMatchList()
@@ -91,7 +91,7 @@ void CPGMatchManager::pubMatchList()
     zmsg_t* msg = zmsg_new();
     zmsg_addstr(msg, "");
     CPGFuncHelper::appendZMsg(msg, serviceType_, kServiceMatchListRS, rs);
-    send(msg, pub_); 
+    send(&msg, pub_);
 }
 
 

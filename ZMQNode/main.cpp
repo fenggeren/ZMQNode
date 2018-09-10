@@ -19,11 +19,47 @@
  sock非线程安全，
  多线程共享sock，会造成死锁！！！
  */
+
+void master()
+{
+    CPGMaster master;
+    master.start();
+}
+
+void login()
+{
+    CPGLoginServer login;
+    login.start();
+}
+
+void gateWays()
+{
+    std::vector<CPGGateWay> gateWays;
+    for (int i = 0; i < 1; i++) {
+        gateWays.push_back(CPGGateWay());
+    }
+    
+    for(auto& gw : gateWays)
+    {
+        gw.start();
+    }
+    
+    zclock_sleep(1000);
+    
+    while (true)
+    {
+        int idx = rand() % gateWays.size();
+        gateWays[idx].sendLoginRQ(123, "123456");
+        //        gateWays[idx].sendMatchListRQ(123);
+        //        gateWays[idx].sendMatchJoinRQ(123, 321);
+        //        gateWays[idx].sendMatchUnjoinRQ(123, 321);
+        zclock_sleep(1);
+    }
+}
+
 void test()
 {
     Queue::MainQueue::MainQueueInit();
-    CPGMaster master;
-    master.start();
     
     CPGLoginServer login;
     login.start();
@@ -42,28 +78,25 @@ void test()
     
     zclock_sleep(1000);
     
-    CPGLoginServer login2;
-    login2.start();
+//    CPGLoginServer login2;
+//    login2.start();
+//
+//    CPGMatchManager mm;
+//    mm.start();
+//
+//    CPGMatchServer ms;
+//    ms.start();
     
-    CPGMatchManager mm;
-    mm.start();
-    
-    CPGMatchServer ms;
-    ms.start();
-    
-    gMainQueue.dispatchAfter(3, [&]{
-        while (true)
-        {
-            int idx = rand() % gateWays.size();
-            gateWays[idx].sendLoginRQ(123, "123456");
-//            gateWays[idx].sendMatchListRQ(123);
-//            gateWays[idx].sendMatchJoinRQ(123, 321);
-//            gateWays[idx].sendMatchUnjoinRQ(123, 321);
-            zclock_sleep(1);
-        }
-    });
- 
-    gMainQueue.runMainThread();
+    while (true)
+    {
+        int idx = rand() % gateWays.size();
+        gateWays[idx].sendLoginRQ(123, "123456");
+//        gateWays[idx].sendMatchListRQ(123);
+//        gateWays[idx].sendMatchJoinRQ(123, 321);
+//        gateWays[idx].sendMatchUnjoinRQ(123, 321);
+        zclock_sleep(1);
+    }
+    Queue::MainQueue::Instance().runMainThread();
 }
 
 void testPub()
@@ -114,8 +147,24 @@ void testQueue()
 int main(int argc, const char * argv[]) {
     
 //    test();
-    test();
+//    test();
 //    testQueue();
+    
+    int type = 2;
+    
+    switch (type) {
+        case 0:
+            master();
+            break;
+        case 1:
+            login();
+            break;
+        case 2:
+            gateWays();
+            
+        default:
+            break;
+    }
     
     return 0;
 }

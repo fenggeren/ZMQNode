@@ -21,12 +21,22 @@
 		1FAEEEF82112E7FB0099D3FF /* CPGLoginServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEEEF62112E7FB0099D3FF /* CPGLoginServer.cpp */; };
 		1FE86DEE211ACB7300ACC0F6 /* ZMQServerNodeBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE86DED211ACB7300ACC0F6 /* ZMQServerNodeBase.cpp */; };
 		1FE86DF1211ACC2100ACC0F6 /* CPGFuncHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE86DF0211ACC2100ACC0F6 /* CPGFuncHelper.cpp */; };
+		1FEE895821422401000EDEE5 /* CPGServerNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE895621422401000EDEE5 /* CPGServerNode.cpp */; };
 		28654B3D211C62E7009CF381 /* CPGMatchManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28654B39211C62E7009CF381 /* CPGMatchManager.cpp */; };
 		28654B3E211C62E7009CF381 /* CPGMatchServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28654B3B211C62E7009CF381 /* CPGMatchServer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		1FAEEEC22110403F0099D3FF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		1FEE895B214608C4000EDEE5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -68,6 +78,9 @@
 		1FE86DED211ACB7300ACC0F6 /* ZMQServerNodeBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZMQServerNodeBase.cpp; sourceTree = "<group>"; };
 		1FE86DEF211ACC2100ACC0F6 /* CPGFuncHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CPGFuncHelper.hpp; sourceTree = "<group>"; };
 		1FE86DF0211ACC2100ACC0F6 /* CPGFuncHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPGFuncHelper.cpp; sourceTree = "<group>"; };
+		1FEE895621422401000EDEE5 /* CPGServerNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPGServerNode.cpp; sourceTree = "<group>"; };
+		1FEE895721422401000EDEE5 /* CPGServerNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CPGServerNode.hpp; sourceTree = "<group>"; };
+		1FEE895D214608C4000EDEE5 /* Login */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Login; sourceTree = BUILT_PRODUCTS_DIR; };
 		28654B39211C62E7009CF381 /* CPGMatchManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPGMatchManager.cpp; sourceTree = "<group>"; };
 		28654B3A211C62E7009CF381 /* CPGMatchManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CPGMatchManager.hpp; sourceTree = "<group>"; };
 		28654B3B211C62E7009CF381 /* CPGMatchServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPGMatchServer.cpp; sourceTree = "<group>"; };
@@ -82,6 +95,13 @@
 				1FAEEEE921104B210099D3FF /* libprotobuf.a in Frameworks */,
 				1FAEEED0211040B70099D3FF /* libzmq.a in Frameworks */,
 				1FAEEED2211040C30099D3FF /* libczmq.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FEE895A214608C4000EDEE5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				1FAEEEC42110403F0099D3FF /* ZMQNode */,
+				1FEE895D214608C4000EDEE5 /* Login */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,6 +172,8 @@
 				1FAEEED62110410F0099D3FF /* CPGMaster.cpp */,
 				1FAEEED72110410F0099D3FF /* CPGMaster.hpp */,
 				1FAEEEEA21104C060099D3FF /* Defines.h */,
+				1FEE895621422401000EDEE5 /* CPGServerNode.cpp */,
+				1FEE895721422401000EDEE5 /* CPGServerNode.hpp */,
 			);
 			path = CPG;
 			sourceTree = "<group>";
@@ -212,6 +235,23 @@
 			productReference = 1FAEEEC42110403F0099D3FF /* ZMQNode */;
 			productType = "com.apple.product-type.tool";
 		};
+		1FEE895C214608C4000EDEE5 /* Login */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FEE8961214608C4000EDEE5 /* Build configuration list for PBXNativeTarget "Login" */;
+			buildPhases = (
+				1FEE8959214608C4000EDEE5 /* Sources */,
+				1FEE895A214608C4000EDEE5 /* Frameworks */,
+				1FEE895B214608C4000EDEE5 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Login;
+			productName = Login;
+			productReference = 1FEE895D214608C4000EDEE5 /* Login */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -222,6 +262,9 @@
 				ORGANIZATIONNAME = huanao;
 				TargetAttributes = {
 					1FAEEEC32110403F0099D3FF = {
+						CreatedOnToolsVersion = 9.4;
+					};
+					1FEE895C214608C4000EDEE5 = {
 						CreatedOnToolsVersion = 9.4;
 					};
 				};
@@ -239,6 +282,7 @@
 			projectRoot = "";
 			targets = (
 				1FAEEEC32110403F0099D3FF /* ZMQNode */,
+				1FEE895C214608C4000EDEE5 /* Login */,
 			);
 		};
 /* End PBXProject section */
@@ -249,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FAEEEF1211064D30099D3FF /* ZMQReactor.cpp in Sources */,
+				1FEE895821422401000EDEE5 /* CPGServerNode.cpp in Sources */,
 				1FAEEED5211040DB0099D3FF /* ZMQNode.cpp in Sources */,
 				1FA29FD52122B37A00D382E2 /* Queue.cpp in Sources */,
 				1FAEEEF82112E7FB0099D3FF /* CPGLoginServer.cpp in Sources */,
@@ -261,6 +306,13 @@
 				1FAEEEDC211049D10099D3FF /* CPGGateWay.cpp in Sources */,
 				1FE86DEE211ACB7300ACC0F6 /* ZMQServerNodeBase.cpp in Sources */,
 				28654B3D211C62E7009CF381 /* CPGMatchManager.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FEE8959214608C4000EDEE5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +456,22 @@
 			};
 			name = Release;
 		};
+		1FEE8962214608C4000EDEE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1FEE8963214608C4000EDEE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -421,6 +489,15 @@
 			buildConfigurations = (
 				1FAEEECC2110403F0099D3FF /* Debug */,
 				1FAEEECD2110403F0099D3FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FEE8961214608C4000EDEE5 /* Build configuration list for PBXNativeTarget "Login" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FEE8962214608C4000EDEE5 /* Debug */,
+				1FEE8963214608C4000EDEE5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

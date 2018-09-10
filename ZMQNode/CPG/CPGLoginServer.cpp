@@ -46,11 +46,7 @@ void CPGLoginServer::handlerLoginRQ(const char* data, size_t len,
     zmsg_send(&msg, router_);
     zmsg_destroy(&msg);
     
-//    gMainQueue.dispatch([&]{
-//
-//    });
-
-//    send(msg, router_);
+//    send(&msg, router_);
 }
 
 void CPGLoginServer::configMessageHandlers()
