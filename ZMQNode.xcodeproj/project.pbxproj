@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F126D12215DC56F00E5A9FD /* ZMQGateWay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F126D10215DC56F00E5A9FD /* ZMQGateWay.cpp */; };
+		1F126D16215DFFA700E5A9FD /* ZMQLogin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F126D14215DFFA700E5A9FD /* ZMQLogin.cpp */; };
+		1F126D19215DFFBD00E5A9FD /* ZMQMatchManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F126D17215DFFBD00E5A9FD /* ZMQMatchManager.cpp */; };
+		1F126D1C215DFFC800E5A9FD /* ZMQMatchServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F126D1A215DFFC800E5A9FD /* ZMQMatchServer.cpp */; };
+		1F126D1F215E035E00E5A9FD /* ZMQServiceBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F126D1D215E035E00E5A9FD /* ZMQServiceBase.cpp */; };
+		1F126D49215E0E3600E5A9FD /* server.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F126D47215E0E3500E5A9FD /* server.pb.cc */; };
 		1F53A9E72146133F0054918F /* CPGLoginServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F53A9E52146133E0054918F /* CPGLoginServer.cpp */; };
 		1FA29FD52122B37A00D382E2 /* Queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FA29FD32122B37900D382E2 /* Queue.cpp */; };
 		1FAEEEC82110403F0099D3FF /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEEEC72110403F0099D3FF /* main.cpp */; };
@@ -48,6 +54,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F126D10215DC56F00E5A9FD /* ZMQGateWay.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ZMQGateWay.cpp; sourceTree = "<group>"; };
+		1F126D11215DC56F00E5A9FD /* ZMQGateWay.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ZMQGateWay.hpp; sourceTree = "<group>"; };
+		1F126D13215DFDF300E5A9FD /* ZMQNetworkDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZMQNetworkDefine.h; sourceTree = "<group>"; };
+		1F126D14215DFFA700E5A9FD /* ZMQLogin.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ZMQLogin.cpp; sourceTree = "<group>"; };
+		1F126D15215DFFA700E5A9FD /* ZMQLogin.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ZMQLogin.hpp; sourceTree = "<group>"; };
+		1F126D17215DFFBD00E5A9FD /* ZMQMatchManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ZMQMatchManager.cpp; sourceTree = "<group>"; };
+		1F126D18215DFFBD00E5A9FD /* ZMQMatchManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ZMQMatchManager.hpp; sourceTree = "<group>"; };
+		1F126D1A215DFFC800E5A9FD /* ZMQMatchServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ZMQMatchServer.cpp; sourceTree = "<group>"; };
+		1F126D1B215DFFC800E5A9FD /* ZMQMatchServer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ZMQMatchServer.hpp; sourceTree = "<group>"; };
+		1F126D1D215E035E00E5A9FD /* ZMQServiceBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ZMQServiceBase.cpp; sourceTree = "<group>"; };
+		1F126D1E215E035E00E5A9FD /* ZMQServiceBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ZMQServiceBase.hpp; sourceTree = "<group>"; };
+		1F126D47215E0E3500E5A9FD /* server.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = server.pb.cc; sourceTree = "<group>"; };
+		1F126D48215E0E3500E5A9FD /* server.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = server.pb.h; sourceTree = "<group>"; };
 		1F4700F921509F3A007E620E /* Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defines.h; sourceTree = "<group>"; };
 		1F53A9E52146133E0054918F /* CPGLoginServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPGLoginServer.cpp; sourceTree = "<group>"; };
 		1F53A9E62146133F0054918F /* CPGLoginServer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CPGLoginServer.hpp; sourceTree = "<group>"; };
@@ -65,7 +84,6 @@
 		1FAEEEDB211049D10099D3FF /* CPGGateWay.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CPGGateWay.hpp; sourceTree = "<group>"; };
 		1FAEEEDF21104B050099D3FF /* server.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = server.pb.cc; sourceTree = "<group>"; };
 		1FAEEEE021104B050099D3FF /* CPGProtoCodec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPGProtoCodec.cpp; sourceTree = "<group>"; };
-		1FAEEEE221104B050099D3FF /* server.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = server.pb.h; sourceTree = "<group>"; };
 		1FAEEEE321104B050099D3FF /* CPGProtoCodec.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CPGProtoCodec.hpp; sourceTree = "<group>"; };
 		1FAEEEE421104B050099D3FF /* Packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Packet.h; sourceTree = "<group>"; };
 		1FAEEEE521104B050099D3FF /* server.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = server.proto; sourceTree = "<group>"; };
@@ -108,6 +126,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F126D0F215DC55400E5A9FD /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				1F126D1D215E035E00E5A9FD /* ZMQServiceBase.cpp */,
+				1F126D1E215E035E00E5A9FD /* ZMQServiceBase.hpp */,
+				1F126D17215DFFBD00E5A9FD /* ZMQMatchManager.cpp */,
+				1F126D18215DFFBD00E5A9FD /* ZMQMatchManager.hpp */,
+				1F126D1A215DFFC800E5A9FD /* ZMQMatchServer.cpp */,
+				1F126D1B215DFFC800E5A9FD /* ZMQMatchServer.hpp */,
+				1F126D14215DFFA700E5A9FD /* ZMQLogin.cpp */,
+				1F126D15215DFFA700E5A9FD /* ZMQLogin.hpp */,
+				1F126D10215DC56F00E5A9FD /* ZMQGateWay.cpp */,
+				1F126D11215DC56F00E5A9FD /* ZMQGateWay.hpp */,
+				1F126D13215DFDF300E5A9FD /* ZMQNetworkDefine.h */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		1FA29FD22122B36D00D382E2 /* dependences */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +179,7 @@
 				1FAEEEEB211062230099D3FF /* Doc */,
 				1FAEEEDE21104B050099D3FF /* proto */,
 				1FAEEED9211041130099D3FF /* CPG */,
+				1F126D0F215DC55400E5A9FD /* Network */,
 				1FAEEEC72110403F0099D3FF /* main.cpp */,
 			);
 			path = ZMQNode;
@@ -183,8 +220,9 @@
 				1FAEEEE421104B050099D3FF /* Packet.h */,
 				1FAEEEDF21104B050099D3FF /* server.pb.cc */,
 				1FAEEEE021104B050099D3FF /* CPGProtoCodec.cpp */,
-				1FAEEEE221104B050099D3FF /* server.pb.h */,
 				1FAEEEE321104B050099D3FF /* CPGProtoCodec.hpp */,
+				1F126D47215E0E3500E5A9FD /* server.pb.cc */,
+				1F126D48215E0E3500E5A9FD /* server.pb.h */,
 				1FAEEEE521104B050099D3FF /* server.proto */,
 			);
 			path = proto;
@@ -293,18 +331,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FAEEEF1211064D30099D3FF /* ZMQReactor.cpp in Sources */,
+				1F126D1F215E035E00E5A9FD /* ZMQServiceBase.cpp in Sources */,
 				1FEE895821422401000EDEE5 /* CPGServerNode.cpp in Sources */,
 				1FAEEED5211040DB0099D3FF /* ZMQNode.cpp in Sources */,
 				1FA29FD52122B37A00D382E2 /* Queue.cpp in Sources */,
 				1FAEEEC82110403F0099D3FF /* main.cpp in Sources */,
 				1FE86DF1211ACC2100ACC0F6 /* CPGFuncHelper.cpp in Sources */,
+				1F126D49215E0E3600E5A9FD /* server.pb.cc in Sources */,
 				28654B3E211C62E7009CF381 /* CPGMatchServer.cpp in Sources */,
 				1F53A9E72146133F0054918F /* CPGLoginServer.cpp in Sources */,
 				1FAEEEE621104B050099D3FF /* server.pb.cc in Sources */,
 				1FAEEED82110410F0099D3FF /* CPGMaster.cpp in Sources */,
 				1FAEEEE721104B050099D3FF /* CPGProtoCodec.cpp in Sources */,
+				1F126D1C215DFFC800E5A9FD /* ZMQMatchServer.cpp in Sources */,
 				1FAEEEDC211049D10099D3FF /* CPGGateWay.cpp in Sources */,
+				1F126D12215DC56F00E5A9FD /* ZMQGateWay.cpp in Sources */,
 				1FE86DEE211ACB7300ACC0F6 /* ZMQServerNodeBase.cpp in Sources */,
+				1F126D16215DFFA700E5A9FD /* ZMQLogin.cpp in Sources */,
+				1F126D19215DFFBD00E5A9FD /* ZMQMatchManager.cpp in Sources */,
 				28654B3D211C62E7009CF381 /* CPGMatchManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,6 +14,9 @@
 #include "CPGMatchManager.hpp"
 #include "CPGMatchServer.hpp"
 #include "dependences/Queue.hpp"
+#include "ZMQMatchManager.hpp"
+#include "ZMQGateWay.hpp"
+
 
 /*
  sock非线程安全，
@@ -144,27 +147,38 @@ void testQueue()
     gMainQueue.runMainThread();
 }
 
+
+void test_gateway()
+{
+    ZGW::ZMQGateWay gateway;
+    
+    gateway.start();
+}
+
+
 int main(int argc, const char * argv[]) {
     
 //    test();
 //    test();
 //    testQueue();
     
-    int type = 2;
+//    int type = 2;
+//
+//    switch (type) {
+//        case 0:
+//            master();
+//            break;
+//        case 1:
+//            login();
+//            break;
+//        case 2:
+//            gateWays();
+//
+//        default:
+//            break;
+//    }
     
-    switch (type) {
-        case 0:
-            master();
-            break;
-        case 1:
-            login();
-            break;
-        case 2:
-            gateWays();
-            
-        default:
-            break;
-    }
+    test_gateway();
     
     return 0;
 }
